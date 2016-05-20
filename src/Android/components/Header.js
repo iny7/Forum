@@ -5,12 +5,18 @@ import {
   StyleSheet,
   Text,
   View,
+  StatusBar
 } from 'react-native'
 
 class Header extends Component {
    render() {
    		return (
 	   		<View style={styles.top}>
+	   		  <StatusBar
+	   		  	 translucent={true}
+			     backgroundColor='rgba(255, 255, 255, 0)'
+			     barStyle="light-content"
+			   />
 	          <Text style={styles.topText}>成都经销商</Text>
 	        </View>
 	    )
@@ -20,7 +26,7 @@ class Header extends Component {
 var styles = StyleSheet.create({
 	top : {
 	    backgroundColor: '#F8F8F8',
-	    height: 35,
+	    height: 50,
 	    justifyContent : 'center',
 	    alignItems : 'center',
 	    // borderStyle: 'solid',

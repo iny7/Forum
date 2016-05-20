@@ -13,7 +13,8 @@ import Footer from './components/Footer'
 
 class AppComponent extends Component {
    render() {
-	    return (
+        console.log('***********',this.props.navigator)
+      return (
 	      <View style={styles.container}>
 	        <Header />
 	        <Main />

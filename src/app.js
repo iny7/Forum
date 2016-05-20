@@ -119,6 +119,7 @@ class navigation extends Component {
     );
   }
   render() {
+    console.log(this.props.navigator)
     return (
       <Navigator
         initialRoute={defaultRoute}

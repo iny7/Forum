@@ -43,7 +43,7 @@ class Main extends Component {
 var styles = StyleSheet.create({
     main : {
       flex : 1,
-      backgroundColor: 'yellow'
+      backgroundColor: '#F0F0F2'
     },
     mainTop : {
       backgroundColor : '#5288D9',
