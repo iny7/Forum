@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 
 
-import App from './src/Android/App';
+import App from './src/App';
 
 class rnDemo extends Component {
    render() {
@@ -16,7 +16,7 @@ class rnDemo extends Component {
        <Navigator
          initialRoute={{ name: defaultName, component: defaultComponent }}
          configureScene={(route) => {
-           return Navigator.SceneConfigs.VerticalDownSwipeJump;
+           return Navigator.SceneConfigs.PushFromRight;
          }}
          renderScene={(route, navigator) => {
            let Component = route.component;
@@ -28,4 +28,4 @@ class rnDemo extends Component {
 
 }
 
-AppRegistry.registerComponent('MyProject', () => rnDemo);
+AppRegistry.registerComponent('car', () => rnDemo);

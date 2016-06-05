@@ -9,6 +9,20 @@ import {
 } from 'react-native'
 
 class Header extends Component {
+	constructor(){
+		super();
+
+	}
+	changeTitle(title){
+		this.setState({
+			title : title
+		})
+	}
+	componentWillMount(){
+		this.setState({
+			title : this.props.title
+		})	
+	}
    render() {
    		return (
 	   		<View style={styles.top}>
@@ -17,7 +31,7 @@ class Header extends Component {
 			     backgroundColor='rgba(255, 255, 255, 0)'
 			     barStyle="light-content"
 			   />
-	          <Text style={styles.topText}>成都经销商</Text>
+	          <Text style={styles.topText}>{this.state.title}</Text>
 	        </View>
 	    )
    }

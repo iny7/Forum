@@ -1,152 +1,74 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- */
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import {
   AppRegistry,
-  Platform,
-  TouchableOpacity,
+  Image,
   StyleSheet,
-  Navigator,
+  Text,
   View,
-  Text
-} from 'react-native';
-import Splash from './Splash';
+  Navigator
+} from 'react-native'
 
-const defaultRoute = {
-  component: Splash
-};
+import Header from './components/Header'
+import Controller from './components/Controller'
+import Sensor from './components/Sensor'
+import About from './components/About'
+import Footer from './components/Footer'
 
-class navigation extends Component {
-  _renderScene(route, navigator) {
-    let Component = route.component;
-    return (
-      <Component {...route.params} navigator={navigator} />
-    );
-  }
-  _renderNavBar() {
-    const styles = {
-      title: {
-        flex: 1, alignItems: 'center', justifyContent: 'center'
-      },
-      button: {
-        flex: 1, width: 50, alignItems: 'center', justifyContent: 'center'
-      },
-      buttonText: {
-        fontSize: 18, color: '#FFFFFF', fontWeight: '400'
-      }
-    }
 
-    //源码在\node_modules\react-native\Libraries\CustomComponents\Navigator
-    //只有这三个有效属性（组件）
-    var routeMapper = {
-      LeftButton(route, navigator, index, navState) {
-        if(index == 1) {
-          return (
-            <TouchableOpacity 
-              onPress={() => navigator.pop()}
-              style={styles.button}>
-              <Text style={styles.buttonText}>消息--</Text>
-            </TouchableOpacity>
-          );
-        } else {
-          return (
-            <TouchableOpacity 
-              onPress={() => navigator.pop()}
-              style={styles.button}>
-              <Text style={styles.buttonText}>消息</Text>
-            </TouchableOpacity>
-          );
-        }
+var arr = [
+      {
+        name : '遥控器',
+        component : Controller,
       },
-      Title(route, navigator, index, navState) {
-        if(index == 2) {
-          return (
-            <TouchableOpacity 
-              onPress={() => navigator.pop()}
-              style={styles.button}>
-              <Text style={styles.buttonText}>工作 --</Text>
-            </TouchableOpacity>
-          );
-        } else {
-          return (
-            <TouchableOpacity 
-              onPress={() => navigator.pop()}
-              style={styles.button}>
-              <Text style={styles.buttonText}>工作</Text>
-            </TouchableOpacity>
-          );
-        }
+      {
+        name : '传感器',
+        component : Sensor,
       },
-      RightButton(route, navigator, index, navState) {
-        // if(index > 0 && route.rightButton) {
-        if(index == 3) {
-          return (
-            <TouchableOpacity 
-              onPress={() => navigator.pop()}
-              style={styles.button}>
-              <Text style={styles.buttonText}>我的--</Text>
-            </TouchableOpacity>
-          );
-        } else {
-          return (
-            <TouchableOpacity 
-              onPress={() => navigator.pop()}
-              style={styles.button}>
-              <Text style={styles.buttonText}>我的</Text>
-            </TouchableOpacity>
-          )
-        }
-      },
-    };
+      {
+        name : '关于',
+        component : About,
+      }]
 
-    return (
-      <Navigator.NavigationBar
-        style={{
-          alignItems: 'center',
-          backgroundColor: '#55ACEE',
-          shadowOffset:{
-              width: 1,
-              height: 0.5,
-          },
-          shadowColor: '#55ACEE',
-          shadowOpacity: 0.8,          
-          }}
-        routeMapper={routeMapper}
-      >
-      </Navigator.NavigationBar>
-    );
-  }
-  render() {
-    console.log(this.props.navigator)
-    return (
-      <Navigator
-        initialRoute={defaultRoute}
-        renderScene={this._renderScene}
-        sceneStyle={{paddingTop: (Platform.OS === 'android' ? 66 : 74)}}
-        navigationBar={this._renderNavBar()} />
-    );
-  }
+class AppComponent extends Component {
+   constructor(){
+    super()
+   }
+   changeTab(index){
+    this.refs.header.changeTitle(arr[index].name)
+    this.refs.navi.jumpTo(arr[index])
+   }
+   render() {
+      
+      return (
+	      <View style={styles.container}>
+	        <Header ref="header" title={arr[0].name}/>
+	        <Navigator
+            ref="navi"
+           initialRoute={arr[0]}
+           initialRouteStack={arr}
+           configureScene={(route) => {
+             
+             return Navigator.SceneConfigs.FloatFromRight;
+           }}
+           renderScene={(route, navigator) => {
+             let Component = route.component;
+             return <Component {...route.params} navigator={navigator} />
+           }} />
+	        <Footer changeTab={this.changeTab.bind(this)}/>
+	      </View>
+	    );
+	}
 }
 
-const styles = StyleSheet.create({
+var styles = StyleSheet.create({
   container: {
+    borderWidth: 2,
+    borderStyle: 'solid',
+    borderBottomWidth: 1,
+    borderBottomColor: '#BBB',
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
   },
 });
 
-AppRegistry.registerComponent('MyProject', () => navigation);
+export default AppComponent

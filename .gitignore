@@ -1,10 +1,8 @@
 # OSX
 #
 .DS_Store
-
 android/
-ios/
-
+node_modules/
 # Xcode
 #
 build/
