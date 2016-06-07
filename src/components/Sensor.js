@@ -5,10 +5,33 @@ import {
   StyleSheet,
   Text,
   View,
+  TouchableOpacity
 } from 'react-native'
 
 
+var image = require('../../image/refresh.jpg')
 class Sensor extends Component {
+    constructor(){
+      super();
+      this.state = {
+        wend: '',
+        shid: ''
+      }
+    }
+
+     getInfo(){
+      console.log("msg")
+      fetch('http://192.168.191.10:8899/car?a=5').then(response => {
+        var data = response.headers.map['da'][0].split(',')
+        var wend = data[0] + '°C'
+        var shid = data[1] + '%'
+        this.setState({
+          wend: wend,
+          shid: shid
+        })
+      })
+     }
+
    render() {
       
       return (
@@ -26,7 +49,7 @@ class Sensor extends Component {
               <Text style={styles.textCenter}>温度</Text>
             </View>
             <View style={styles.mainTopItem}>
-              <Text style={styles.textCenter}>30 °C</Text>
+              <Text style={styles.textCenter}>{this.state.wend}</Text>
             </View>
           </View>
           <View  style={styles.mainTop}>
@@ -34,21 +57,33 @@ class Sensor extends Component {
               <Text style={styles.textCenter}>湿度</Text>
             </View>
             <View style={styles.mainTopItem}>
-              <Text style={styles.textCenter}>100</Text>
+              <Text style={styles.textCenter}>{this.state.shid}</Text>
             </View>
           </View>
+          <TouchableOpacity 
+              style={styles.button} 
+              onPress={this.getInfo.bind(this)}>
+              <Image
+                source={image}
+                style={styles.buttonImage}/>
+            </TouchableOpacity>
         </View>
       )
    }
 }
 
 var styles = StyleSheet.create({
+    button: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center'
+    },
     wrap : {
       flex : 1,
       padding: 50,
       backgroundColor: '#F0F0F2',
-      justifyContent: 'center'
-
+      justifyContent: 'center',
+      
     },
     mainTop : {
       backgroundColor : '#5288D9',
@@ -69,7 +104,12 @@ var styles = StyleSheet.create({
       color : '#FFF',
       borderWidth : 1,
       borderColor : 'red',
-    }
+    },
+    buttonImage: {
+      borderRadius: 35,
+      width: 70,
+      height: 70,
+    },
 })
 
 export default Sensor

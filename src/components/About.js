@@ -15,23 +15,23 @@ var MOCKED_MOVIES_DATA = [
 var data = [
       {
         name: '占哲琦',
-        avatar: 'http://i.imgur.com/UePbdph.jpg',
-        duty: '负责XXXXX',
+        avatar: require('../../image/zzq.jpg'),
+        duty: '环境配置、影像控制',
       },
       {
-        name: '刘立文',
-        avatar: 'http://i.imgur.com/UePbdph.jpg',
-        duty: '负责XXXXX',
+        name: '刘力文',
+        avatar: require('../../image/llw.jpg'),
+        duty: '写服务端、代码编写',
       },
       {
         name: '秦长熙',
-        avatar: 'http://i.imgur.com/UePbdph.jpg',
-        duty: '负责XXXXX',
+        avatar: require('../../image/qcx.jpg'),
+        duty: '写客户端、数据交互',
       },
       {
         name: '陈明伟',
-        avatar: 'http://i.imgur.com/UePbdph.jpg',
-        duty: '负责XXXXX',
+        avatar: require('../../image/cmw.jpg'),
+        duty: '小车控制、文档编写',
       },
 ]
 
@@ -51,7 +51,7 @@ class About extends Component {
             return (
             <View key={index} style={curStyle.bgStyle}>
               <Image
-                source={{uri: item.avatar}}
+                source={item.avatar}
                 style={styles.avatar}
                 />
               <Text style={curStyle.textStyle}>{item.name}</Text>
@@ -92,8 +92,8 @@ var styles = StyleSheet.create({
       marginHorizontal: 10,
     },
     avatar: {
-      borderWidth : 1,
-      borderColor : 'green',
+      // borderWidth : 1,
+      // borderColor : 'green',
       width: 60,
       height: 60,
       borderRadius: 30

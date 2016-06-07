@@ -8,20 +8,37 @@ import {
 } from 'react-native'
 
 
-import Header from '../components/Header'
-import LoginBox from '../components/LoginBox'
+import Header from './components/Header'
+import LoginBox from './components/LoginBox'
+
+import App from './App'
+
 
 class Login extends Component {
     constructor(props) {
         super(props);
     }
 
+    switchPage(){
+      this.props.navigator.replace({
+          component: App,
+          // params: {
+          //   name: this.state.name,
+          //   age: this.state.age,
+          //   changeMyAge: (age) => {
+          //     this.setState({ age })
+          //   }
+          // }
+        })  
+    }
+    
+
    render() {
       return (
 	      <View style={styles.container}>
-	        <Header title="登陆-五粮春销售服务端"/>
+	        <Header title="登陆"/>
 	        <View style={styles.main}>
-            <LoginBox navigator={this.props.navigator}/>
+            <LoginBox success={this.switchPage.bind(this)}/>
           </View>
 	      </View>
 	    );
@@ -36,7 +53,7 @@ var styles = StyleSheet.create({
     borderBottomColor: '#BBB',
     flex: 1,
     backgroundColor: '#F5FCFF',
-    backgroundColor: 'red',
+    // backgroundColor: '',
   },
   main : {
     flex : 1,

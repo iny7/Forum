@@ -43,7 +43,7 @@ class AppComponent extends Component {
 	      <View style={styles.container}>
 	        <Header ref="header" title={arr[0].name}/>
 	        <Navigator
-            ref="navi"
+           ref="navi"
            initialRoute={arr[0]}
            initialRouteStack={arr}
            configureScene={(route) => {
