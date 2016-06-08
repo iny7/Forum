@@ -35,19 +35,24 @@ class Controller extends Component {
    }
 
     clickTop(){
-      fetch('http://192.168.191.10:8899/car?a=1')
+      var ip = 'http://'+global.address+':8899/car?a=1'
+      fetch(ip)
     }
     clickLeft(){
-      fetch('http://192.168.191.10:8899/car?a=3')
+      var ip = 'http://'+global.address+':8899/car?a=3'
+      fetch(ip)
     }
     clickRight(){
-      fetch('http://192.168.191.10:8899/car?a=4')
+      var ip = 'http://'+global.address+':8899/car?a=4'
+      fetch(ip)
     }
     clickBottom(){
-      fetch('http://192.168.191.10:8899/car?a=2')
+      var ip = 'http://'+global.address+':8899/car?a=2'
+      fetch(ip)
     }
      clickCenter(){
-        fetch('http://192.168.191.10:8899/car?a=0')
+      var ip = 'http://'+global.address+':8899/car?a=0'
+      fetch(ip)
      }
 
      handlePlay(){
@@ -56,7 +61,7 @@ class Controller extends Component {
       })
      }
    render() {
-
+      var ip = 'http://'+global.address+':8080/javascript_simple.html'
       return (
      	<View style={styles.wrap}>
             {this.state.running ?
@@ -64,7 +69,7 @@ class Controller extends Component {
                 <WebView
                   automaticallyAdjustContentInsets={false}
                   style={styles.video}
-                  source={{uri: 'http://192.168.191.10:8080/javascript_simple.html'}}
+                  source={{uri: ip}}
                   javaScriptEnabled={true}
                   domStorageEnabled={true}
                   decelerationRate="normal"

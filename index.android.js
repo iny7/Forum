@@ -10,8 +10,9 @@ import App from './src/App';
 import LoginPage from './src/LoginPage';
 
 var defaultComponent = LoginPage;
-
+var ADDRESS = ''
 class rnDemo extends Component {
+
    render() {
        return (
          <Navigator
@@ -21,7 +22,7 @@ class rnDemo extends Component {
            }}
            renderScene={(route, navigator) => {
              let Component = route.component;
-             return <Component {...route.params} navigator={navigator} />
+             return <Component {...route.params} navigator={navigator}/>
            }} />
        );
    }

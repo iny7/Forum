@@ -15,6 +15,7 @@ var user = {
   password : 'admin'
 }
 
+
 class LoginBox extends Component {
 
     constructor(props) {
@@ -29,17 +30,18 @@ class LoginBox extends Component {
       var username = this.state.username
       var password = this.state.password
       if(username == user.username && password == user.password){
+        global.address = this.state.address != undefined ? this.state.address : '192.168.191.2'
           this.props.success()
         }else{
           alert('用户名或密码错误')
         }
-      
     }
 
     changeUsername(username){
       this.setState({
         username : username,
         password : this.state.password,
+        address : this.state.address
       })
     }
 
@@ -47,6 +49,15 @@ class LoginBox extends Component {
       this.setState({
         username : this.state.username,
         password : password,
+        address : this.state.address
+      })
+    }
+
+    changeAddress(address){
+      this.setState({
+        username : this.state.username,
+        password : this.state.password,
+        address : address
       })
     }
 
@@ -54,6 +65,7 @@ class LoginBox extends Component {
     forgetPass(){}
 
    render() {
+
       return (
      		<View style={styles.loginBox}>
           <View style={styles.inputBox}>
@@ -72,6 +84,15 @@ class LoginBox extends Component {
               onChangeText={this.changePassword.bind(this)}
               placeholder="密码"
               password={true}
+            />
+          </View>
+
+          <View style={[styles.inputBox,{marginTop:-1}]}>
+            <TextInput
+              style={styles.input}
+              value={this.state.address}
+              onChangeText={this.changeAddress.bind(this)}
+              placeholder="地址"
             />
           </View>
 

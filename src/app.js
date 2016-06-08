@@ -52,7 +52,7 @@ class AppComponent extends Component {
            }}
            renderScene={(route, navigator) => {
              let Component = route.component;
-             return <Component {...route.params} navigator={navigator} />
+             return <Component {...route.params} navigator={navigator}/>
            }} />
 	        <Footer changeTab={this.changeTab.bind(this)}/>
 	      </View>

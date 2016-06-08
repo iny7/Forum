@@ -20,8 +20,8 @@ class Sensor extends Component {
     }
 
      getInfo(){
-      console.log("msg")
-      fetch('http://192.168.191.10:8899/car?a=5').then(response => {
+      var ip = 'http://'+global.address+':8899/car?a=5'
+      fetch(ip).then(response => {
         var data = response.headers.map['da'][0].split(',')
         var wend = data[0] + '°C'
         var shid = data[1] + '%'
