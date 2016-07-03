@@ -18,18 +18,20 @@ import Footer from './components/Footer'
 
 var arr = [
       {
-        name : '空调遥控器',
+        name : 'air',
         component : AirConditioner,
       },
       {
-        name : '热水器',
+        name : 'water',
         component : WaterHeater,
       },
       {
-        name : '关于',
+        name : 'about',
         component : About,
       }
 ];
+
+var arr2 = [];
 
 class AppComponent extends Component {
    constructor(){
@@ -38,6 +40,16 @@ class AppComponent extends Component {
    changeTab(index){
     this.refs.header.changeTitle(arr[index].name)
     this.refs.navi.jumpTo(arr[index])
+   }
+
+   openLeft(){
+    var air = this.refs.navi.refs.air
+    air.openDrawer()
+   }
+
+   openRight(){
+    // var about = this.refs.navi.refs.about
+    // about.openDrawer()
    }
    // <Header ref="header" title={arr[0].name}/>
    render() {
@@ -53,9 +65,11 @@ class AppComponent extends Component {
            }}
            renderScene={(route, navigator) => {
              let Component = route.component;
-             return <Component {...route.params} navigator={navigator}/>
+             arr2.push(Component)
+             return <Component {...route.params} navigator={navigator} ref={route.name}/>
            }} />
-           <Footer></Footer>
+           <Footer clickLeft={this.openLeft.bind(this)}
+              clickRight={this.openRight.bind(this)}/>
         </View>
       );
   }

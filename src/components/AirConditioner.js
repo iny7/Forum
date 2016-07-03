@@ -6,7 +6,8 @@ import {
   Text,
   View,
   TouchableOpacity,
-  WebView
+  WebView,
+  DrawerLayoutAndroid
 } from 'react-native'
 
 // import fetch from 'isomorphic-fetch'
@@ -21,9 +22,6 @@ var images = {
   down: require('../../image/down.jpg'),
   running: require('../../image/stop.jpg'),
 }
-var MOCKED_MOVIES_DATA = [
-  {title: '标题', year: '2015', posters: {thumbnail: 'http://i.imgur.com/UePbdph.jpg'}},
-];
 
 class AirConditioner extends Component {
    
@@ -32,6 +30,10 @@ class AirConditioner extends Component {
     this.state = {
       running : false
     }
+   }
+
+   openDrawer(){
+    this.refs.drawer.openDrawer();
    }
 
     clickTop(){
@@ -63,22 +65,29 @@ class AirConditioner extends Component {
    render() {
       // var ip = 'http://'+global.address+':8080/javascript_simple.html'
       // var ip2 = 'https://modao.cc/app/4H3iwJoG6BKPg7SPwaYoPI71DGHYGuv?inapp=1'
-      var ip = 'http://www.baidu.com'
+      var ip = 'http://www.google.com'
 
       return (
      	<View style={styles.wrap}>
-          <WebView
-            style={styles.screen}
-            source={{uri: ip}}
-            automaticallyAdjustContentInsets={false}
-            javaScriptEnabled={true}
-            domStorageEnabled={true}
-            decelerationRate="normal"
-            onNavigationStateChange={this.onNavigationStateChange}
-            onShouldStartLoadWithRequest={this.onShouldStartLoadWithRequest}
-            startInLoadingState={true}
-            scalesPageToFit={this.state.scalesPageToFit}
-          />
+          <DrawerLayoutAndroid
+            ref="drawer"
+            drawerWidth={200}
+            drawerPosition={DrawerLayoutAndroid.positions.Left}  
+            renderNavigationView={() =><Text>我的</Text>}>
+          <View style={styles.screenWrap}>
+            <WebView
+              style={styles.screen}
+              source={{uri: ip}}
+              automaticallyAdjustContentInsets={false}
+              javaScriptEnabled={true}
+              domStorageEnabled={true}
+              decelerationRate="normal"
+              onNavigationStateChange={this.onNavigationStateChange}
+              onShouldStartLoadWithRequest={this.onShouldStartLoadWithRequest}
+              startInLoadingState={true}
+              scalesPageToFit={this.state.scalesPageToFit}
+            />
+          </View>
           <View style={styles.controller}>
               <View style={styles.itemLine}>
                 <TouchableOpacity
@@ -135,6 +144,7 @@ class AirConditioner extends Component {
                 </TouchableOpacity>
               </View>
           </View>
+          </DrawerLayoutAndroid>
         </View>
       )
    }
@@ -145,8 +155,11 @@ var styles = StyleSheet.create({
       flex : 1,
       backgroundColor: '#F0F0F2',
     },
+    screenWrap: {
+      height: 220,
+    },
     screen : {
-      height: 170,
+      // height: 170,
       backgroundColor : '#FFF',
       backgroundColor : 'red',
     },

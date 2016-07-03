@@ -21,7 +21,7 @@ class Header extends Component {
 	componentWillMount(){
 		this.setState({
 			title : this.props.title
-		})	
+		})
 	}
    render() {
    		return (
