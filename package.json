@@ -2,11 +2,13 @@
   "name": "car",
   "version": "1.0.0",
   "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start"
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "and": "react-native run-android",
+    "ios": "react-native run-ios"
   },
   "dependencies": {
     "isomorphic-fetch": "^2.2.1",
-    "react": "^15.0.2",
+    "react": "15.0.2",
     "react-native": "^0.26.3"
   }
 }

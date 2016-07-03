@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {Component} from 'react';
 import {
   AppRegistry,
   Image,
@@ -10,7 +10,7 @@ import {
 
 
 var image = require('../../image/refresh.jpg')
-class Sensor extends Component {
+class WaterHeater extends Component {
     constructor(){
       super();
       this.state = {
@@ -112,4 +112,4 @@ var styles = StyleSheet.create({
     },
 })
 
-export default Sensor
+export default WaterHeater

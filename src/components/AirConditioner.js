@@ -25,7 +25,7 @@ var MOCKED_MOVIES_DATA = [
   {title: '标题', year: '2015', posters: {thumbnail: 'http://i.imgur.com/UePbdph.jpg'}},
 ];
 
-class Controller extends Component {
+class AirConditioner extends Component {
    
    constructor(){
     super();
@@ -61,77 +61,77 @@ class Controller extends Component {
       })
      }
    render() {
-      var ip = 'http://'+global.address+':8080/javascript_simple.html'
+      // var ip = 'http://'+global.address+':8080/javascript_simple.html'
+      // var ip2 = 'https://modao.cc/app/4H3iwJoG6BKPg7SPwaYoPI71DGHYGuv?inapp=1'
+      var ip = 'http://www.baidu.com'
+
       return (
      	<View style={styles.wrap}>
-            {this.state.running ?
-              <View style={styles.topCon2}>
-                <WebView
-                  automaticallyAdjustContentInsets={false}
-                  style={styles.video}
-                  source={{uri: ip}}
-                  javaScriptEnabled={true}
-                  domStorageEnabled={true}
-                  decelerationRate="normal"
-                  startInLoadingState={true}
-                  scalesPageToFit={true}
-                /> 
-              </View>: 
-                <View style={styles.topCon}>
-                  <Image
-                      source={images.running}
-                      style={styles.video}
-                      resizeMode='cover'/>
-                </View>
-              }
-          
+          <WebView
+            style={styles.screen}
+            source={{uri: ip}}
+            automaticallyAdjustContentInsets={false}
+            javaScriptEnabled={true}
+            domStorageEnabled={true}
+            decelerationRate="normal"
+            onNavigationStateChange={this.onNavigationStateChange}
+            onShouldStartLoadWithRequest={this.onShouldStartLoadWithRequest}
+            startInLoadingState={true}
+            scalesPageToFit={this.state.scalesPageToFit}
+          />
           <View style={styles.controller}>
-
               <View style={styles.itemLine}>
-                <TouchableOpacity 
-                  style={styles.button} 
+                <TouchableOpacity
+                  style={styles.button}
                   // onPress={this.clickTop.bind(this)}
                   onPressIn={this.clickTop.bind(this)}
                   onPressOut={this.clickCenter.bind(this)}>
-                  <Image
-  	                source={images.up}
-  	                style={styles.buttonImage}/>
+                  <Text>开/关</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.button}
+                  onPressIn={this.clickLeft.bind(this)}
+                  onPressOut={this.clickCenter.bind(this)}>
+                  <Text>模式</Text>
                 </TouchableOpacity>
                </View>
                 
                <View style={styles.itemLine}>
-                <TouchableOpacity 
-                  style={styles.button} 
-                  onPressIn={this.clickLeft.bind(this)}
-                  onPressOut={this.clickCenter.bind(this)}>
-                  <Image
-  	                source={images.left}
-  	                style={styles.buttonImage}/>
-                </TouchableOpacity>
-                <TouchableOpacity 
-                  style={styles.button}   
+                <TouchableOpacity
+                  style={styles.button}
                   onPress={this.handlePlay.bind(this)}>
-                  <Image
-                    source={this.state.running ? images.pause : images.start}
-                    style={styles.buttonImage}/>
+                  <Text>-</Text>
                 </TouchableOpacity>
-                <TouchableOpacity 
-                  style={styles.button} 
-                  onPressIn={this.clickRight.bind(this)}
-                  onPressOut={this.clickCenter.bind(this)}>
-                  <Image
-                    source={images.right}
-                    style={styles.buttonImage}/>
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={this.handlePlay.bind(this)}>
+                  <Text>+</Text>
                 </TouchableOpacity>
               </View>
+
               <View style={styles.itemLine}>
-                <TouchableOpacity 
-                  style={styles.button} 
-                  onPressIn={this.clickBottom.bind(this)}
-                  onPressOut={this.clickCenter.bind(this)}>
-                  <Image
-                    source={images.down}
-                    style={styles.buttonImage}/>
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={this.handlePlay.bind(this)}>
+                  <Text>风速</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={this.handlePlay.bind(this)}>
+                  <Text>上下扫风</Text>
+                </TouchableOpacity>
+              </View>
+
+              <View style={styles.itemLine}>
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={this.handlePlay.bind(this)}>
+                  <Text>定时</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={this.handlePlay.bind(this)}>
+                  <Text>左右扫风</Text>
                 </TouchableOpacity>
               </View>
           </View>
@@ -145,22 +145,10 @@ var styles = StyleSheet.create({
       flex : 1,
       backgroundColor: '#F0F0F2',
     },
-    topCon : {
-      height: 200,
+    screen : {
+      height: 170,
       backgroundColor : '#FFF',
-      alignItems: 'center'
-    },
-    topCon2 : {
-      backgroundColor : '#FFF',
-      height: 200,
-    },
-    video : {
-      flex: 1,
-      // backgroundColor : '#5288D9',
-      backgroundColor : '#FFF',
-    },
-    videoImg : {
-      flex: 1,
+      backgroundColor : 'red',
     },
     controller: {
     	flex: 1,
@@ -188,4 +176,4 @@ var styles = StyleSheet.create({
     }
 })
 
-export default Controller
+export default AirConditioner
