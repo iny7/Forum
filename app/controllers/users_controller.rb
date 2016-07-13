@@ -20,15 +20,20 @@ class UsersController < ApplicationController
   def create_login_session
     user = User.find_by_name(params[:user][:name])
     if user && user.authenticate(params[:user][:password])
-      session[:user_id] = user.id
-      redirect_to :root
+      if params[:remember_me]
+        cookies.permanent[:auth_token] = user.auth_token
+      else
+        cookies[:auth_token] = user.auth_token
+      end
+      render plain: cookies[:auth_token]
+      # redirect_to :root
     else
       redirect_to :login
     end
   end
 
   def logout
-    session[:user_id] = nil
+    cookies.delete(:auth_token)
     redirect_to :root
   end
 
