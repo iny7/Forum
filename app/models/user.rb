@@ -4,6 +4,10 @@ class User < ActiveRecord::Base
 
   before_create { generate_token(:auth_token) }
 
+  validates :name, :email, presence: true
+
+  validates :name, :email, uniqueness: { case_sensitive: false }
+
   def generate_token(column)
     begin
       self[column] = SecureRandom.urlsafe_base64

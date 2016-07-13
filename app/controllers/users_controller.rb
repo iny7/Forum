@@ -1,11 +1,12 @@
 class UsersController < ApplicationController
   
   def create
-    user = User.new(user_params)
-    if user.save
+    @user = User.new(user_params)
+    if @user.save
+      cookies[:auth_token] = @user.auth_token
       redirect_to :root
     else
-      render 'signup'
+      render :signup
     end
   end
 
@@ -25,9 +26,10 @@ class UsersController < ApplicationController
       else
         cookies[:auth_token] = user.auth_token
       end
-      render plain: cookies[:auth_token]
-      # redirect_to :root
+      flash.notice = '登录成功!'
+      redirect_to :root
     else
+      flash.notice = '登录失败!'
       redirect_to :login
     end
   end
