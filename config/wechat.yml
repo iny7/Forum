@@ -1,7 +1,7 @@
 default: &default
-  appid: "wxfe1eacad9b834b94"
-  secret: "1c433b60a95fcd3746bca119d96a9518"
-  token:  "asdfg"
+  appid: "wx9badc3155c5326be"
+  secret: "1b66b27039f416b2c4ae0edd5a2b7207"
+  #token:  "asdfg"
   access_token: "/var/tmp/wechat_access_token"
   jsapi_ticket: "/var/tmp/wechat_jsapi_ticket"
   #encoding_aes_key:  "hZzty9wT9zmzLJCYKIcyBcXKZAen6bSAtO1aOj7bAK8"
@@ -13,7 +13,7 @@ production:
   access_token: <%= ENV['WECHAT_ACCESS_TOKEN'] %>
   jsapi_ticket: <%= ENV['WECHAT_JSAPI_TICKET'] %>
 
-development:
+development:  
   <<: *default
   trusted_domain_fullname: "http://11ont02dmu.proxy.qqbrowser.cc"
 
