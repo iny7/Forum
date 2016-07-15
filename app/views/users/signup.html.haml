@@ -1,0 +1,31 @@
+= form_for @user do |f|
+  
+  = f.label :name, 'username'
+  %br/
+  = f.text_field :name
+  - if @user.errors[:name].any?
+    %p= @user.errors[:name][0]
+  %br/
+  
+  = f.label :email, 'email'
+  %br/
+  = f.text_field :email
+  - if @user.errors[:email].any?
+    %p= @user.errors[:email][0]
+  %br/
+
+  = f.label :password, 'password'
+  %br/
+  = f.password_field :password
+  - if @user.errors[:password].any?
+    %p= @user.errors[:password][0]
+  %br/
+
+  = f.label :password_confirmation, 'confirm password'
+  %br/
+  = f.password_field :password_confirmation
+  - if @user.errors[:password_confirmation].any?
+    %p= @user.errors[:password_confirmation][0]
+  %br/
+
+  = f.submit 'Sign up'
