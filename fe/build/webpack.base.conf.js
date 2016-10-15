@@ -36,6 +36,11 @@ var config = {
   module: {
     preLoaders: [
       {
+        test: /\.(jsx|js)$/,
+        loader: 'babel-loader',
+        exclude: /node_modules/
+      },
+      {
         test: /\.vue$/,
         loader: 'eslint',
         include: projectRoot,

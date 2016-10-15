@@ -1,9 +1,7 @@
-import Vue from 'vue'
+import React from 'react'
+import ReactDOM from 'react-dom'
 import App from './App'
 
-/* eslint-disable no-new */
-new Vue({
-  el: 'body',
-  render: h => h(App)
-})
+ReactDOM.render(<App/>, document.body)
+
 console.log('application')
