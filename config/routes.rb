@@ -2,17 +2,16 @@ Rails.application.routes.draw do
 
   get 'signup' => 'users#signup', :as => 'signup'
 
-  get 'login' => 'users#login', :as => 'login'
+  get 'signin' => 'users#signin', :as => 'signin'
 
   post 'create_login_session' => 'users#create_login_session'
 
   delete 'logout' => 'users#logout', :as => 'logout'
 
-
   resources :users, only: [:create]
 
   resource :wechat, only: [:show, :create]
-  
+
   get 'welcome/index'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
