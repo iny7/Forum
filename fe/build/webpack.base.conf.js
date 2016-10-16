@@ -124,7 +124,6 @@ if (production) {
     new webpack.optimize.OccurenceOrderPlugin()
   );
 } else {
-  console.log('hahhahahahahhahahah')
   config.devServer = {
     port: devServerPort,
     headers: { 'Access-Control-Allow-Origin': '*' }

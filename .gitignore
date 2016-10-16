@@ -19,4 +19,8 @@
 /node_modules
 /public/webpack
 
+# Added files under /fe
+fe/dist
+/fe/node_modules
+
 *.DS_Store

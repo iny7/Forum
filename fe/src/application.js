@@ -1,10 +1,10 @@
 import React from 'react'
 import { render } from 'react-dom'
 import { BrowserRouter, Match, Miss, Link } from 'react-router'
-// import App from './App'
+import SignIndex from './signin'
+import SignIn from './signin/signin'
+import SignUp from './signin/signup'
 
-// import About from './application/About'
-// import Repos from './application/Repos'
 
 console.log('application')
 
@@ -14,27 +14,12 @@ const App = () => (
   //    and make the location available to other components
   //    automatically
   <BrowserRouter>
-    <div>
-      <ul>
-        {/* 3. Link to some paths with `Link` */}
-        <li><Link to="/">Home</Link></li>
-        <li><Link to="/about">About</Link></li>
-        <li><Link to="/topics">Topics</Link></li>
-      </ul>
-
-      <hr/>
-
-      {/* 4. Render some `<Match/>` components.
-             When the current location matches the `pattern`
-             then the `component` will render.
-      */}
-      <Match exactly pattern="/" component={Home} />
-      <Match pattern="/about" component={About} />
-      <Match pattern="/topics" component={Topics} />
-
-      {/* If none of those match, then a sibling `Miss` will render. */}
+    <section className="bg">
+      <Match exactly pattern="/" component={SignIndex} />
+      <Match pattern="/signin" component={SignIn} />
+      <Match pattern="/signup" component={SignUp} />
       <Miss component={NoMatch}/>
-    </div>
+    </section>
   </BrowserRouter>
 )
 
