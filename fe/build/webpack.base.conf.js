@@ -1,6 +1,5 @@
 var path = require('path')
 var config = require('../config')
-var utils = require('./utils')
 var projectRoot = path.resolve(__dirname, '../')
 var StatsPlugin = require('stats-webpack-plugin')
 
@@ -59,6 +58,10 @@ var config = {
         loader: 'vue'
       },
       {
+        test: /\.sass$/,
+        loaders: ["style", "css", "sass"]
+      },
+      {
         test: /\.js$/,
         loader: 'babel',
         include: projectRoot,
@@ -67,22 +70,6 @@ var config = {
       {
         test: /\.json$/,
         loader: 'json'
-      },
-      {
-        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
-        loader: 'url',
-        query: {
-          limit: 10000,
-          name: utils.assetsPath('img/[name].[hash:7].[ext]')
-        }
-      },
-      {
-        test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-        loader: 'url',
-        query: {
-          limit: 10000,
-          name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
-        }
       }
     ]
   },
@@ -99,15 +86,7 @@ var config = {
       modules: false,
       assets: true
     })
-  ],
-  vue: {
-    loaders: utils.cssLoaders(),
-    postcss: [
-      require('autoprefixer')({
-        browsers: ['last 2 versions']
-      })
-    ]
-  }
+  ]
 }
 
 if (production) {

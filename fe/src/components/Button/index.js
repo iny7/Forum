@@ -1,4 +1,6 @@
-import React from 'react';
+import React from 'react'
+
+import './style.sass'
 
 //Component not component!!!!!!!!!!
 class Button extends React.Component {
@@ -10,8 +12,10 @@ class Button extends React.Component {
 
   render() {
     return (
-      <section className="btn">{this.props.children}</section>
-    );
+      <button className="btn btn-default">
+        {this.props.children}
+      </button>
+    )
   }
 }
 

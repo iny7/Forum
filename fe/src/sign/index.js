@@ -1,6 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router'
-import { Button } from '../components/Button'
+import Button from '../components/Button'
+
+import './index.sass'
 
 //Component not component!!!!!!!!!!
 class SignPage extends React.Component {
@@ -17,19 +19,17 @@ class SignPage extends React.Component {
           <Link to="/signup">
             {
               ({ isActive, onClick, href })=>
-                <button
-                  className="btn btn-default">
+                <Button>
                   注册
-                </button>
+                </Button>
             }
           </Link>
           <Link to="/signin">
             {
               (params) =>
-                <button
-                  className="btn btn-primary">
+                <Button>
                   登录
-                </button>
+                </Button>
             }
           </Link>
         </div>

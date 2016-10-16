@@ -9,11 +9,6 @@ class SignIn extends React.Component {
       super(props, context)
   }
 
-  handleSubmit(e) {
-    e.preventDefault();
-    console.log('Received values of form:', this.props.form.getFieldsValue());
-  }
-
   render() {
     return (
       <div className="signin_page">
@@ -30,26 +25,17 @@ class SignIn extends React.Component {
           <Link to="/signup">
             {
               ({ isActive, onClick, href })=>
-                <Button
-                  label="Home"
-                  size="large"
-                  onClick={onClick}
-                  href={href}
-                  isActive={isActive}>
+                <button>
                   注册
-                </Button>
+                </button>
             }
           </Link>
           <Link to="/signin">
             {
               (params) =>
-                <Button
-                  type="primary"
-                  size="large"
-                  label="About"
-                  {...params}>
+                <button>
                   登录
-                </Button>
+                </button>
             }
           </Link>
         </div>
