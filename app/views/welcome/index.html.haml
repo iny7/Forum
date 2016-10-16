@@ -11,8 +11,7 @@
 - if flash.notice
   %p= flash.notice
 
-
-= javascript_include_tag "https://res.wx.qq.com/open/js/jweixin-1.0.0.js"
+= javascript_include_tag "http://res.wx.qq.com/open/js/jweixin-1.0.0.js"
 = wechat_config_js debug: true, api: %w(onMenuShareAppMessage)
 
 :javascript
@@ -37,5 +36,4 @@
       }
     });
   });
-%br
 %a{:href => "javascript:wx.closeWindow();"} Close

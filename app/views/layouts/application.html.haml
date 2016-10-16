@@ -5,8 +5,9 @@
     %meta(http-equiv="x-ua-compatible" content="ie=edge")
     %meta{:content => "width=device-width, initial-scale=1, maximum-scale=1", :name => "viewport"}
     %title Blog
-    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
-    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    %link{:href => "/css/reset.css", :media => "screen", :rel => "stylesheet"}
+    %link{:href => "/css/font-awesome.min.css", :media => "screen", :rel => "stylesheet"}
+    = stylesheet_link_tag    'application', media: 'all'
     = csrf_meta_tags
   %body
     #app

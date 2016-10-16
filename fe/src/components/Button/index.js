@@ -1,7 +1,7 @@
 import React from 'react';
 
 //Component not component!!!!!!!!!!
-class SignIn extends React.Component {
+class Button extends React.Component {
 
   //in ES6, you can not use getIntialState() {} to initial react component
   constructor(props, context) {
@@ -10,9 +10,9 @@ class SignIn extends React.Component {
 
   render() {
     return (
-      <section className="banner">SignIn</section>
+      <section className="btn">{this.props.children}</section>
     );
   }
 }
 
-export default SignIn;
+export default Button;

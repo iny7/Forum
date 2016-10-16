@@ -1,38 +1,19 @@
 import React from 'react'
 import { render } from 'react-dom'
 import { BrowserRouter, Match, Miss, Link } from 'react-router'
-import SignIndex from './signin'
-import SignIn from './signin/signin'
-import SignUp from './signin/signup'
+import SignPage from './sign'
+import SignIn from './sign/signin'
+import SignUp from './sign/signup'
 
-
-console.log('application')
-
-// insert into index.js
 const App = () => (
-  // 2. render a `Router`, it will listen to the url changes
-  //    and make the location available to other components
-  //    automatically
   <BrowserRouter>
-    <section className="bg">
-      <Match exactly pattern="/" component={SignIndex} />
+    <section className="container">
+      <Match exactly pattern="/" component={SignPage} />
       <Match pattern="/signin" component={SignIn} />
       <Match pattern="/signup" component={SignUp} />
       <Miss component={NoMatch}/>
     </section>
   </BrowserRouter>
-)
-
-const Home = () => (
-  <div>
-    <h2>Home</h2>
-  </div>
-)
-
-const About = () => (
-  <div>
-    <h2>About</h2>
-  </div>
 )
 
 const NoMatch = ({ location }) => (
