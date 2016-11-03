@@ -24,3 +24,5 @@ fe/dist
 /fe/node_modules
 
 *.DS_Store
+
+*.log

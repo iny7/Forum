@@ -12,7 +12,9 @@ class Button extends React.Component {
 
   render() {
     return (
-      <button className="btn btn-default">
+      <button
+        className="btn btn-default"
+        onClick={this.props.onClick}>
         {this.props.children}
       </button>
     )

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router'
-import { Button } from '../components/Button'
+import Button from '../components/Button'
 
 //Component not component!!!!!!!!!!
 class SignIn extends React.Component {
@@ -12,33 +12,38 @@ class SignIn extends React.Component {
   render() {
     return (
       <div className="signin_page">
-        <span className="fa fa-close"></span>
-        <h1 className="logo">票友</h1>
+        <Link to="/">
+          {
+            ({ isActive, onClick, href }) =>
+              <span className="fa fa-close" onClick={onClick}></span>
+          }
+        </Link>
+        <h1 className="logo">应用</h1>
         <form action="">
-          <input type="text" placeholder="用户名" />
-          <input type="password" placeholder="密码" />
-          <button type="submit"></button>
+          <div className="form-group">
+            <i className="fa fa-user"></i>
+            <input type="text" placeholder="用户名" />
+          </div>
+          <div className="form-group">
+            <i className="fa fa-lock"></i>
+            <input type="password" placeholder="密码" />
+          </div>
+          <Button>登录</Button>
         </form>
-        <Link to="/forget">忘记密码</Link>
-        <Link to="/signup">新用户注册</Link>
-        <div className="btns">
-          <Link to="/signup">
-            {
-              ({ isActive, onClick, href })=>
-                <button>
-                  注册
-                </button>
-            }
-          </Link>
-          <Link to="/signin">
-            {
-              (params) =>
-                <button>
-                  登录
-                </button>
-            }
-          </Link>
-        </div>
+        <Link to="/forget">
+          {
+            ({ isActive, onClick, href }) =>
+              <Button onClick={onClick}>
+                忘记密码
+              </Button>
+          }
+        </Link>
+        <Link to="/signup">{
+          ({ isActive, onClick, href }) =>
+            <Button onClick={onClick}>
+              新用户注册
+            </Button>
+          }</Link>
       </div>
     )
   }

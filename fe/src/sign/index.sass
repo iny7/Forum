@@ -1,7 +1,8 @@
 @import '../variable'
 
 h1.logo
-  margin-top: 15vh
+  padding-top: 15%
+  padding-bottom: 40px
   text-align: center
   letter-spacing: 15px
   font-size: 60px
@@ -26,11 +27,24 @@ h1.logo
 
 .signin_page
   height: 100%
-  display: flex
-  flex-direction: column
-  justify-content: space-between
-  align-items: center
   position: relative
+  form
+    width: 80%
+    margin: 0 auto
+  .fa-close
+    position: absolute
+    top: 40px
+    right: 40px
+    font-size: 24px
+    cursor: pointer
+    color: #ccc
+
+.signup_page
+  height: 100%
+  position: relative
+  form
+    width: 80%
+    margin: 0 auto
   .fa-close
     position: absolute
     top: 40px

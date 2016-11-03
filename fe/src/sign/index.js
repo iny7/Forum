@@ -18,16 +18,16 @@ class SignPage extends React.Component {
         <div className="btns">
           <Link to="/signup">
             {
-              ({ isActive, onClick, href })=>
-                <Button>
+              ({ isActive, onClick, href }) =>
+                <Button onClick={onClick}>
                   注册
                 </Button>
             }
           </Link>
           <Link to="/signin">
             {
-              (params) =>
-                <Button>
+              ({ isActive, onClick, href }) =>
+                <Button onClick={onClick}>
                   登录
                 </Button>
             }
