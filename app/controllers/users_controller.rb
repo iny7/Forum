@@ -12,10 +12,12 @@ class UsersController < ApplicationController
 
   def signup
     @user = User.new
+    render :text => "", :layout => true
   end
 
   def signin
     @user = User.new
+    render :text => "", :layout => true
   end
 
   def create_login_session

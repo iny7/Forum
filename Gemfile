@@ -23,6 +23,8 @@ gem 'jbuilder', '~> 2.0'
 
 gem 'webpack-rails'
 
+gem 'auto_migrations', git: 'https://github.com/yzhang/auto_migrations'
+
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 

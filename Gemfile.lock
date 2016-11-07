@@ -1,3 +1,9 @@
+GIT
+  remote: https://github.com/yzhang/auto_migrations
+  revision: af840ed9f29bdd3581cb36afa12f31b2bac70bf3
+  specs:
+    auto_migrations (1.1.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -170,6 +176,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  auto_migrations!
   bcrypt (~> 3.1.7)
   byebug
   coffee-rails (~> 4.1.0)

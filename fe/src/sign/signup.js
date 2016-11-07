@@ -1,13 +1,34 @@
 import React from 'react'
 import { Link } from 'react-router'
 import Button from '../components/Button'
+import { InlineInput } from '../components/Form'
 
 //Component not component!!!!!!!!!!
 class SignUp extends React.Component {
 
-  //in ES6, you can not use getIntialState() {} to initial react component
   constructor(props, context) {
-      super(props, context);
+    super(props, context)
+    this.state = {
+      nickname: 'chancy',
+      username: 'iny',
+      password: '123'
+    }
+  }
+
+  changeNickName(e) {
+    this.setState({nickname: e.target.value})
+  }
+
+  changeUserName(e) {
+    this.setState({username: e.target.value})
+  }
+
+  changePassWord(e) {
+    this.setState({password: e.target.value})
+  }
+
+  handleSignUp() {
+    // ajax post this.state and redirect
   }
 
   render() {
@@ -20,29 +41,33 @@ class SignUp extends React.Component {
           }
         </Link>
         <h1 className="logo">应用</h1>
-        <form className="new_user" id="new_user" action="/users" acceptCharset="UTF-8" method="post">
-          <input type="hidden" name="authenticity_token" value="/n8koyB1wii9POtHqrW5YIg5P5tYLycpVP1+kKBv2rlmS03Ol3pKTI1+LlmI7uUPuWh2VdBegOQY57C0oBtbaA==" />
-          <div className="form-group">
-            <i className="fa fa-smile-o"></i>
-            <input type="text" placeholder="昵称" name="user[nickname]" />
-          </div>
-          <div className="form-group">
-            <i className="fa fa-user"></i>
-            <input type="text" placeholder="用户名" name="user[name]"/>
-          </div>
-          <div className="form-group">
-            <i className="fa fa-lock"></i>
-            <input type="password" placeholder="密码" name="user[password]" />
-          </div>
-        </form>
-        <Link to="/signup">
-          {
-            ({ isActive, onClick, href }) =>
-              <Button onClick={onClick}>
-                注册
-              </Button>
-          }
-        </Link>
+        <div className="form_box">
+          <InlineInput
+            icon="smile-o"
+            value={this.state.nickname}
+            placeholder="昵称"
+            handleChange={this.changeNickName.bind(this)}>
+          </InlineInput>
+          <InlineInput
+            icon="user"
+            value={this.state.username}
+            placeholder="用户名"
+            handleChange={this.changeUserName.bind(this)}>
+          </InlineInput>
+          <InlineInput
+            icon="lock"
+            type="password"
+            value={this.state.password}
+            placeholder="密码"
+            handleChange={this.changePassWord.bind(this)}>
+          </InlineInput>
+          <Button
+            onClick={this.handleSignUp}
+            size="entire"
+            color="primary">
+            注册
+          </Button>
+        </div>
         <Link to="/signin">
           {
             ({ isActive, onClick, href }) =>
