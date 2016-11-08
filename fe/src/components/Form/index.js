@@ -11,16 +11,23 @@ class InlineInput extends React.Component {
   }
 
   render() {
-    const { icon, type='text', value, placeholder } = this.props
+    const { icon, type='text', value, placeholder, klass } = this.props
     return (
-      <div>
-        {this.props.icon ? <i className={"fa fa-" + icon}></i> : null}
-        <input
-          type={type}
-          value={value}
-          placeholder={placeholder}
-          onChange={this.props.handleChange}/>
-        {this.props.children}
+      <div className="form-group">
+        <div className="input-group">
+          {this.props.icon ?
+            <div className="input-group-addon">
+              <i className={"fa fa-" + icon}></i>
+            </div>
+             : null}
+          <input
+            className={'form-control ' + klass}
+            type={type}
+            value={value}
+            placeholder={placeholder}
+            onChange={this.props.handleChange}/>
+          {this.props.children}
+        </div>
       </div>
     )
   }

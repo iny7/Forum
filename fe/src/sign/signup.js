@@ -44,18 +44,21 @@ class SignUp extends React.Component {
         <div className="form_box">
           <InlineInput
             icon="smile-o"
+            klass="input-lg"
             value={this.state.nickname}
             placeholder="昵称"
             handleChange={this.changeNickName.bind(this)}>
           </InlineInput>
           <InlineInput
             icon="user"
+            klass="input-lg"
             value={this.state.username}
             placeholder="用户名"
             handleChange={this.changeUserName.bind(this)}>
           </InlineInput>
           <InlineInput
             icon="lock"
+            klass="input-lg"
             type="password"
             value={this.state.password}
             placeholder="密码"
@@ -63,15 +66,16 @@ class SignUp extends React.Component {
           </InlineInput>
           <Button
             onClick={this.handleSignUp}
-            size="entire"
-            color="primary">
+            klass="btn-success btn-lg btn-block">
             注册
           </Button>
         </div>
         <Link to="/signin">
           {
             ({ isActive, onClick, href }) =>
-              <Button onClick={onClick}>
+              <Button
+                onClick={onClick}
+                klass="btn-link">
                 已有帐号登录
               </Button>
           }

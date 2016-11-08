@@ -11,12 +11,10 @@ class Button extends React.Component {
   }
 
   render() {
-    const { color="default", size="md" } = this.props
-    let sizeClass  = 'btn-' + size
-    let colorClass = 'btn-' + color
+    const { color="default", klass, block=false } = this.props
     return (
       <button
-        className={['btn', sizeClass, colorClass].join(' ')}
+        className={'btn '+ klass}
         onClick={this.props.onClick}>
         {this.props.children}
       </button>

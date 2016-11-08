@@ -37,12 +37,14 @@ class SignIn extends React.Component {
         <div className="form_box">
           <InlineInput
             icon="user"
+            klass="input-lg"
             value={this.state.username}
             placeholder="用户名"
             handleChange={this.changeUserName.bind(this)}>
           </InlineInput>
           <InlineInput
             icon="lock"
+            klass="input-lg"
             type="password"
             value={this.state.password}
             placeholder="密码"
@@ -53,27 +55,33 @@ class SignIn extends React.Component {
               ({ isActive, onClick, href }) =>
                 <Button
                   onClick={onClick}
-                  size="entire"
-                  color="primary">
+                  klass="btn-primary btn-lg btn-block"
+                  block={true}>
                   登录
                 </Button>
             }
           </Link>
         </div>
-        <Link to="/forget">
-          {
+        <div className="signin-footer">
+          <Link to="/forget">
+            {
+              ({ isActive, onClick, href }) =>
+                <Button
+                  onClick={onClick}
+                  klass="btn-link">
+                  忘记密码
+                </Button>
+            }
+          </Link>
+          <Link to="/signup">{
             ({ isActive, onClick, href }) =>
-              <Button onClick={onClick}>
-                忘记密码
+              <Button
+                onClick={onClick}
+                klass="btn-link">
+                新用户注册
               </Button>
-          }
-        </Link>
-        <Link to="/signup">{
-          ({ isActive, onClick, href }) =>
-            <Button onClick={onClick}>
-              新用户注册
-            </Button>
-          }</Link>
+            }</Link>
+        </div>
       </section>
     )
   }
