@@ -14,7 +14,7 @@ class SignPage extends React.Component {
   render() {
     return (
       <div className="sign_bg">
-        <h1 className="logo">票友</h1>
+        <h1 className="logo">呵呵</h1>
         <div className="btns">
           <Link to="/signup">
             {

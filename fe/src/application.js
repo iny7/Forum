@@ -4,6 +4,10 @@ import { BrowserRouter, Match, Miss, Link } from 'react-router'
 import SignPage from './sign'
 import SignIn from './sign/signin'
 import SignUp from './sign/signup'
+import { Router, browserHistory } from 'react-router'
+import { Provider } from 'react-redux'
+
+import configureStore from './store/configureStore'
 
 const App = () => (
   <BrowserRouter>

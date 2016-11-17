@@ -1,15 +1,21 @@
-= form_for @user, url: 'create_login_session' do |f|
+.container
+  .row
+    %h1.text-center 登录
+    = form_for @user, url: 'create_login_session', html: {:class => 'col col-xs-6 col-xs-offset-3'} do |f|
+      .form-group
+        = f.label :name
+        = f.text_field :name, :class => 'form-control'
 
-  = f.label :name, 'username'
-  = f.text_field :name
+      .form-group
+        = f.label :password, 'password'
+        = f.password_field :password, :class => 'form-control'
 
-  = f.label :password, 'password'
-  = f.password_field :password
+      .form-group
+        = check_box_tag :remember_me, params[:remember_me], :class => 'form-control'
+        = label_tag :remember_me
 
-  = check_box_tag :remember_me, params[:remember_me]
-  = label_tag :remember_me
+      .form-group
+        = f.submit 'Login', :class => 'btn btn-primary btn-block'
 
-  = f.submit 'Login'
-
-- if flash.notice
-  %p= flash.notice
+        - if flash.notice
+          %p= flash.notice

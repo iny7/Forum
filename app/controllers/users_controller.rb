@@ -12,12 +12,12 @@ class UsersController < ApplicationController
 
   def signup
     @user = User.new
-    render :text => "", :layout => true
+    # render :text => "", :layout => true
   end
 
   def signin
     @user = User.new
-    render :text => "", :layout => true
+    # render :text => "", :layout => true
   end
 
   def create_login_session
@@ -32,7 +32,7 @@ class UsersController < ApplicationController
       redirect_to :root
     else
       flash.notice = '登录失败!'
-      redirect_to :login
+      redirect_to :signin
     end
   end
 
