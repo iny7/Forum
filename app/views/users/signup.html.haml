@@ -1,4 +1,7 @@
-.container
+:ruby
+  @body_class = "signup-page"
+
+%section.container
   .row
     %h1.text-center 注册
     = form_for @user, html: {:class => 'col col-xs-6 col-xs-offset-3'} do |f|

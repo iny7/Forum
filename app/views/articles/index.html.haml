@@ -1,14 +1,22 @@
-%h1 Articles
-= link_to 'New Article', new_article_path
+:ruby
+  @body_class = "articles-page"
+%section.container
+  .row
+    .col-xs-10.col-xs-offset-1
+      %h1 Articles
+      %table.table.table-striped
+        %tr
+          %th Title
+          %th Text
+          %th
+          %th
+          %th
+        - @articles.each do |article|
+          %tr
+            %td= article.title
+            %td= article.text
+            %td= link_to 'Show', article_path(article)
+            %td= link_to 'Edit', edit_article_path(article)
+            %td= link_to 'Delete', article_path(article), method: 'delete', data: {confirm: 'Are you sure?'}
 
-%table
-  %tr
-    %th Title
-    %th Text
-  - @articles.each do |article|
-    %tr
-      %td= article.title
-      %td= article.text
-      %td= link_to 'Show', article_path(article)
-      %td= link_to 'Edit', edit_article_path(article)
-      %td= link_to 'Delete', article_path(article), method: 'delete', data: {confirm: 'Are you sure?'}
+      = link_to 'New Article', new_article_path, :class => 'btn btn-link pull-right'

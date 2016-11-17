@@ -9,7 +9,7 @@
     %link{:href => "/css/font-awesome.min.css", :media => "screen", :rel => "stylesheet"}
     = stylesheet_link_tag    'application', media: 'all'
     = csrf_meta_tags
-  %body
+  %body{:class => @body_class}
     = yield
 
   = javascript_include_tag 'application'

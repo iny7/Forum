@@ -5,13 +5,15 @@
       %ul
         = @article.errors.full_messages.each do |msg|
           %li= msg
-  %p
+  .form-group
     = f.label :title
-    = f.text_field :title
-  %p
+    = f.text_field :title, :class => 'form-control'
+
+  .form-group
     = f.label :text
-    = f.text_field :text
-  %p
-    = f.submit 
+    = f.text_field :text, :class => 'form-control'
+
+  .form-group
+    = f.submit :class => 'btn btn-primary pull-right'
 
 

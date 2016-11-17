@@ -1,4 +1,7 @@
-.container
+:ruby
+  @body_class = "signin-page"
+
+%section.container
   .row
     %h1.text-center 登录
     = form_for @user, url: 'create_login_session', html: {:class => 'col col-xs-6 col-xs-offset-3'} do |f|
