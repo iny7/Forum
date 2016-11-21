@@ -1,0 +1,22 @@
+:ruby
+  @body_class = "projects-page"
+%section.container
+  .row
+    .col-xs-10.col-xs-offset-1
+      %h1 Projects
+      %table.table.table-striped
+        %tr
+          %th Title
+          / %th Text
+          %th
+          %th
+          %th
+        - @projects.each do |p|
+          %tr
+            %td= p.name
+            / %td= p.text
+            %td= link_to 'Show', project_path(p)
+            %td= link_to 'Edit', edit_project_path(p)
+            %td= link_to 'Delete', project_path(p), method: 'delete', data: {confirm: 'Are you sure?'}
+
+      = link_to 'New Article', new_article_path, :class => 'btn btn-link pull-right'
