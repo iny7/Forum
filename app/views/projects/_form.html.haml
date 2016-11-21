@@ -1,0 +1,24 @@
+= form_for @project do |f|
+  /= f.hidden_field :user_id, {value: current_user.id}
+  - if @project.errors.any?
+    #error_explanation
+      %h2- pluralize (@project.errors.count, "error")
+      %ul
+        = @project.errors.full_messages.each do |msg|
+          %li= msg
+  .form-group
+    = f.label :name
+    = f.text_field :name, :class => 'form-control'
+
+  .form-group
+    = check_box_tag :private, params[:private], :class => 'form-control'
+    = label_tag :private
+
+  .form-group
+    = f.label :password, 'password'
+    = f.password_field :password, :class => 'form-control'
+
+  .form-group
+    = f.submit :class => 'btn btn-primary pull-right'
+
+

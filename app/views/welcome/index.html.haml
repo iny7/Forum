@@ -2,7 +2,11 @@
 = #wechat_config_js debug: true, api: %w(onMenuShareAppMessage)
 
 %section
-  hehe
+  - @projects.each do |p|
+    = link_to p.name, project_path(p)
+
+  = link_to '新建项目', new_project_path
+
 - if false
   :javascript
     wx.ready(function() {
