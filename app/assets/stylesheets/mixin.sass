@@ -1,0 +1,11 @@
+@mixin single-text()
+  white-space: nowrap
+  text-overflow: ellipsis
+  overflow: hidden
+
+@mixin multiple-text($num)
+  overflow : hidden
+  text-overflow: ellipsis
+  display: -webkit-box
+  -webkit-line-clamp: $num
+  -webkit-box-orient: vertical

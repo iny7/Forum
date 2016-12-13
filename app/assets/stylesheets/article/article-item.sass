@@ -1,0 +1,39 @@
+.articles-page
+  .article-item
+    display: flex
+    flex-direction: column
+    padding: 10px
+    border-bottom: 1px solid #ddd
+    .article-author
+      display: flex
+      align-items: center
+      .avatar
+        width: 24px
+        height: 24px
+      .name
+        margin-left: 5px
+        font-size: 14px
+        line-height: 24px
+      .fa
+        margin-left: auto
+        margin-right: 10px
+        font-size: 16px
+        color: #aaa
+
+    .article-title
+      font-size: 18px
+      color: $basic-color
+      @include single-text()
+    .article-content
+      @include multiple-text(2)
+
+    .article-info
+      display: flex
+      align-items: center
+      .fa
+        margin: 0 4px
+      .comment
+        margin-left: 24px
+      .time
+        margin-left: auto
+        margin-right: 10px
