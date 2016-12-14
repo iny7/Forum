@@ -3,15 +3,21 @@
   height: 64px
   background: #f8f8f8
   border-bottom: 1px solid #ddd
-  h2
+  display: flex
+  justify-content: center
+  align-items: center
+  .header-title
     font-size: 20px
     text-align: center
-  .fa-bell-o, .fa-edit
-    position: absolute
-    top: 50%
-    transform: translateY(-50%)
-    font-size: 24px
-  .fa-bell-o
-    right: 60px
-  .fa-edit
-    right: 15px
+    // TODO 去除bs后删掉
+    margin: 0
+  .header-left, .header-right
+    flex: 1
+    display: flex
+    align-items: center
+  .header-right
+    justify-content: flex-end
+    .fa
+      font-size: 24px
+      &:not(:last-child)
+      margin-right: 10px

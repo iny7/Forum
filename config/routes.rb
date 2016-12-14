@@ -4,6 +4,8 @@ Rails.application.routes.draw do
 
   get 'signin' => 'users#signin', :as => 'signin'
 
+  get 'account' => 'account#show'
+
   post 'create_login_session' => 'users#create_login_session'
 
   delete 'logout' => 'users#logout', :as => 'logout'

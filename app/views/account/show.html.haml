@@ -1,0 +1,40 @@
+:ruby
+  @body_class = "account-page"
+
+= content_for :header do
+  = render partial: 'header'
+
+.cx-body
+  %section.section-1
+    %img.account-bg{:src => "/images/bg.jpeg"}
+    %img.avatar{:src => "images/avatar.png"}
+    %h3.name JAY西元前
+    %p.desc 一个脱离了高级趣味的人
+
+  %section.section-2
+    .item.focus
+      .num 22
+      .attr 关注
+    .item.fans
+      .num 5
+      .attr 粉丝
+    .item.posts
+      .num 399
+      .attr 帖子
+
+  %section.section-3
+    .item
+      .fa.fa-star
+      %h4 我的收藏
+      .fa.fa-angle-right
+    .item
+      .fa.fa-group
+      %h4 我的好友
+      .fa.fa-angle-right
+    .item
+      .fa.fa-sign-out
+      %h4 退出登录
+      .fa.fa-angle-right
+
+= content_for :footer do
+  = render 'footer'
