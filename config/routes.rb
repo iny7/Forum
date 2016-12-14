@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   get 'signin' => 'users#signin', :as => 'signin'
 
   get 'account' => 'account#show'
+  get 'account/edit' => 'account#edit'
 
   post 'create_login_session' => 'users#create_login_session'
 

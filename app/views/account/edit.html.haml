@@ -1,18 +1,17 @@
 :ruby
   @body_class = "account-page"
 
-= content_for :header do
-  %header.cx-header
-    .header-left
-    %h2.header-title 我的
-    .header-right
-      %a.fa.fa-id-card-o{:href => "/account/edit"}
-      %a.fa.fa-cog{:href => "/settings"}
+%header.cx-header
+  .header-left
+    %a.fa.fa-chevron-left{:href => "/account"}
+  %h2.header-title 要啥自行车啊
+  .header-right
+    %a{:href => "/account"} 完成
 
 .cx-body
   %section.section-1
     %img.account-bg{:src => "/images/bg.jpeg"}
-    %img.avatar{:src => "images/avatar.png"}
+    %img.avatar{:src => "/images/avatar.png"}
     %h3.name JAY西元前
     %p.desc 一个脱离了高级趣味的人
 
@@ -40,6 +39,3 @@
       .fa.fa-sign-out
       %h4 退出登录
       .fa.fa-angle-right
-
-= content_for :footer do
-  = render 'footer'
