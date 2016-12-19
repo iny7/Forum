@@ -4,6 +4,6 @@ class WelcomeController < ApplicationController
   # wechat_api
   def index
     # @projects = current_user.projects
-    redirect_to articles_url
+    redirect_to posts_url
   end
 end
