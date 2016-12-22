@@ -1,0 +1,18 @@
+!!!
+%html
+  %head
+    %meta(http-equiv="Content-Type" content="text/html;charset=utf-8")
+    %meta(http-equiv="x-ua-compatible" content="ie=edge")
+    %meta{:content => "width=device-width, initial-scale=1, maximum-scale=1", :name => "viewport"}
+    %title Blog
+    %link{:href => "/css/reset.css", :media => "screen", :rel => "stylesheet"}
+    %link{:href => "/css/font-awesome.min.css", :media => "screen", :rel => "stylesheet"}
+    = stylesheet_link_tag 'welcome', media: 'all'
+    = csrf_meta_tags
+  %body{:class => @body_class}
+
+    = yield
+
+  = javascript_include_tag 'welcome'
+  /= javascript_include_tag *webpack_asset_paths('application')
+

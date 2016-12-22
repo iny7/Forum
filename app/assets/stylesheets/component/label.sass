@@ -1,0 +1,45 @@
+.mb-label
+  display: inline-block
+  color: rgba($core-color, 0.5)
+  border: 1px solid rgba($core-color, 0.5)
+  cursor: pointer
+  text-align: center
+  padding: 0 6px
+  a
+    color: rgba($core-color, 0.5)
+    &:hover
+      color: $core-color
+
+  &:hover
+    border: 1px solid $core-color
+    color: $core-color
+  &.active
+    background: $core-color
+    border: 1px solid $core-color
+    color: $support-color
+    a
+      color: $support-color
+/* size */
+.mb-label
+  &.sm
+    min-width: 58px
+    min-height: 16px
+    font-size: 10px
+    line-height: 14px
+  &.md
+    min-width: 72px
+    min-height: 20px
+    font-size: 12px
+    line-height: 18px
+  &.lg
+    min-width: 84px
+    min-height: 30px
+    font-size: 14px
+    line-height: 28px
+    padding: 0 8px
+
+.mb-contact
+  width: 83px
+  height: 32px
+  font-size: 12px
+  border: 1px solid $core-color

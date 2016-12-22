@@ -1,19 +1,19 @@
-= form_for @article do |f|
-  - if @article.errors.any?
+= form_for @post do |f|
+  - if @post.errors.any?
     #error_explanation
-      %h2- pluralize (@article.errors.count, "error")
+      %h2- pluralize (@post.errors.count, "error")
       %ul
-        = @article.errors.full_messages.each do |msg|
+        = @post.errors.full_messages.each do |msg|
           %li= msg
   .form-group
-    = f.label :title
-    = f.text_field :title, :class => 'form-control'
+    %label{:for => "title"} 标题
+    %input.form-control{:type => "text", name: 'title', placeholder: '请输入标题'}
 
   .form-group
-    = f.label :text
-    = f.text_field :text, :class => 'form-control'
+    %label{:for => "content"} 内容
+    %textarea.form-control{:type => "text", name: 'content'}
 
   .form-group
-    = f.submit :class => 'btn btn-primary pull-right'
+    %input.btn.btn-primary{:type => "submit"}
 
 

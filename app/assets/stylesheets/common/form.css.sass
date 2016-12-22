@@ -1,0 +1,111 @@
+/**************** form ****************/
+.form-group
+  position: relative
+  width: 100%
+
+  &:not(:last-child)
+    margin-bottom: 10px
+
+.form-control
+  padding-left: 10px
+  line-height: 16px
+  width: 100%
+  height: 45px
+  outline: none
+  border: 1px solid #E0E0E0
+
+  &:focus
+    border: 1px solid $core-color
+
+textarea.form-control
+  height: auto
+
+.form-group-icon
+  .form-control
+    padding-left: 45px
+
+    &:focus + .form-icon i.fa
+      color: $core-color
+
+  .form-icon
+    position: absolute
+    top: 0
+    left: 0
+    width: 45px
+    height: 100%
+    font-size: 20px
+    line-height: 40px
+    text-align: center
+    color: #c5c5c5
+    & i.fa
+      margin-top: 13px
+
+.login-box
+  text-align: center
+
+  .login-header
+    .logo
+      height: 96px
+      width: 96px
+    h6
+      font-size: 16px
+      color: $font-color
+      line-height: 30px
+
+  .btn.submit
+    width: 100%
+    height: 100%
+    margin: 5px 0
+    line-height: 43px
+  .login-header,
+  .login-body,
+    margin: 0 auto
+    width: 100%
+
+  .login-footer
+    margin: 20px 0
+    color: $link-color
+    .forgot-password
+      margin-bottom: 10px
+    .quick-login
+      width: 80%
+      max-width: 260px
+      margin: 0 auto
+      margin-top: 20px
+      color: $link-color
+      .hr
+        border-bottom: 1px solid #DEDFE1
+        span
+          display: inline-block
+          padding: 0 17px
+          background: white
+          transform: translateY(50%)
+      .fa-wechat
+        margin-top: 24px
+        color: #0ABB07
+        font-size: 32px
+        cursor: pointer
+
+    .switch-domain
+      width: 80%
+      margin: 0 auto
+      a
+        display: inline-block
+        width: 100%
+        padding: 10px
+        border-top: 1px solid #efefef
+        &:last-child
+          border-bottom: 1px solid #efefef
+        img, span
+          vertical-align: middle
+
+  .form-error
+    background: rgba($core-color, 0.1)
+    border: 1px solid $core-color20
+    color: $core-color
+    margin: 10px 0
+    padding: 10px
+    text-align: left
+
+.form-input:-webkit-autofill
+  box-shadow: 0 0 0 5rem white inset
