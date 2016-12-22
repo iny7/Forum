@@ -8,18 +8,19 @@ class User < ActiveRecord::Base
   has_many :posts, dependent: :destroy
   has_many :comments, through: :posts
   has_many :likes, as: :likeable
-  before_create { generate_token(:auth_token) }
+  # before_create { generate_token(:auth_token) }
 
   after_create :create_profile
 
-  validates :name, :email, presence: true
+  validates :name, presence: true
 
-  validates :name, :email, uniqueness: { case_sensitive: false }
+  # def generate_token(column)
+  #   begin
+  #     self[column] = SecureRandom.urlsafe_base64
+  #   end while User.exists?(column => self[column])
+  # end
 
-  def generate_token(column)
-    begin
-      self[column] = SecureRandom.urlsafe_base64
-    end while User.exists?(column => self[column])
+  def generate_profile(nickname)
   end
 
 end

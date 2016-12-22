@@ -1,0 +1,10 @@
+:ruby
+  @body_class = "messages-page"
+
+= content_for :header do
+  = render partial: 'header'
+
+%section.cx-body
+
+= content_for :footer do
+  = render 'footer'

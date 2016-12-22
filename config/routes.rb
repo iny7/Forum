@@ -4,9 +4,6 @@ Rails.application.routes.draw do
 
   get 'signin' => 'welcome#signin', :as => 'signin'
 
-  get 'account' => 'account#show'
-  get 'account/edit' => 'account#edit'
-
   post 'create_login_session' => 'users#create_login_session'
 
   delete 'logout' => 'users#logout', :as => 'logout'
@@ -29,11 +26,14 @@ Rails.application.routes.draw do
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
 
   # Example resource route (maps HTTP verbs to controller actions automatically):
-  resources :posts do
-    resources :comments
+  namespace :application do
+    resources :posts do
+      resources :comments
+    end
+    resources :messages
+    get 'account' => 'account#show'
+    get 'account/edit' => 'account#edit'
   end
-
-  resources :projects
 
   resources :todos
 
