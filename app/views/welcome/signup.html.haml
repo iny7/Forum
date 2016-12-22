@@ -1,0 +1,35 @@
+:ruby
+  @body_class = "signin-page signup-page"
+
+%header
+  %a.fa.fa-close{href: '/'}
+
+%section
+  %h1.logo 论坛
+  = form_for @user, html: {class: ''} do |f|
+    .form-group
+      %input.form-control{type: 'text', name: 'user[nickname]', placeholder: '昵称'}
+      - if @user.errors[:name].any?
+        %p= @user.errors[:name][0]
+
+    .form-group
+      %input.form-control{type: 'text', name: 'user[name]', placeholder: '用户名'}
+      - if @user.errors[:email].any?
+        %p= @user.errors[:email][0]
+
+    .form-group
+      %input.form-control{type: 'password', name: 'user[password]', placeholder: '密码'}
+      - if @user.errors[:password].any?
+        %p= @user.errors[:password][0]
+
+    .form-group
+      %input.form-control{type: 'password', name: 'user[password_confirmation]', placeholder: '确认密码'}
+      - if @user.errors[:password_confirmation].any?
+        %p= @user.errors[:password_confirmation][0]
+
+
+    .form-group
+      %input.btn.btn-primary.btn-block{type: 'submit', value: '注册'}
+
+%footer
+  %a.link{href: 'signin'} 已有帐号登录

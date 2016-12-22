@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
 
-  get 'signup' => 'users#signup', :as => 'signup'
+  get 'signup' => 'welcome#signup', :as => 'signup'
 
-  get 'signin' => 'users#signin', :as => 'signin'
+  get 'signin' => 'welcome#signin', :as => 'signin'
 
   get 'account' => 'account#show'
   get 'account/edit' => 'account#edit'

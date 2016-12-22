@@ -10,16 +10,6 @@ class UsersController < ApplicationController
     end
   end
 
-  def signup
-    @user = User.new
-    # render :text => "", :layout => true
-  end
-
-  def signin
-    @user = User.new
-    # render :text => "", :layout => true
-  end
-
   def create_login_session
     user = User.find_by_name(params[:user][:name])
     if user && user.authenticate(params[:user][:password])
