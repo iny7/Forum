@@ -4,6 +4,14 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   private
+    def render_json(data)
+      respond_to do |wants|
+        wants.json do
+          render json: data
+        end
+      end
+    end
+
     def current_user
       @current_user ||= cookies[:user_id] && User.find_by_id(cookies[:user_id])
     end

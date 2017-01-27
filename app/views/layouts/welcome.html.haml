@@ -9,10 +9,8 @@
     %link{:href => "/css/font-awesome.min.css", :media => "screen", :rel => "stylesheet"}
     = stylesheet_link_tag 'welcome', media: 'all'
     = csrf_meta_tags
-  %body{:class => @body_class}
+  %body
+    #app
 
-    = yield
-
-  = javascript_include_tag 'welcome'
-  /= javascript_include_tag *webpack_asset_paths('application')
+  = javascript_include_tag *webpack_asset_paths('welcome')
 
