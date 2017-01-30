@@ -9,25 +9,35 @@ class UsersController < ApplicationController
     # else
     #   render 'welcome/signup'
     # end
-    render_json({
-      result: 'hehe'
-    })
+    render_json({ result: 'hehe' })
   end
 
   def create_login_session
     user = User.find_by_name(params[:user][:name])
-    if user && user.authenticate(params[:user][:password])
-      if params[:remember_me]
+    if user
+      if user.authenticate(params[:user][:password])
         cookies.permanent[:user_id] = user.id
+        render_json({ status_code: 200 })
       else
-        cookies[:user_id] = user.id
+        cookies.permanent[:user_id] = user.id
+        render_json({ status_code: 403 })
       end
-      flash.notice = '登录成功!'
-      redirect_to posts_path
     else
-      flash.notice = '登录失败!'
-      redirect_to :signin
+      render_json({ status_code: 404 })
     end
+
+    # if user && user.authenticate(params[:user][:password])
+      # if params[:remember_me]
+      #   cookies.permanent[:user_id] = user.id
+      # else
+      #   cookies[:user_id] = user.id
+      # end
+      # flash.notice = '登录成功!'
+      # redirect_to posts_path
+    # else
+    #   flash.notice = '登录失败!'
+    #   redirect_to :signin
+    # end
   end
 
   def logout

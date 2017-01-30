@@ -1,16 +1,19 @@
 module.exports = {
   root: true,
   parser: 'babel-eslint',
-  parserOptions: {
-    sourceType: 'module'
-  },
-  // required to lint *.vue files
+  // extends: ['standard', 'plugin:react/recommended'],
   plugins: [
-    'html'
+    'react'
   ],
-  // add your custom rules here
   'rules': {
-    // allow debugger during development
-    'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0
+    'arrow-parens': 0,
+    'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
+    'semi': [2, 'never'],
+    'no-console': 0
+  },
+  'parserOptions': {
+    'ecmaFeatures': {
+      'jsx': true
+    }
   }
 }

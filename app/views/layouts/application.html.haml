@@ -7,17 +7,10 @@
     %title Blog
     %link{:href => "/css/reset.css", :media => "screen", :rel => "stylesheet"}
     %link{:href => "/css/font-awesome.min.css", :media => "screen", :rel => "stylesheet"}
-    = stylesheet_link_tag    'application', media: 'all'
+    = stylesheet_link_tag 'application', media: 'all'
     = csrf_meta_tags
-  %body{:class => @body_class}
-    - unless @noheader
-      = yield :header
+  %body
+    #app
 
-    = yield
-
-    - unless @noheader
-      = yield :footer
-
-  = javascript_include_tag 'application'
   = javascript_include_tag *webpack_asset_paths('application')
 

@@ -12,7 +12,7 @@ Rails.application.routes.draw do
 
   resource :wechat, only: [:show, :create]
 
-  get 'welcome/index'
+  # get 'welcome/index'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -26,7 +26,7 @@ Rails.application.routes.draw do
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
 
   # Example resource route (maps HTTP verbs to controller actions automatically):
-  namespace :application do
+  scope module: :application do
     resources :posts do
       resources :comments
     end

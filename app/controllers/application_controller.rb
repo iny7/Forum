@@ -3,7 +3,15 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
+  def index
+    layout_only
+  end
+
   private
+    def layout_only
+      render text: nil, layout: true
+    end
+
     def render_json(data)
       respond_to do |wants|
         wants.json do
