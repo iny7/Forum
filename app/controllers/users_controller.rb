@@ -42,7 +42,9 @@ class UsersController < ApplicationController
 
   def logout
     cookies.delete(:auth_token)
-    redirect_to :root
+    cookies.delete(:user_id)
+    # redirect_to :root
+    render_json({status_code: 200})
   end
 
   private

@@ -14,6 +14,9 @@ class ApplicationController < ActionController::Base
 
     def render_json(data)
       respond_to do |wants|
+        wants.html do
+          layout_only
+        end
         wants.json do
           render json: data
         end
@@ -21,7 +24,8 @@ class ApplicationController < ActionController::Base
     end
 
     def current_user
-      @current_user ||= cookies[:user_id] && User.find_by_id(cookies[:user_id])
+      # @current_user ||= cookies[:user_id] && User.find_by_id(cookies[:user_id])
+      cookies[:user_id] && User.find_by_id(cookies[:user_id])
     end
 
     def logged_in?

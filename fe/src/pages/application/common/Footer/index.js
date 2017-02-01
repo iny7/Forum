@@ -7,7 +7,7 @@ export default class Footer extends React.Component {
   render () {
     return (
       <footer className="cx-footer">
-        <IndexLink className="footer-icon" to="/" activeClassName="active">
+        <IndexLink className="footer-icon" to="/posts" activeClassName="active">
           <span className="fa fa-home"></span>
           <span>主页</span>
         </IndexLink>

@@ -5,6 +5,7 @@ import { Router, Route, IndexRoute, browserHistory } from 'react-router'
 import Welcome from './Welcome'
 import SignIn from './SignIn'
 import SignUp from './SignUp'
+import './style.sass'
 
 // TODO: root应使用动态路由, 已经登录进入主页, 没有登录进入登录页面
 // 使用() => () 省去一个return

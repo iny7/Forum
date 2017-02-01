@@ -1,34 +1,51 @@
 import React from 'react'
-import { Link } from 'react-router'
+import { Link, IndexLink } from 'react-router'
 
 import './style.sass'
 import Carousel from './Carousel'
 
+const PostNav = ({router}) => (
+  <ul className="article-header">
+    <li>
+      <IndexLink
+        to={{pathname: '/posts', query: {type: 'newest'}}}
+        activeClassName="active">
+        最新
+      </IndexLink>
+    </li>
+    <li>
+      <Link
+        to={{pathname: '/posts', query: {type: 'picked'}}}
+        activeClassName="active">
+        精选
+      </Link>
+    </li>
+    <li>
+      <Link
+        to={{pathname: '/posts', query: {type: 'anonymous'}}}
+        activeClassName="active">
+        匿名
+      </Link>
+    </li>
+  </ul>
+)
 export default class List extends React.Component {
   componentWillMount () {
     document.body.className = 'posts-page'
   }
   render () {
+    const { router: { location } } = this.context
+    console.log(location.query)
     return (
       <main className="cx-body">
-        <ul className="article-header">
-          <li>
-            <Link to="/posts">最新</Link>
-          </li>
-          <li>
-            <Link to="/posts/picked">精选</Link>
-          </li>
-          <li>
-            <Link to="posts/anonymous">匿名</Link>
-          </li>
-        </ul>
         <section className="article-body">
           <Carousel />
+          <PostNav />
           <ul>
             {[1,2,3].map((value, key) => {
               return (
                 <li key={key} className="article-item">
-                  <Link to="#">
+                  <Link to={`/posts/${key}`}>
                     <div className="article-author">
                       <img className="avatar" src="/images/avatar.png" />
                       <span className="name">要啥自行车啊</span>
@@ -59,9 +76,12 @@ export default class List extends React.Component {
     )
   }
 }
-
+List.contextTypes = {
+  router: React.PropTypes.object
+}
 List.title = '首页'
-List.headerRight = () => (
+List.needBack = false
+List.HeaderRight = () => (
   <div className="header-right">
     <Link className="fa fa-bell-o" to="/notifications"></Link>
     <Link className="fa fa-edit" to="/posts/new"></Link>

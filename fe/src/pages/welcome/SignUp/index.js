@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router'
 import myFetch from 'utils/myFetch'
+import './style.sass'
 
 export default class SignIn extends React.Component {
   constructor () {

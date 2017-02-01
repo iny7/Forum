@@ -25,7 +25,6 @@ export default function RootPageRoute () {
   return (
     <Route path="/" component={App}>
       <IndexRoute component={PostRoutes.List} />
-      <Route path="posts" component={PostRoutes.List}></Route>
       <Route path="messages" component={MessageRoutes.List}></Route>
       <Route path="account" component={AccountRoutes.Account}></Route>
     </Route>

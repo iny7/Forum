@@ -1,12 +1,11 @@
 Rails.application.routes.draw do
 
-  get 'signup' => 'welcome#signup', :as => 'signup'
-
-  get 'signin' => 'welcome#signin', :as => 'signin'
+  # get 'signup' => 'welcome#signup', :as => 'signup'
+  # get 'signin' => 'welcome#signin', :as => 'signin'
 
   post 'create_login_session' => 'users#create_login_session'
 
-  delete 'logout' => 'users#logout', :as => 'logout'
+  delete 'logout' => 'users#logout'
 
   resources :users, only: [:create]
 
@@ -18,6 +17,8 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
   root 'welcome#index'
+
+  get '*all' => 'welcome#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

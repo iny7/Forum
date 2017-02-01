@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router'
 import myFetch from 'utils/myFetch'
+import './style.sass'
 
 const STATUS_CODE = {
   SUCCESS: 200,
@@ -31,7 +32,7 @@ export default class SignIn extends React.Component {
       if (statucCode === STATUS_CODE.SUCCESS) {
         console.log('success')
         // do not use dispatch action to redirect but react-router
-        router.replace('/posts')
+        location.replace('/posts')
       } else {
         this.setState({statucCode})
       }

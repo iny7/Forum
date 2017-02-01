@@ -1,10 +1,23 @@
 import React from 'react'
-import { Link } from 'react-router'
+import { Link, browserHistory } from 'react-router'
+import myFetch from 'utils/myFetch'
 import './style.sass'
 
 export default class Account extends React.Component {
   componentWillMount () {
     document.body.className = 'account-page'
+  }
+  handleSignOut = () => {
+    myFetch.delete({
+      url: '/logout'
+    }).then((result) => {
+      if (result.status_code === 200) {
+        // 删除客户端的token
+        location.replace('/')
+      } else {
+        console.log('登出错误')
+      }
+    })
   }
   render () {
     return (
@@ -40,7 +53,7 @@ export default class Account extends React.Component {
             <h4>我的好友</h4>
             <span className="fa fa-angle-right"></span>
           </div>
-          <div className="item">
+          <div className="item" onClick={this.handleSignOut}>
             <span className="fa fa-sign-out"></span>
             <h4>退出登录</h4>
             <span className="fa fa-angle-right"></span>
@@ -52,9 +65,10 @@ export default class Account extends React.Component {
 }
 
 Account.title = '我的'
-Account.headerRight = () => (
+Account.needBack = false
+Account.HeaderRight = () => (
   <div className="header-right">
     <Link className="fa fa-id-card-o" to="/account/edit"></Link>
-    <Link className="fa fa-cog" to="/settings"></Link>
+    <Link className="fa fa-cog" to="/account/settings"></Link>
   </div>
 )

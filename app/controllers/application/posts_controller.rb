@@ -10,6 +10,9 @@ module Application
 
 			def index
 				@posts = Post.all
+				render_json({
+					posts: @posts
+				})
 			end
 
 			def edit
@@ -32,7 +35,10 @@ module Application
 			end
 
 			def show
-				@post = Post.find(params[:id])
+				@post = Post.find_by_id(params[:id])
+				render_json({
+					post: @post
+				})
 			end
 
 	  	def create

@@ -1,21 +1,31 @@
 import React from 'react'
-import { Link } from 'react-router'
+import { Link, browserHistory } from 'react-router'
 
 import './style.sass'
 
 export default class Header extends React.Component {
+  handleBack = () => {
+    browserHistory.goBack()
+  }
   render () {
-    const { title, headerRight } = this.props
+    const { title, needBack, HeaderRight } = this.props
+    // 判断是stateless component还是普通component
+    const rightSplat = HeaderRight.prototype.render ? <HeaderRight /> : HeaderRight()
     return (
       <header className="cx-header">
-        <div className="header-left"></div>
+        {needBack ? (
+          <div className="header-left">
+            <span className="fa fa-angle-left" onClick={this.handleBack}></span>
+          </div>
+        ) : <div className="header-left"></div>}
         <h2 className="header-title">{title}</h2>
-        {headerRight()}
+        {rightSplat}
       </header>
     )
   }
 }
 
 Header.defaultProps = {
-  headerRight: () => <div className="header-right"></div>
+  needBack: true,
+  HeaderRight: () => <div className="header-right"></div>
 }
