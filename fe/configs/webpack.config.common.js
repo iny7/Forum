@@ -44,7 +44,18 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         loaders: ['babel-loader']
+      },
+      {
+        test: /\.sass$/,
+        exclude: /node_modules/,
+        loaders: ['style-loader', 'css-loader', 'sass-loader']
       }
+    ]
+  },
+  sassLoader: {
+    data: '@import "variable";@import "mixin";',
+    includePaths: [
+      path.resolve(__dirname, "../src")
     ]
   },
   plugins: [

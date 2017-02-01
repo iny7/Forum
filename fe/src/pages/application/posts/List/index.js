@@ -1,10 +1,16 @@
 import React from 'react'
 import { Link } from 'react-router'
 
+import './style.sass'
+import Carousel from './Carousel'
+
 export default class List extends React.Component {
+  componentWillMount () {
+    document.body.className = 'posts-page'
+  }
   render () {
     return (
-      <main className="cx-body articles-page">
+      <main className="cx-body">
         <ul className="article-header">
           <li>
             <Link to="/posts">最新</Link>
@@ -17,7 +23,7 @@ export default class List extends React.Component {
           </li>
         </ul>
         <section className="article-body">
-          <div className="article-carousel">轮播</div>
+          <Carousel />
           <ul>
             {[1,2,3].map((value, key) => {
               return (
@@ -53,3 +59,11 @@ export default class List extends React.Component {
     )
   }
 }
+
+List.title = '首页'
+List.headerRight = () => (
+  <div className="header-right">
+    <Link className="fa fa-bell-o" to="/notifications"></Link>
+    <Link className="fa fa-edit" to="/posts/new"></Link>
+  </div>
+)

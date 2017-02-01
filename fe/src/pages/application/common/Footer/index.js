@@ -1,10 +1,12 @@
 import React from 'react'
 import { IndexLink, Link } from 'react-router'
 
+import './style.sass'
+
 export default class Footer extends React.Component {
   render () {
     return (
-      <header className="cx-footer">
+      <footer className="cx-footer">
         <IndexLink className="footer-icon" to="/" activeClassName="active">
           <span className="fa fa-home"></span>
           <span>主页</span>
@@ -17,7 +19,7 @@ export default class Footer extends React.Component {
           <span className="fa fa-user"></span>
           <span>我的</span>
         </Link>
-      </header>
+      </footer>
     )
   }
 }

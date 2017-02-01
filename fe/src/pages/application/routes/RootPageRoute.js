@@ -9,13 +9,17 @@ import AccountRoutes from '../account'
 import MessageRoutes from '../messages'
 
 // TODO: root应使用动态路由, 已经登录进入主页, 没有登录进入登录页面
-const App = ({ children }) => (
-  <div className="application-page">
-    <Header />
-    {children}
-    <Footer />
-  </div>
-)
+const App = ({ route, routes, children }) => {
+  const { title, headerRight } = children.type
+  console.log(children)
+  return (
+    <div className="application-page">
+      <Header {...{title, headerRight}} />
+      {children}
+      <Footer />
+    </div>
+  )
+}
 
 export default function RootPageRoute () {
   return (
