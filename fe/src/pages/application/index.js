@@ -41,17 +41,11 @@ const AppWithoutFooter = ({ route, routes, children }) => {
 import './style.sass'
 // 使用() => () 省去一个return
 const ApplicationPage = () => (
-  /*<Router history={browserHistory}>
-    {RootPageRoute()}
-    {PostRoute()}
-    {AccountRoute()}
-  </Router>*/
   <Router history={browserHistory}>
     <Route path="/" component={App}>
       <Route path="posts" component={Post.List} />
       <Route path="messages" component={Message.List} />
       <Route path="account" component={Account.Account} />
-      <IndexRedirect to="/posts" query={{type: 'newest'}} />
     </Route>
     <Route path="/posts" component={AppWithoutFooter}>
       <Route path="new" component={Post.New}></Route>

@@ -4,38 +4,47 @@ import { Link, IndexLink } from 'react-router'
 import './style.sass'
 import Carousel from './Carousel'
 
-const PostNav = ({router}) => (
-  <ul className="article-header">
-    <li>
-      <IndexLink
-        to={{pathname: '/posts', query: {type: 'newest'}}}
-        activeClassName="active">
-        最新
-      </IndexLink>
-    </li>
-    <li>
-      <Link
-        to={{pathname: '/posts', query: {type: 'picked'}}}
-        activeClassName="active">
-        精选
-      </Link>
-    </li>
-    <li>
-      <Link
-        to={{pathname: '/posts', query: {type: 'anonymous'}}}
-        activeClassName="active">
-        匿名
-      </Link>
-    </li>
-  </ul>
-)
+class PostNav extends React.Component {
+  render () {
+    const { type } = this.context.router.location.query
+    return (
+      <ul className="article-header">
+        <li>
+          <Link
+            to={{pathname: '/posts'}}
+            className={!type ? 'active' : ''}>
+            最新
+          </Link>
+        </li>
+        <li>
+          <Link
+            to={{pathname: '/posts', query: {type: 'picked'}}}
+            activeClassName="active">
+            精选
+          </Link>
+        </li>
+        <li>
+          <Link
+            to={{pathname: '/posts', query: {type: 'anonymous'}}}
+            activeClassName="active">
+            匿名
+          </Link>
+        </li>
+      </ul>
+    )
+  }
+}
+
+PostNav.contextTypes = {
+  router: React.PropTypes.object
+}
+
 export default class List extends React.Component {
   componentWillMount () {
     document.body.className = 'posts-page'
   }
   render () {
     const { router: { location } } = this.context
-    console.log(location.query)
     return (
       <main className="cx-body">
         <section className="article-body">
