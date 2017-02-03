@@ -11,8 +11,8 @@ var outputPath = path.join(__dirname, '..', '..', 'public', 'webpack')
 var entryRoot = path.join(__dirname, '../src/pages')
 
 var entry = {
-  welcome: path.join(entryRoot, 'welcome'),
-  application: path.join(entryRoot, 'application')
+  // welcome: path.join(entryRoot, 'welcome'),
+  application: entryRoot
 }
 
 module.exports = {

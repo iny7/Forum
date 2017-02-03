@@ -1,18 +1,22 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Router, Route, Redirect, IndexRedirect, browserHistory } from 'react-router'
-
+import { Router, IndexRoute, Route, Redirect, IndexRedirect, browserHistory } from 'react-router'
 
 // import RootPageRoute from './routes/RootPageRoute'
 // import PostRoute from './routes/PostRoute'
 // import AccountRoute from './routes/AccountRoute'
 
-import Header from './common/Header'
-import Footer from './common/Footer'
+import Header from 'components/Header'
+import Footer from 'components/Footer'
+
+import Welcome from './Welcome'
+import SignIn from './SignIn'
+import SignUp from './SignUp'
 
 import Post from './posts'
 import Message from './messages'
 import Account from './account'
+import './style.sass'
 
 const App = ({ route, routes, children }) => {
   if (children) {
@@ -38,10 +42,14 @@ const AppWithoutFooter = ({ route, routes, children }) => {
   )
 }
 
-import './style.sass'
 // 使用() => () 省去一个return
 const ApplicationPage = () => (
   <Router history={browserHistory}>
+    <Route path="/">
+      <IndexRoute component={Welcome} />
+      <Route path="/signin" component={SignIn} />
+      <Route path="/signup" component={SignUp} />
+    </Route>
     <Route path="/" component={App}>
       <Route path="posts" component={Post.List} />
       <Route path="messages" component={Message.List} />

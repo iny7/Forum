@@ -48,14 +48,14 @@ class UsersController < ApplicationController
   end
 
   private
-    def user_params
-      params.fetch(:user, {}).permit(
-        :name, :email, :password, :password_confirmation,
-        :avatar, :permalink, :description, :code, :company_name, :promo_code,
-        profile_attributes: [
-          :nickname, :tags, :company, :job_title,
-          :sites, :wechat, :mobile, :birthday, :location
-        ]
-      )
-    end
+  def user_params
+    params.fetch(:user, {}).permit(
+      :name, :email, :password, :password_confirmation,
+      :avatar, :permalink, :description, :code, :company_name, :promo_code,
+      profile_attributes: [
+        :nickname, :tags, :company, :job_title,
+        :sites, :wechat, :mobile, :birthday, :location
+      ]
+    )
+  end
 end

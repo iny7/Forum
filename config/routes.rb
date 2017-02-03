@@ -1,24 +1,14 @@
 Rails.application.routes.draw do
 
-  # get 'signup' => 'welcome#signup', :as => 'signup'
-  # get 'signin' => 'welcome#signin', :as => 'signin'
-
-  post 'create_login_session' => 'users#create_login_session'
-
-  delete 'logout' => 'users#logout'
-
   resources :users, only: [:create]
+  post 'create_login_session' => 'users#create_login_session'
+  delete 'logout' => 'users#logout'
 
   resource :wechat, only: [:show, :create]
 
-  # get 'welcome/index'
-  # The priority is based upon order of creation: first created -> highest priority.
-  # See how all your routes lay out with "rake routes".
+  root 'application#index'
 
-  # You can have the root of your site routed with "root"
-  root 'welcome#index'
-
-  get '*all' => 'welcome#index'
+  get '*all' => 'application#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

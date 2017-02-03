@@ -1,23 +1,19 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
-import { Router, Route, IndexRoute, browserHistory } from 'react-router'
-
-import Welcome from './Welcome'
-import SignIn from './SignIn'
-import SignUp from './SignUp'
+import { Link } from 'react-router'
 import './style.sass'
 
-// TODO: root应使用动态路由, 已经登录进入主页, 没有登录进入登录页面
-// 使用() => () 省去一个return
-const WelcomePage = () => (
-  <Router history={browserHistory}>
-    <Route path="/">
-      <IndexRoute component={Welcome} />
-      <Route path="/signin" component={SignIn} />
-      <Route path="/signup" component={SignUp} />
-    </Route>
-  </Router>
-)
-
-ReactDOM.render(<WelcomePage />, document.getElementById('app'))
-// ReactDOM.render(<div className="hehe">heheh</div>, document.getElementById('app'))
+export default class Welcome extends React.Component {
+  render () {
+    return (
+      <div className="sign-index-page">
+        <header>
+          <h1 className="logo">论坛</h1>
+        </header>
+        <footer>
+          <Link className="btn btn-default" to="/signup">注册</Link>
+          <Link className="btn btn-primary" to="/signin">登录</Link>
+        </footer>
+      </div>
+    )
+  }
+}
