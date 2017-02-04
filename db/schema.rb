@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 20161121143042) do
   create_table "profiles", force: :cascade do |t|
     t.integer  :user_id,                      null: false
     t.string   :nickname,         limit: 255
+    t.string   :avatar
     t.string   :grade,            limit: 255#            null: false
     t.boolean  :sex
   end
@@ -51,21 +52,5 @@ ActiveRecord::Schema.define(version: 20161121143042) do
     t.timestamps
   end
   # add_index "comments", ["article_id"], name: "index_comments_on_article_id", using: :btree
-
-  # create_table "projects", force: :cascade do |t|
-  #   t.string   :name,       limit: 255
-  #   t.boolean  :access,
-  #   t.string   :password,   limit: 255
-  #   t.datetime :created_at,             null: false
-  #   t.datetime :updated_at,             null: false
-  #   t.integer  :user_id,    limit: 4,   null: false
-  # end
-
-  # create_table "todos", force: :cascade do |t|
-  #   t.integer :project_id,              null: false
-  #   t.string  :title,       limit: 255
-  #   t.string  :assign_to,   limit: 255
-  #   t.boolean :completed
-  # end
 
 end

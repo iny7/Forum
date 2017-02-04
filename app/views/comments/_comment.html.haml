@@ -1,9 +1,0 @@
-%p
-  %strong Commenter:
-  = comment.commenter
-
-%p
-  %strong Body:
-  = comment.body
-
-= link_to 'Delete Comment', [comment.article, comment], method: 'delete', data: {confirm: 'Are you sure?'}

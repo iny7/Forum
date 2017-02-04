@@ -20,7 +20,7 @@ export default class SignIn extends React.Component {
     const { name, password } = this.refs
     const { router } = this.context
     myFetch.post({
-      url: '/create_login_session',
+      url: '/login_sessions',
       data: {
         user: {
           name: name.value,

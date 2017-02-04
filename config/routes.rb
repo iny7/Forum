@@ -1,14 +1,16 @@
 Rails.application.routes.draw do
 
   resources :users, only: [:create]
-  post 'create_login_session' => 'users#create_login_session'
-  delete 'logout' => 'users#logout'
+  scope module: :users do
+    put '/profile' => 'profiles#update'
+    resources :login_sessions, only: [:create]
+    delete 'login_sessions' => 'login_sessions#logout'
+  end
 
-  resource :wechat, only: [:show, :create]
+  # resource :wechat, only: [:show, :create]
 
-  root 'application#index'
-
-  get '*all' => 'application#index'
+  # root 'application#index'
+  get '/(*all)' => 'application#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
@@ -17,16 +19,10 @@ Rails.application.routes.draw do
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
 
   # Example resource route (maps HTTP verbs to controller actions automatically):
-  scope module: :application do
-    resources :posts do
-      resources :comments
-    end
-    resources :messages
-    get 'account' => 'account#show'
-    get 'account/edit' => 'account#edit'
+  resources :posts, except: [:new, :edit] do
+    resources :comments, except: [:new, :edit]
   end
-
-  resources :todos
+  resources :messages
 
   # Example resource route with options:
   #   resources :products do

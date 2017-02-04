@@ -12,6 +12,26 @@ class ApplicationController < ActionController::Base
     render text: nil, layout: true
   end
 
+  def process_image_data(key)
+    image_data = params[key]
+    return nil unless image_data.present?
+
+    r = /^data:image\/(.*?);base64,(.*?)$/.match(image_data)
+    return nil unless r
+
+    ext     = r[1]
+    data    = r[2]
+    decoded = Base64.decode64(data)
+
+    # FIXME: hardcode for svg
+    ext = 'svg' if ext.include?('svg')
+
+    raw = Asset::FilelessIO.new(decoded)
+    raw.original_filename = "#{key}_#{Time.now.to_i}.#{ext}"
+    raw.content_type = "image/#{ext}"
+    raw
+  end
+
   def render_json(data)
     respond_to do |wants|
       wants.html do

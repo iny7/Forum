@@ -3,19 +3,11 @@ class PostsController < ApplicationController
 
 	# http_basic_authenticate_with name: "dhh", password: "secret", except: [:index, :show]
 
-	def new
-		@post = Post.new
-	end
-
 	def index
 		@posts = Post.all
 		render_json({
 			posts: @posts
 		})
-	end
-
-	def edit
-		@post = Post.find(params[:id])
 	end
 
 	def update
@@ -30,7 +22,7 @@ class PostsController < ApplicationController
 	def destroy
 		@post = Post.find(params[:id])
 		@post.destroy
-		redirect_to posst_path
+		redirect_to post_path
 	end
 
 	def show
@@ -42,6 +34,7 @@ class PostsController < ApplicationController
 
 	def create
 		@post = Post.new(post_params)
+		@post.user_id = current_user.id
 		if @post.save
 			redirect_to @post
 		else

@@ -9,7 +9,7 @@ export default class Account extends React.Component {
   }
   handleSignOut = () => {
     myFetch.delete({
-      url: '/logout'
+      url: '/login_sessions'
     }).then((result) => {
       if (result.status_code === 200) {
         // 删除客户端的token
