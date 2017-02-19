@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Router, IndexRoute, Route, Redirect, IndexRedirect, browserHistory } from 'react-router'
+import { Router, IndexRoute, Route, browserHistory } from 'react-router'
 
 // import RootPageRoute from './routes/RootPageRoute'
 // import PostRoute from './routes/PostRoute'
@@ -18,7 +18,7 @@ import Message from './messages'
 import Account from './account'
 import './style.sass'
 
-const App = ({ route, routes, children }) => {
+const App = ({ children }) => {
   if (children) {
     var { title, needBack, HeaderRight } = children.type
   }
@@ -30,7 +30,9 @@ const App = ({ route, routes, children }) => {
     </div>
   )
 }
-const AppWithoutFooter = ({ route, routes, children }) => {
+App.propTypes = { children: React.PropTypes.element }
+
+const AppWithoutFooter = ({ children }) => {
   if (children) {
     var { title, HeaderRight } = children.type
   }
@@ -41,8 +43,8 @@ const AppWithoutFooter = ({ route, routes, children }) => {
     </div>
   )
 }
+AppWithoutFooter.propTypes = { children: React.PropTypes.element }
 
-// 使用() => () 省去一个return
 const ApplicationPage = () => (
   <Router history={browserHistory}>
     <Route path="/">

@@ -1,3 +1,4 @@
+const { alert } = window
 import React from 'react'
 import { Link } from 'react-router'
 import myFetch from 'utils/myFetch'
@@ -14,7 +15,6 @@ export default class SignIn extends React.Component {
   }
   handleChange = (e) => {
     const { name, value } = e.target
-    const newState = {}[name] = value
     this.setState(Object.assign({}, this.state, {
       [name]: value
     }))
@@ -27,20 +27,23 @@ export default class SignIn extends React.Component {
       data: { user: { name, password } }
     }).then((result) => {
       console.log(result)
-    }).catch(e => console.log("Oops, error"))
+    }).catch(e => console.log('Oops, error'))
   }
   handleSubmit = (e) => {
     e.preventDefault()
     const { name, password, password2 } = this.state
+    if (password !== password2) {
+      return alert('请确认两次输入的密码相同')
+    }
     myFetch.post({
       url: '/users.json',
       data: { user: { name, password } }
     }).then((result) => {
       console.log(result)
-    }).catch(e => console.log("Oops, error"))
+    }).catch(e => console.log('Oops, error'))
   }
   render () {
-    const { user, password, password2 } = this.state
+    const { name, password, password2 } = this.state
     return (
       <div className="signin-page">
         <header>

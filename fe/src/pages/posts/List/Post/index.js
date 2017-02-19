@@ -3,6 +3,7 @@ import { Link } from 'react-router'
 
 export default class Post extends React.Component {
   render () {
+    const key = 1
     return (
       <li className="article-item">
         <Link to={`/posts/${key}`}>

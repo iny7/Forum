@@ -45,7 +45,7 @@ export default class List extends React.Component {
     document.body.className = 'posts-page'
   }
   render () {
-    const { router: { location } } = this.context
+    // const { router: { location } } = this.context
     return (
       <main className="cx-body">
         <section className="article-body">

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router'
+// import { Link } from 'react-router'
 import myFetch from 'utils/myFetch'
 import imgUploader from 'utils/imgUploader'
 import './style.sass'
@@ -11,7 +11,7 @@ export default class Edit extends React.Component {
   }
   handleAvatar = () => this.refs.avatar.click()
   handleUpload = (e) => {
-    const pic  = e.target.files[0]
+    const pic = e.target.files[0]
     imgUploader(pic, (data) => {
       this.refs.thumbnail.src = data
     })
@@ -29,8 +29,7 @@ export default class Edit extends React.Component {
       data: { profile }
     }).then((result) => {
       console.log(result)
-    }).catch(e => console.log("Oops, error"))
-
+    }).catch(e => console.log('Oops, error'))
   }
   render () {
     return (

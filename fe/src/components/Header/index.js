@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, browserHistory } from 'react-router'
+import { browserHistory } from 'react-router'
 
 import './style.sass'
 
@@ -28,4 +28,9 @@ export default class Header extends React.Component {
 Header.defaultProps = {
   needBack: true,
   HeaderRight: () => <div className="header-right"></div>
+}
+Header.propTypes = {
+  title: React.PropTypes.string,
+  needBack: React.PropTypes.bool,
+  HeaderRight: React.PropTypes.func
 }

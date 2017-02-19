@@ -13,7 +13,7 @@ export default class Account extends React.Component {
     }).then((result) => {
       if (result.status_code === 200) {
         // 删除客户端的token
-        location.replace('/')
+        browserHistory.replace('/')
       } else {
         console.log('登出错误')
       }

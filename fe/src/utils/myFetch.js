@@ -1,23 +1,26 @@
-function getQueryString(params = {}) {
+const { fetch } = window
+
+function getQueryString (params = {}) {
   const esc = encodeURIComponent
   return Object.keys(params)
     .map(k => esc(k) + '=' + esc(params[k]))
     .join('&')
 }
 
-function request(params) {
+function request (params) {
   const method = params.method || 'GET'
   const credentials = 'include'
   const headers = params.headers || {
     'Accept': 'application/json',
-    'Content-Type': 'application/json',
+    'Content-Type': 'application/json'
   }
 
-  let body, qs = ''
-  if (['GET', 'DELETE'].indexOf(method) > -1)
+  let qs = ''
+  if (['GET', 'DELETE'].indexOf(method) > -1) {
     qs = '?' + getQueryString(params.data)
-  else // POST or PUT
-    body = JSON.stringify(params.data)
+  } else { // POST or PUT
+    var body = JSON.stringify(params.data)
+  }
 
   const url = params.url + qs
 
