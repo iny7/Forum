@@ -1,3 +1,4 @@
+const { alert, FileReader, Image } = window
 // const IMAGE_TYPES = /^image\/(png|jpg|jpeg|gif|svg|tiff|svg\+xml)$/i
 const IMAGE_TYPES = /^image\/png$/i
 

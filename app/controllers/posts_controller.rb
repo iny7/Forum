@@ -36,9 +36,14 @@ class PostsController < ApplicationController
 		@post = Post.new(post_params)
 		@post.user_id = current_user.id
 		if @post.save
-			redirect_to @post
+			render_json({
+				status_code: 200
+				post_id: @post.id
+			})
 		else
-			render 'new'
+			render_json({
+				errors: @post.errors
+			})
 		end
 	end
 
