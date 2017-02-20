@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 20161121143042) do
   create_table "posts", force: :cascade do |t|
     t.string   :title,         limit: 255
     t.text     :content,       limit: 65535
-    t.string   :category,                 null: false
+    t.string   :category
     t.timestamps
 
     t.integer  :user_id,       limit: 4,     null: false

@@ -37,7 +37,7 @@ class PostsController < ApplicationController
 		@post.user_id = current_user.id
 		if @post.save
 			render_json({
-				status_code: 200
+				status_code: 200,
 				post_id: @post.id
 			})
 		else

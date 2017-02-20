@@ -18,60 +18,64 @@ import Message from './messages'
 import Account from './account'
 import './style.sass'
 
-const App = ({ children }) => {
+import { Provider, connect } from 'react-redux'
+import configureStore from 'store/configureStore'
+
+const App = ({ route, children, container, dispatch }) => {
+  const isRoot = ['/', '/posts', 'account'].indexOf(route.path) !== -1
   if (children) {
     var { title, needBack, HeaderRight } = children.type
   }
   return (
     <div className="application-page">
       <Header {...{title, needBack, HeaderRight}} />
-      {children}
-      <Footer />
+      {React.cloneElement(children || <div />, {container, dispatch})}
+      { isRoot ? <Footer /> : null }
     </div>
   )
 }
-App.propTypes = { children: React.PropTypes.element }
+App.propTypes = {
+  route: React.PropTypes.object,
+  children: React.PropTypes.element,
+  dispatch: React.PropTypes.func,
+  container: React.PropTypes.object
+}
 
-const AppWithoutFooter = ({ children }) => {
-  if (children) {
-    var { title, HeaderRight } = children.type
+const PostContainer = connect((state) => {
+  return {
+    container: state.post
   }
-  return (
-    <div className="application-page">
-      <Header {...{title, HeaderRight}} />
-      {children}
-    </div>
-  )
-}
-AppWithoutFooter.propTypes = { children: React.PropTypes.element }
+})(App)
 
 const ApplicationPage = () => (
   <Router history={browserHistory}>
     <Route path="/">
-      <IndexRoute component={Welcome} />
+      <IndexRoute name="hehe" component={Welcome} />
       <Route path="/signin" component={SignIn} />
       <Route path="/signup" component={SignUp} />
     </Route>
-    <Route path="/" component={App}>
-      <Route path="posts" component={Post.List} />
-      <Route path="messages" component={Message.List} />
-      <Route path="account" component={Account.Account} />
-    </Route>
-    <Route path="/posts" component={AppWithoutFooter}>
+    <Route path="/posts" component={PostContainer}>
+      <IndexRoute component={Post.List} />
       <Route path="new" component={Post.New}></Route>
       <Route path="edit" component={Post.New}></Route>
       <Route path=":id" component={Post.Show}></Route>
     </Route>
-    <Route path="/messages" component={AppWithoutFooter}>
+    <Route path="/messages" component={App}>
+      <IndexRoute component={Message.List} />
       <Route path=":id" component={Message.Show}></Route>
       <Route path="new" component={Message.New}></Route>
       <Route path="edit" component={Message.Edit}></Route>
     </Route>
-    <Route path="/account" component={AppWithoutFooter}>
+    <Route path="/account" component={App}>
+      <IndexRoute component={Account.Account} />
       <Route path="edit" component={Account.Edit}></Route>
       <Route path="settings" component={Account.Settings}></Route>
     </Route>
   </Router>
 )
 
-ReactDOM.render(<ApplicationPage />, document.getElementById('app'))
+ReactDOM.render(
+  <Provider store={configureStore()}>
+    <ApplicationPage />
+  </Provider>, document.getElementById('app')
+)

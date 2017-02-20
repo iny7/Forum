@@ -11,7 +11,8 @@ module.exports = {
     'semi': [2, 'never'],
     'no-console': 0,
     'eol-last': 0,
-    'react/display-name': 0
+    'react/display-name': 0,
+    'react/prop-types': 0
   },
   'parserOptions': {
     'ecmaFeatures': {

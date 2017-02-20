@@ -4,6 +4,7 @@ import { Link } from 'react-router'
 import './style.sass'
 import Carousel from './Carousel'
 import Post from './Post'
+import myFetch from 'utils/myFetch'
 
 class PostNav extends React.Component {
   render () {
@@ -35,16 +36,38 @@ class PostNav extends React.Component {
     )
   }
 }
-
 PostNav.contextTypes = {
   router: React.PropTypes.object
 }
 
 export default class List extends React.Component {
+  constructor () {
+    super()
+    this.state = {
+      headlines: [],
+      posts: []
+    }
+  }
   componentWillMount () {
     document.body.className = 'posts-page'
   }
+  componentDidMount () {
+    const { type } = this.context.router.location.query
+    this.props.dispatch({
+      type: 'REQUEST_POSTS',
+      category: type
+    })
+  }
+  fetchData (type) {
+    myFetch.get({
+      url: '/posts' + type ? `?type=${type}` : ''
+    }).then((result) => {
+      this.setState()
+    })
+  }
   render () {
+    const { container, dispatch } = this.props
+    const { posts } = container
     // const { router: { location } } = this.context
     return (
       <main className="cx-body">
@@ -52,7 +75,7 @@ export default class List extends React.Component {
           <Carousel />
           <PostNav />
           <ul>
-            {[1, 2, 3].map((value, key) => {
+            {posts.map((value, key) => {
               return <Post key={key} />
             })}
           </ul>
@@ -64,6 +87,7 @@ export default class List extends React.Component {
 List.contextTypes = {
   router: React.PropTypes.object
 }
+
 List.title = '首页'
 List.needBack = false
 List.HeaderRight = () => (
