@@ -1,10 +1,10 @@
-const { fetch } = window
+import fetch from 'isomorphic-fetch'
 
 function getQueryString (params = {}) {
   const esc = encodeURIComponent
-  return Object.keys(params)
-    .map(k => esc(k) + '=' + esc(params[k]))
-    .join('&')
+  return Object.keys(params).map((k) => {
+    return esc(k) + '=' + esc(params[k])
+  }).join('&')
 }
 
 function request (params) {
@@ -22,7 +22,7 @@ function request (params) {
     var body = JSON.stringify(params.data)
   }
 
-  const url = params.url + qs
+  const url = `${params.url}.json${qs}`
 
   return fetch(url, { method, credentials, headers, body }).then(response => response.json())
 }

@@ -1,7 +1,9 @@
 const { alert } = window
 import React from 'react'
 import { Link } from 'react-router'
-import myFetch from 'utils/myFetch'
+
+import { createUser } from 'actions'
+
 import './style.sass'
 
 export default class SignIn extends React.Component {
@@ -19,28 +21,18 @@ export default class SignIn extends React.Component {
       [name]: value
     }))
   }
-  componentDidMount () {
-    const name = 'hehe'
-    const password = 'xixi'
-    myFetch.post({
-      url: '/users.json',
-      data: { user: { name, password } }
-    }).then((result) => {
-      console.log(result)
-    }).catch(e => console.log('Oops, error'))
-  }
   handleSubmit = (e) => {
     e.preventDefault()
+    console.log(e)
     const { name, password, password2 } = this.state
     if (password !== password2) {
       return alert('请确认两次输入的密码相同')
     }
-    myFetch.post({
-      url: '/users.json',
-      data: { user: { name, password } }
-    }).then((result) => {
-      console.log(result)
-    }).catch(e => console.log('Oops, error'))
+    const user = {
+      name,
+      password
+    }
+    this.props.dispatch(createUser(user))
   }
   render () {
     const { name, password, password2 } = this.state

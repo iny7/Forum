@@ -1,6 +1,6 @@
 import React from 'react'
-import myFetch from 'utils/myFetch'
-import { browserHistory } from 'react-router'
+import { createPost } from 'actions'
+
 // import MyEditor from './MyEditor'
 
 import './style.sass'
@@ -9,25 +9,15 @@ export default class New extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault()
     const { title, content } = this
-    myFetch.post({
-      url: '/posts',
-      data: {
-        title: title.value,
-        text: content.value
-      }
-    }).then((result) => {
-      if (result.status_code === 200) {
-        // 跳转成功页面
-        const id = result.post_id
-        browserHistory.replace(`/posts/${id}`)
-      } else {
-        console.log(result.errors)
-      }
-    })
+    const post = {
+      title: title.value,
+      content: content.value
+    }
+    this.props.dispatch(createPost(post))
   }
   render () {
     return (
-      <div style={{padding: '20px 5%'}}>
+      <div style={{padding: '20px 5%', flex: '1'}}>
         {/* <MyEditor /> */}
         <div className="form-group">
           <input

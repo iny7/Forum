@@ -11,46 +11,49 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161121143042) do
-
-  create_table "users", force: :cascade do |t|
-    t.string   :name,           limit: 255
-    t.string   :password_digest, limit: 255
-    t.timestamps
-  end
-
-  create_table "profiles", force: :cascade do |t|
-    t.integer  :user_id,                      null: false
-    t.string   :nickname,         limit: 255
-    t.string   :avatar
-    t.string   :grade,            limit: 255#            null: false
-    t.boolean  :sex
-  end
-
-  create_table "posts", force: :cascade do |t|
-    t.string   :title,         limit: 255
-    t.text     :content,       limit: 65535
-    t.string   :category
-    t.timestamps
-
-    t.integer  :user_id,       limit: 4,     null: false
-  end
+ActiveRecord::Schema.define(version: 20170228132623) do
 
   create_table "comments", force: :cascade do |t|
-    t.string   :commenter,  limit: 255
-    t.text     :body,       limit: 65535
-    t.timestamps
-
-    t.integer  "post_id",  limit: 4,     null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.integer  "post_id",    limit: 4,     null: false
+    t.string   "commenter",  limit: 255
+    t.text     "body",       limit: 65535
   end
 
   create_table "likes", force: :cascade do |t|
-    t.integer :likeable_id
-    t.string  :likeable_type
-    # 上面两行等同于:
-    # t.references :likeable, polymorphic: true
-    t.timestamps
+    t.integer  "likeable_id",   limit: 4
+    t.string   "likeable_type", limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
-  # add_index "comments", ["article_id"], name: "index_comments_on_article_id", using: :btree
+
+  create_table "posts", force: :cascade do |t|
+    t.string   "title",      limit: 255
+    t.string   "category",   limit: 255,   null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.integer  "user_id",    limit: 4,     null: false
+    t.text     "content",    limit: 65535
+    t.boolean  "headlines"
+  end
+
+  create_table "profiles", force: :cascade do |t|
+    t.integer "user_id",  limit: 4,   null: false
+    t.string  "nickname", limit: 255
+    t.string  "grade",    limit: 255
+    t.boolean "sex"
+    t.string  "avatar",   limit: 255
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string   "name",            limit: 255
+    t.string   "password_digest", limit: 255
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.string   "auth_token",      limit: 255
+  end
+
+  add_index "users", ["auth_token"], name: "index_users_on_auth_token", using: :btree
 
 end

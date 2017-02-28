@@ -8,12 +8,12 @@ default: &default
 
 development:
   <<: *default
-  database: todo
+  database: forum
 
 test:
   <<: *default
-  database: todo
+  database: forum
 
 production:
   <<: *default
-  database: todo
+  database: forum

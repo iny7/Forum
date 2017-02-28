@@ -5,6 +5,10 @@ class ApplicationController < ActionController::Base
   # 422 unprocessable entity
   skip_before_action :verify_authenticity_token
 
+  # before_action :login_required
+  # skip_before_action :login_required, only: [:index]
+  helper_method :current_user
+
   def index
     layout_only
   end
@@ -47,7 +51,8 @@ class ApplicationController < ActionController::Base
 
   def current_user
     # @current_user ||= cookies[:user_id] && User.find_by_id(cookies[:user_id])
-    cookies[:user_id] && User.find_by_id(cookies[:user_id])
+    # cookies[:user_id] && User.find_by_id(cookies[:user_id])
+    @current_user ||= authenticate_token
   end
 
   def logged_in?
@@ -59,15 +64,25 @@ class ApplicationController < ActionController::Base
   end
 
   def access_denied
-    respond_to do |wants|
-      wants.html do
-        session[:return_to] = request.fullpath
-        redirect_to signin_url
-      end
-      wants.json { render :json => "Access denied.", :status => '403'}
-    end
+    render json: { errors: 'Access Denied' }, status: 401
+    # respond_to do |wants|
+    #   wants.html do
+    #     session[:return_to] = request.fullpath
+    #     redirect_to signin_url
+    #   end
+    #   wants.json { render :json => "Access denied.", :status => '403'}
+    # end
   end
 
-  helper_method :current_user
+  def require_login!
+    return true if authenticate_token
+    # render json: { errors: 'Access Denied' }, status: 401
+  end
+
+  def authenticate_token
+    authenticate_with_http_token do |token|
+      User.find_by(auth_token: token)
+    end
+  end
 
 end

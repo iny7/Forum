@@ -1,5 +1,6 @@
 module Users
   class LoginSessionsController < ApplicationController
+    skip_before_action :login_required, only: [:create]
     def create
       user = User.find_by_name(params[:user][:name])
       if user

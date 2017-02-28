@@ -4,7 +4,11 @@ class PostsController < ApplicationController
 	# http_basic_authenticate_with name: "dhh", password: "secret", except: [:index, :show]
 
 	def index
-		@posts = Post.all
+		if params[:type].present?
+			@posts = Post.where(category: params[:type])
+		else
+			@posts = Post.all
+		end
 		render_json({
 			posts: @posts
 		})
@@ -49,6 +53,6 @@ class PostsController < ApplicationController
 
 	private
   def post_params
-    params.require(:post).permit(:title, :text)
+    params.require(:post).permit(:title, :content)
   end
 end

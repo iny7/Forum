@@ -41,44 +41,26 @@ PostNav.contextTypes = {
 }
 
 export default class List extends React.Component {
-  constructor () {
-    super()
-    this.state = {
-      headlines: [],
-      posts: []
-    }
-  }
   componentWillMount () {
     document.body.className = 'posts-page'
   }
-  componentDidMount () {
-    const { type } = this.context.router.location.query
-    this.props.dispatch({
-      type: 'REQUEST_POSTS',
-      category: type
-    })
-  }
-  fetchData (type) {
-    myFetch.get({
-      url: '/posts' + type ? `?type=${type}` : ''
-    }).then((result) => {
-      this.setState()
-    })
-  }
   render () {
-    const { container, dispatch } = this.props
-    const { posts } = container
+    const { container } = this.props
+    console.log(container)
+    const { headlines, posts, isFetching } = container
     // const { router: { location } } = this.context
     return (
       <main className="cx-body">
         <section className="article-body">
           <Carousel />
           <PostNav />
-          <ul>
-            {posts.map((value, key) => {
-              return <Post key={key} />
-            })}
-          </ul>
+          { isFetching ? '正在加载' : (
+            <ul>
+              {posts.map((value, key) => {
+                return <Post key={key} />
+              })}
+            </ul>
+          ) }
         </section>
       </main>
     )

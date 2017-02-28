@@ -1,6 +1,7 @@
 import React from 'react'
-import { Link, browserHistory } from 'react-router'
-import myFetch from 'utils/myFetch'
+import { Link } from 'react-router'
+import { login } from 'actions'
+
 import './style.sass'
 
 const STATUS_CODE = {
@@ -18,25 +19,11 @@ export default class SignIn extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault()
     const { name, password } = this.refs
-    // const { router } = this.context
-    myFetch.post({
-      url: '/login_sessions',
-      data: {
-        user: {
-          name: name.value,
-          password: password.value
-        }
-      }
-    }).then((result) => {
-      const statucCode = result.status_code
-      if (statucCode === STATUS_CODE.SUCCESS) {
-        console.log('success')
-        // do not use dispatch action to redirect but react-router
-        browserHistory.replace('/posts')
-      } else {
-        this.setState({statucCode})
-      }
-    }).catch(e => console.log('sign in error'))
+    const user = {
+      name: name.value,
+      password: password.value
+    }
+    this.props.dispatch(login(user))
   }
   render () {
     const { statucCode } = this.state

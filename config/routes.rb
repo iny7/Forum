@@ -9,9 +9,6 @@ Rails.application.routes.draw do
 
   # resource :wechat, only: [:show, :create]
 
-  # root 'application#index'
-  get '/(*all)' => 'application#index'
-
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
@@ -63,4 +60,7 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
+
+  # root 'application#index'
+  get '/(*all)' => 'application#index'
 end
