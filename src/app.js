@@ -17,61 +17,61 @@ import Footer from './components/Footer'
 
 
 var arr = [
-      {
-        name : 'air',
-        component : AirConditioner,
-      },
-      {
-        name : 'water',
-        component : WaterHeater,
-      },
-      {
-        name : 'about',
-        component : About,
-      }
-];
+  {
+    name: 'air',
+    component: AirConditioner,
+  }, {
+    name: 'water',
+    component: WaterHeater,
+  }, {
+    name: 'about',
+    component: About,
+  }
+]
 
 var arr2 = [];
 
-class AppComponent extends Component {
-   constructor(){
+export default class AppComponent extends Component {
+  constructor() {
     super()
-   }
-   changeTab(index){
+  }
+
+  changeTab (index) {
     this.refs.header.changeTitle(arr[index].name)
     this.refs.navi.jumpTo(arr[index])
-   }
+  }
 
-   openLeft(){
+  openLeft = () => {
     var air = this.refs.navi.refs.air
     air.openDrawer()
-   }
+  }
 
-   openRight(){
+  openRight = () => {
     // var about = this.refs.navi.refs.about
     // about.openDrawer()
-   }
+  }
+
    // <Header ref="header" title={arr[0].name}/>
-   render() {
-      return (
-        <View style={styles.container}>
-          
-          <Navigator
-           ref="navi"
-           initialRoute={arr[0]}
-           initialRouteStack={arr}
-           configureScene={(route) => {
-             return Navigator.SceneConfigs.HorizontalSwipeJump;
-           }}
-           renderScene={(route, navigator) => {
-             let Component = route.component;
-             arr2.push(Component)
-             return <Component {...route.params} navigator={navigator} ref={route.name}/>
-           }} />
-           <Footer clickLeft={this.openLeft.bind(this)}
-              clickRight={this.openRight.bind(this)}/>
-        </View>
-      );
+  render () {
+    return (
+      <View style={styles.container}>
+        <Navigator
+          ref="navi"
+          initialRoute={arr[0]}
+          initialRouteStack={arr}
+          configureScene={ route => Navigator.SceneConfigs.HorizontalSwipeJump }}
+          renderScene={(route, navigator) => {
+            let Component = route.component;
+            arr2.push(Component)
+            return <Component {...route.params} navigator={navigator} ref={route.name} />
+          }}
+        />
+        <Footer
+          clickLeft={this.openLeft.bind(this)}
+          clickRight={this.openRight.bind(this)}
+        />
+      </View>
+    )
   }
 }
 
@@ -136,9 +136,4 @@ var styles = StyleSheet.create({
 //               <Text>3</Text>
 //           </TouchableOpacity>)
 //   },
-  
 // };
-
-
-
-export default AppComponent

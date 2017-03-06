@@ -1,109 +1,107 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import {
-  AppRegistry,
-  Image,
+  ScrollView,
   StyleSheet,
+  RefreshControl,
   Text,
+  TouchableWithoutFeedback,
   View,
 } from 'react-native'
 
+const styles = StyleSheet.create({
+  row: {
+    borderColor: 'grey',
+    borderWidth: 1,
+    padding: 20,
+    backgroundColor: '#3a5795',
+    margin: 5,
+  },
+  text: {
+    alignSelf: 'center',
+    color: '#fff',
+  },
+  scrollview: {
+    flex: 1,
+  },
+});
 
-var MOCKED_MOVIES_DATA = [
-  {title: '标题', year: '2015', posters: {thumbnail: ''}},
-];
-
-var data = [
-      {
-        name: '占哲琦',
-        avatar: require('../../image/zzq.jpg'),
-        duty: '环境配置、影像控制',
-      },
-      {
-        name: '刘力文',
-        avatar: require('../../image/llw.jpg'),
-        duty: '写服务端、代码编写',
-      },
-      {
-        name: '秦长熙',
-        avatar: require('../../image/qcx.jpg'),
-        duty: '写客户端、数据交互',
-      },
-      {
-        name: '陈明伟',
-        avatar: require('../../image/cmw.jpg'),
-        duty: '小车控制、文档编写',
-      },
-]
-
-class About extends Component {
-   
-   render() {
-      return (
-     		<View style={styles.wrap}>
-          {data.map((item, index) => {
-            var curStyle = index % 2 == 0 ? {
-                      bgStyle : styles.itemBlue,
-                      textStyle : styles.textBlue,
-                    } : {
-                      bgStyle : styles.item,
-                      textStyle : styles.text,
-                    }
-            return (
-            <View key={index} style={curStyle.bgStyle}>
-              <Image
-                source={item.avatar}
-                style={styles.avatar}
-                />
-              <Text style={curStyle.textStyle}>{item.name}</Text>
-              <Text style={curStyle.textStyle}>{item.duty}</Text>
-            </View>)
-          })}
-          <Text style={styles.copyright}>Copyright © 2016 四川大学 软件学院</Text>
+class Row extends Component {
+  constructor(){
+    super();
+  }
+  _onClick() {
+    this.props.onClick(this.props.data);
+  }
+  render() {
+    return (
+     <TouchableWithoutFeedback onPress={this._onClick.bind(this)} >
+        <View style={styles.row}>
+          <Text style={styles.text}>
+            {this.props.data.text + ' (' + this.props.data.clicks + ' clicks)'}
+          </Text>
         </View>
-      )
-   }
+      </TouchableWithoutFeedback>
+    );
+  }
 }
 
-var styles = StyleSheet.create({
-    wrap : {
-      flex : 1,
-      backgroundColor: '#F0F0F2',
-    },
-    item : {
-      padding: 20,
-      flexDirection: 'row',
-      // backgroundColor : '#45BA51',
-      backgroundColor : '#9BBCEC',
-      alignItems: 'center',
-    },
-    itemBlue : {
-      padding: 20,
-      flexDirection: 'row',
-      backgroundColor : '#5288D9',
-      // backgroundColor : '#7EAAEc',
-      alignItems: 'center',
-    },
-    text : {
-      color: '#333',
-      marginHorizontal: 10,
-    },
-    textBlue : {
-      color: '#FFF',  
-      marginHorizontal: 10,
-    },
-    avatar: {
-      // borderWidth : 1,
-      // borderColor : 'green',
-      width: 60,
-      height: 60,
-      borderRadius: 30
-    },
-    copyright : {
-      flex: 1,
-      marginTop: 20,
-      textAlign: 'center',
-      color : '#444',
+export default class RefreshControlExample extends Component {
+  constructor() {
+    super()
+    this.state = {
+      isRefreshing: false,
+      loaded: 0,
+      rowData: Array.from(new Array(20)).map(
+        (val, i) => ({text: 'Initial row ' + i, clicks: 0})),
     }
-})
+  }
 
-export default About
+  _onClick(row) {
+    row.clicks++;
+    this.setState(Object.assign({}, this.state, {
+      rowData: this.state.rowData,
+    }));
+  }
+
+  render() {
+    const rows = this.state.rowData.map((row, ii) => {
+      return <Row key={ii} data={row} onClick={this._onClick.bind(this)}/>;
+    });
+    return (
+      <ScrollView
+        style={styles.scrollview}
+        refreshControl={
+          <RefreshControl
+            refreshing={this.state.isRefreshing}
+            onRefresh={this._onRefresh.bind(this)}
+            tintColor="#ff0000"
+            title="Loading..."
+            titleColor="#00ff00"
+            colors={['#ff0000', '#00ff00', '#0000ff']}
+            progressBackgroundColor="#ffff00"
+          />
+        }>
+        {rows}
+      </ScrollView>
+    );
+  }
+
+  _onRefresh() {
+    this.setState({isRefreshing: true});
+    setTimeout(() => {
+      // prepend 10 items
+      const rowData = Array.from(new Array(10))
+      .map((val, i) => ({
+        text: 'Loaded row ' + (+this.state.loaded + i),
+        clicks: 0,
+      }))
+      .concat(this.state.rowData);
+
+      this.setState({
+        loaded: this.state.loaded + 10,
+        isRefreshing: false,
+        rowData: rowData,
+      });
+    }, 5000);
+  }
+}

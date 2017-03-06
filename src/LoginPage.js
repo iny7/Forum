@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import {
   AppRegistry,
   Image,
@@ -13,36 +13,30 @@ import LoginBox from './components/LoginBox'
 
 import App from './App'
 
+export default class Login extends Component {
+  switchPage() {
+    this.props.navigator.replace({
+      component: App,
+      // params: {
+      //   name: this.state.name,
+      //   age: this.state.age,
+      //   changeMyAge: (age) => {
+      //     this.setState({ age })
+      //   }
+      // }
+    })
+  }
 
-class Login extends Component {
-    constructor(props) {
-        super(props);
-    }
-
-    switchPage(){
-      this.props.navigator.replace({
-          component: App,
-          // params: {
-          //   name: this.state.name,
-          //   age: this.state.age,
-          //   changeMyAge: (age) => {
-          //     this.setState({ age })
-          //   }
-          // }
-        })
-    }
-    
-
-   render() {
-      return (
-	      <View style={styles.container}>
-	        <Header title="登陆"/>
-	        <View style={styles.main}>
-            <LoginBox success={this.switchPage.bind(this)}/>
-          </View>
-	      </View>
-	    );
-	}
+  render() {
+    return (
+      <View style={styles.container}>
+        <Header title="登陆" />
+        <View style={styles.main}>
+          <LoginBox success = { this.switchPage.bind(this) }/>
+        </View>
+      </View>
+    )
+  }
 }
 
 var styles = StyleSheet.create({
@@ -52,13 +46,10 @@ var styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#BBB',
     flex: 1,
-    backgroundColor: '#F5FCFF',
-    // backgroundColor: '',
+    backgroundColor: '#F5FCFF'
   },
-  main : {
-    flex : 1,
+  main: {
+    flex: 1,
     backgroundColor: '#F0F0F2'
   }
-});
-
-export default Login
+})

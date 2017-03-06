@@ -8,32 +8,32 @@ import {
   TouchableOpacity
 } from 'react-native'
 
-
 var image = require('../../image/refresh.jpg')
-class WaterHeater extends Component {
-    constructor(){
-      super();
-      this.state = {
-        wend: '',
-        shid: ''
-      }
-    }
 
-     getInfo(){
-      var ip = 'http://'+global.address+':8899/car?a=5'
-      fetch(ip).then(response => {
-        var data = response.headers.map['da'][0].split(',')
-        var wend = data[0] + '°C'
-        var shid = data[1] + '%'
-        this.setState({
-          wend: wend,
-          shid: shid
-        })
+export default class WaterHeater extends Component {
+  constructor() {
+    super()
+    this.state = {
+      wend: '',
+      shid: ''
+    }
+  }
+
+  getInfo() {
+    var ip = 'http://' + global.address + ':8899/car?a=5'
+    fetch(ip).then(response => {
+      var data = response.headers.map['da'][0].split(',')
+      var wend = data[0] + '°C'
+      var shid = data[1] + '%'
+      this.setState({
+        wend: wend,
+        shid: shid
       })
-     }
+    })
+  }
+
 
    render() {
-      
       return (
      		<View style={styles.wrap}>
           <View  style={styles.mainTop}>
@@ -60,8 +60,8 @@ class WaterHeater extends Component {
               <Text style={styles.textCenter}>{this.state.shid}</Text>
             </View>
           </View>
-          <TouchableOpacity 
-              style={styles.button} 
+          <TouchableOpacity
+              style={styles.button}
               onPress={this.getInfo.bind(this)}>
               <Image
                 source={image}
@@ -73,43 +73,40 @@ class WaterHeater extends Component {
 }
 
 var styles = StyleSheet.create({
-    button: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center'
-    },
-    wrap : {
-      flex : 1,
-      padding: 50,
-      backgroundColor: '#F0F0F2',
-      justifyContent: 'center',
-      
-    },
-    mainTop : {
-      backgroundColor : '#5288D9',
-      flexDirection: 'row',
-      justifyContent : 'space-between'
-    },
-    mainTopItem : {
-      margin : 20,
-    },
-    thumbnail: {
-      borderWidth : 1,
-      borderColor : 'green',
-      width: 50,
-      height: 50,
-    },
-    textCenter : {
-      // fontSize : 20,
-      color : '#FFF',
-      borderWidth : 1,
-      borderColor : 'red',
-    },
-    buttonImage: {
-      borderRadius: 35,
-      width: 70,
-      height: 70,
-    },
+  button: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  wrap: {
+    flex: 1,
+    padding: 50,
+    backgroundColor: '#F0F0F2',
+    justifyContent: 'center',
+  },
+  mainTop: {
+    backgroundColor: '#5288D9',
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  mainTopItem: {
+    margin: 20,
+  },
+  thumbnail: {
+    borderWidth: 1,
+    borderColor: 'green',
+    width: 50,
+    height: 50,
+  },
+  textCenter: {
+    // fontSize : 20,
+    color: '#FFF',
+    borderWidth: 1,
+    borderColor: 'red',
+  },
+  buttonImage: {
+    borderRadius: 35,
+    width: 70,
+    height: 70,
+  },
 })
-
-export default WaterHeater
