@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import {
   AppRegistry,
   Navigator
@@ -6,6 +6,8 @@ import {
 
 import App from './src/App'
 AppRegistry.registerComponent('Forum', () => App)
+
+// import LoginPage from './src/LoginPage';
 
 // var defaultComponent = App;
 // class rnDemo extends Component {
@@ -23,6 +25,4 @@ AppRegistry.registerComponent('Forum', () => App)
 //            }} />
 //        );
 //    }
-
-
 // }

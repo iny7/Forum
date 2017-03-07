@@ -1,5 +1,5 @@
 {
-  "name": "car",
+  "name": "Forum",
   "version": "1.0.0",
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
@@ -8,7 +8,15 @@
   },
   "dependencies": {
     "isomorphic-fetch": "^2.2.1",
-    "react": "15.0.2",
-    "react-native": "^0.26.3"
+    "react": "^15.4.2",
+    "react-native": "^0.42.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^7.1.1",
+    "eslint": "^3.17.1",
+    "eslint-config-standard": "^7.0.0",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-react": "^6.10.0",
+    "eslint-plugin-standard": "^2.1.1"
   }
 }

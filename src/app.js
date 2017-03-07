@@ -55,17 +55,6 @@ export default class AppComponent extends Component {
   render () {
     return (
       <View style={styles.container}>
-        <Navigator
-          ref="navi"
-          initialRoute={arr[0]}
-          initialRouteStack={arr}
-          configureScene={ route => Navigator.SceneConfigs.HorizontalSwipeJump }}
-          renderScene={(route, navigator) => {
-            let Component = route.component;
-            arr2.push(Component)
-            return <Component {...route.params} navigator={navigator} ref={route.name} />
-          }}
-        />
         <Footer
           clickLeft={this.openLeft.bind(this)}
           clickRight={this.openRight.bind(this)}
