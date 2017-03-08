@@ -1,7 +1,6 @@
-### 基于树莓派的智能家居系统，前端
+### Mobile client of Forum, based on react-native
 
 ####Todo
- * 1.搭起页面框架（3个遥控器、设置和个人信息fixed），跑通手势
- * 2.完成空调遥控器界面布局
- * 3.完成空调遥控器WebView Canvas部分
- * 4.完成个人信息和设置页面的布局
+ * 1. 布局首页
+ * 2. 布局注册页
+ * 3. 添加带底栏的Posts页

@@ -7,12 +7,16 @@
     "ios": "react-native run-ios"
   },
   "dependencies": {
+    "babel": "^6.23.0",
     "isomorphic-fetch": "^2.2.1",
+    "native-base": "^2.0.12",
     "react": "^15.4.2",
-    "react-native": "^0.42.0"
+    "react-native": "^0.42.0",
+    "react-native-router-flux": "^3.38.0"
   },
   "devDependencies": {
     "babel-eslint": "^7.1.1",
+    "babel-plugin-import": "^1.1.1",
     "eslint": "^3.17.1",
     "eslint-config-standard": "^7.0.0",
     "eslint-plugin-promise": "^3.5.0",
