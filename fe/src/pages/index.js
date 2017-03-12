@@ -60,6 +60,8 @@ function getContainer (reducerName) {
 
 const HomeContainer = getContainer('user')
 const PostContainer = getContainer('post')
+// const AccountContainer = getContainer('account')
+// 发现这儿还是不能这么接! 还是把Header做成接收左右菜单的组件好了, 要复用这个还是比较不靠谱
 
 const loginRequired = (nextState, replace) => {
   if (!getToken()) {

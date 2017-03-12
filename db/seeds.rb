@@ -2,23 +2,36 @@ users = User.create([
   {
     email: 'a@a.com',
     name: 'a',
-    password: 'a',
-    password_digest: 'a',
-    created_at: DateTime.now,
-    updated_at: DateTime.now,
+    password: 'a'
   },
   {
     email: 't@t.com',
     name: 't',
-    password: 't',
-    password_digest: 't',
-    created_at: DateTime.now,
-    updated_at: DateTime.now,
+    password: 't'
   }
 ])
 
 posts = Post.create([
   {
-    title: 
+    title: '头条新闻',
+    user_id: 1,
+    content: '如果你无法简洁的表达你的想法，那只说明你还不够了解它。如果你无法简洁的表达你的想法，那只说明你还不够了解它解它...\n
+            如果你无法简洁的表达你的想法，那只说明你还不够了解它。如果你无法简洁的表达你的想法，那只说明你还不够了解它解它...\n
+            如果你无法简洁的表达你的想法，那只说明你还不够了解它。如果你无法简洁的表达你的想法，那只说明你还不够了解它解它...\n
+            如果你无法简洁的表达你的想法，那只说明你还不够了解它。如果你无法简洁的表达你的想法，那只说明你还不够了解它解它...\n',
+    created_at: DateTime.now,
+    updated_at: DateTime.now,
+    headlines: true
+  },
+  {
+    title: '请教下，PostCSS和rework有什么区别区区别...',
+    user_id: 1,
+    content: '如果你无法简洁的表达你的想法，那只说明你还不够了解它。如果你无法简洁的表达你的想法，那只说明你还不够了解它解它...\n
+            如果你无法简洁的表达你的想法，那只说明你还不够了解它。如果你无法简洁的表达你的想法，那只说明你还不够了解它解它...\n
+            如果你无法简洁的表达你的想法，那只说明你还不够了解它。如果你无法简洁的表达你的想法，那只说明你还不够了解它解它...\n
+            如果你无法简洁的表达你的想法，那只说明你还不够了解它。如果你无法简洁的表达你的想法，那只说明你还不够了解它解它...\n',
+    created_at: DateTime.now,
+    updated_at: DateTime.now,
+    headlines: false
   }
 ])

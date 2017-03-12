@@ -24,6 +24,11 @@ export default function (state = initialState, action) {
         isFetching: false,
         token
       })
+    case 'user:signout':
+      return Object.assign({}, state, {
+        user: {},
+        token: ''
+      })
     default:
       return state
   }

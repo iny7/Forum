@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link, browserHistory } from 'react-router'
-import myFetch from 'utils/myFetch'
 import './style.sass'
 
 export default class Account extends React.Component {
@@ -8,16 +7,8 @@ export default class Account extends React.Component {
     document.body.className = 'account-page'
   }
   handleSignOut = () => {
-    myFetch.delete({
-      url: '/login_sessions'
-    }).then((result) => {
-      if (result.status_code === 200) {
-        // 删除客户端的token
-        browserHistory.replace('/')
-      } else {
-        console.log('登出错误')
-      }
-    })
+    this.props.dispatch({ type: 'user:signout' })
+    browserHistory.replace('/')
   }
   render () {
     return (

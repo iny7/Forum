@@ -6,10 +6,7 @@ class ApplicationController < ActionController::Base
 
   acts_as_token_authentication_handler_for User#, unless: lambda { |controller| controller.request.format.html? }
 
-  before_action :authenticate_user!, expect: [path: '/signin']
-  # before_action :login_required
-  # skip_before_action :login_required, only: [:index]
-  # helper_method :current_user
+  before_action :authenticate_user!
 
   def index
     layout_only
@@ -70,17 +67,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def current_user
-    # @current_user ||= cookies[:user_id] && User.find_by_id(cookies[:user_id])
-    # cookies[:user_id] && User.find_by_id(cookies[:user_id])
-    @current_user ||= authenticate_token
-  end
-
-  def login_required
-    return true if authenticate_token
-    access_denied
-  end
-
   def access_denied
     # render json: { errors: 'Access Denied' }, status: 401
     respond_to do |wants|
@@ -89,14 +75,6 @@ class ApplicationController < ActionController::Base
         redirect_to '/'
       end
       wants.json { render :json => "Access denied.", :status => '403'}
-    end
-  end
-
-  def authenticate_token
-    authenticate_with_http_token do |token, options|
-      Rails.logger.info ')' * 10
-      Rails.logger.info token
-      User.find_by(auth_token: token)
     end
   end
 
