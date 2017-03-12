@@ -5,8 +5,8 @@ class Post < ActiveRecord::Base
 
   default_scope -> { where(headlines: false) }
 
-  validates :title, presence:true,
-                    length: { minimum: 2 }
+  validates :title, presence:true#, length: { minimum: 2 }
+
   before_save :default_values
 
   def default_values

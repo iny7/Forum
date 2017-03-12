@@ -21,6 +21,7 @@ import { Provider, connect } from 'react-redux'
 import configureStore from 'store/configureStore'
 
 const App = ({ route, children, container, dispatch }) => {
+  console.log(container)
   const needHeader = ['/', '/signin', '/signup'].indexOf(route.path) === -1
   const needFooter = ['/messages', '/posts', '/account'].indexOf(route.path) !== -1
   if (children) {
@@ -43,26 +44,37 @@ App.propTypes = {
 
 const store = configureStore()
 
-const HomeContainer = connect((state) => {
-  return {
-    container: state.user
-  }
-})(App)
+window.store = store
 
-const PostContainer = connect((state) => {
-  return {
-    container: state.post
+function getToken () {
+  return store.getState().user.token
+}
+
+function getContainer (reducerName) {
+  return connect((state) => {
+    return {
+      container: state[reducerName]
+    }
+  })(App)
+}
+
+const HomeContainer = getContainer('user')
+const PostContainer = getContainer('post')
+
+const loginRequired = (nextState, replace) => {
+  if (!getToken()) {
+    replace('/signin')
   }
-})
+}
 
 const ApplicationPage = () => (
   <Router history={browserHistory}>
     <Route path="/" component={HomeContainer}>
       <IndexRoute component={Home.Welcome} />
-      <Route path="/signin" component={Home.SignIn} />
+      <Route path="/users/sign_in" component={Home.SignIn} />
       <Route path="/signup" component={Home.SignUp} />
     </Route>
-    <Route path="/posts" component={PostContainer}>
+    <Route path="/posts" component={PostContainer} onEnter={loginRequired}>
       <IndexRoute
         onEnter={(nState) => {
           const { type } = nState.location.query
@@ -77,14 +89,14 @@ const ApplicationPage = () => (
       <Route path="edit" component={Post.New}></Route>
       <Route path=":id" component={Post.Show}></Route>
     </Route>
-    <Route path="/messages" component={App}>
+    <Route path="/messages" component={App} onEnter={loginRequired}>
       <IndexRoute component={Message.List} />
       <Route path=":id" component={Message.Show}></Route>
       <Route path="new" component={Message.New}></Route>
       <Route path="edit" component={Message.Edit}></Route>
     </Route>
     <Route path="/account" component={App}>
-      <IndexRoute component={Account.Account} />
+      <IndexRoute component={Account.Account} onEnter={loginRequired}/>
       <Route path="edit" component={Account.Edit}></Route>
       <Route path="settings" component={Account.Settings}></Route>
     </Route>

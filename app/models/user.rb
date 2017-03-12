@@ -1,6 +1,12 @@
 class User < ActiveRecord::Base
+  acts_as_token_authenticatable
 
-  has_secure_password
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :trackable, :validatable
+
+  # has_secure_password
 
   has_one :profile, class_name: 'Users::Profile'
 
@@ -10,9 +16,10 @@ class User < ActiveRecord::Base
   has_many :likes, as: :likeable
   # before_create { generate_token(:auth_token) }
 
+  # before_create :generate_auth_token
   after_create :create_profile
 
-  validates :name, presence: true
+  # validates :name, presence: true
 
   # def generate_token(column)
   #   begin
@@ -22,5 +29,9 @@ class User < ActiveRecord::Base
 
   def generate_profile(nickname)
   end
+
+  # def generate_auth_token
+  #   self.auth_token = SecureRandom.uuid.gsub(/\-/,'')
+  # end
 
 end

@@ -1,6 +1,7 @@
-import { browserHistory } from 'react-router'
+const { localStorage } = window
 
 const initialState = {
+  token: localStorage.getItem('token'),
   user: {},
   isFetching: false
 }
@@ -16,10 +17,14 @@ export default function (state = initialState, action) {
         isFetching: true
       })
     case 'LOGIN_SUCCESS':
-      browserHistory.replace('/posts')
+      const { email, token } = action.payload
+      localStorage.setItem('email', email)
+      localStorage.setItem('token', token)
       return Object.assign({}, state, {
         isFetching: false,
-        user: action.user
+        token
       })
+    default:
+      return state
   }
 }

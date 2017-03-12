@@ -20,13 +20,14 @@ export default class SignIn extends React.Component {
     e.preventDefault()
     const { name, password } = this.refs
     const user = {
-      name: name.value,
+      email: name.value,
       password: password.value
     }
     this.props.dispatch(login(user))
   }
   render () {
     const { statucCode } = this.state
+    console.log(this.props)
     return (
       <div className="signin-page">
         <header>

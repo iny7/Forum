@@ -1,13 +1,16 @@
 import myFetch from 'utils/myFetch'
 import { browserHistory } from 'react-router'
 
+const SIGNIN_PATH = '/users/sign_in'
+const SIGNUP_PATH = '/users'
+
 function createUser (user) {
   return (dispatch) => {
     dispatch({
       type: 'CREATE_USER'
     })
     return myFetch.post({
-      url: '/users',
+      url: SIGNUP_PATH,
       data: { user }
     }).then((result) => {
       console.log(result)
@@ -22,19 +25,23 @@ function login (user) {
       user
     })
     return myFetch.post({
-      url: '/login_sessions',
+      url: SIGNIN_PATH,
       data: { user }
     }).then((result) => {
-      const statucCode = result.status_code
-      if (statucCode === 200) {
+      const { email, authentication_token: token } = result
+      if (token) {
         console.log('success')
         // do not use dispatch action to redirect but react-router
         dispatch({
-          type: 'LOGIN_SUCCESS'
+          type: 'LOGIN_SUCCESS',
+          payload: {
+            email,
+            token
+          }
         })
         browserHistory.replace('/posts')
       } else {
-        this.setState({statucCode})
+        // this.setState({})
       }
     }).catch(e => console.log('sign in error'))
   }

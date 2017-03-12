@@ -1,3 +1,4 @@
+const { localStorage } = window
 import fetch from 'isomorphic-fetch'
 
 function getQueryString (params = {}) {
@@ -12,7 +13,9 @@ function request (params) {
   const credentials = 'include'
   const headers = params.headers || {
     'Accept': 'application/json',
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    'X-User-Email': localStorage.getItem('email'),
+    'X-User-Token': localStorage.getItem('token')
   }
 
   let qs = ''

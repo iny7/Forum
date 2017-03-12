@@ -1,11 +1,15 @@
 Rails.application.routes.draw do
 
-  resources :users, only: [:create]
-  scope module: :users do
-    put '/profile' => 'profiles#update'
-    resources :login_sessions, only: [:create]
-    delete 'login_sessions' => 'login_sessions#logout'
-  end
+  devise_for :users, controllers: {
+    sessions: 'users/sessions',
+    registrations: 'users/registrations'
+  }
+  # resources :users, only: [:create]
+  # scope module: :users do
+  #   put '/profile' => 'profiles#update'
+  #   resources :login_sessions, only: [:create]
+  #   delete 'login_sessions' => 'login_sessions#logout'
+  # end
 
   # resource :wechat, only: [:show, :create]
 
@@ -19,7 +23,7 @@ Rails.application.routes.draw do
   resources :posts, except: [:new, :edit] do
     resources :comments, except: [:new, :edit]
   end
-  resources :messages
+  # resources :messages
 
   # Example resource route with options:
   #   resources :products do

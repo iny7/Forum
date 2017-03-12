@@ -1,12 +1,14 @@
 class UsersController < ApplicationController
   skip_before_action :verify_authenticity_token
+  skip_before_action :login_required, only: [:create]
 
   def create
     @user = User.new(user_params)
-    render_json({
-      status_code: @user.save ? 200 : 403,
-      user_id: @user.id
-    })
+    if @user.save
+      render json: { token: @user.auth_token }
+    else
+      render json: { erros: @user.errors }
+    end
   end
 
   private
