@@ -1,12 +1,12 @@
 users = User.create([
   {
     email: 'a@a.com',
-    name: 'a',
+    name: '一傻子',
     password: 'a'
   },
   {
     email: 't@t.com',
-    name: 't',
+    name: '二傻子',
     password: 't'
   }
 ])
@@ -33,5 +33,29 @@ posts = Post.create([
     created_at: DateTime.now,
     updated_at: DateTime.now,
     headlines: false
+  }
+])
+
+comments = Comment.create([
+  {
+    post_id: 1,
+    user_id: 1,
+    content: '我是111评论内容!!!!',
+    created_at: DateTime.now,
+    updated_at: DateTime.now,
+  },
+  {
+    post_id: 1,
+    user_id: 1,
+    content: '我是111评论内容!!!!',
+    created_at: DateTime.now,
+    updated_at: DateTime.now
+  },
+  {
+    post_id: 2,
+    user_id: 1,
+    content: '我是222评论内容!!!!',
+    created_at: DateTime.now,
+    updated_at: DateTime.now
   }
 ])

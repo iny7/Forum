@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router'
-import { login } from 'actions'
+import { login } from 'actions/user'
 
 import './style.sass'
 

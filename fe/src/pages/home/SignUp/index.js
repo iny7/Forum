@@ -2,7 +2,7 @@ const { alert } = window
 import React from 'react'
 import { Link } from 'react-router'
 
-import { createUser } from 'actions'
+import { createUser } from 'actions/user'
 
 import './style.sass'
 

@@ -4,7 +4,9 @@ import { Link } from 'react-router'
 import './style.sass'
 import Carousel from './Carousel'
 import Post from './Post'
-import myFetch from 'utils/myFetch'
+
+import Header from 'components/Header'
+import Footer from 'components/Footer'
 
 class PostNav extends React.Component {
   render () {
@@ -45,24 +47,27 @@ export default class List extends React.Component {
     document.body.className = 'posts-page'
   }
   render () {
-    const { container } = this.props
-    console.log(container)
-    const { headlines, posts, isFetching } = container
+    const { posts, isLoading } = this.props
+    const headlines = []
     // const { router: { location } } = this.context
     return (
-      <main className="cx-body">
-        <section className="article-body">
-          <Carousel />
-          <PostNav />
-          { isFetching ? '正在加载' : (
-            <ul>
-              {posts.map((value, key) => {
-                return <Post key={key} />
-              })}
-            </ul>
-          ) }
-        </section>
-      </main>
+      <div className="application-page">
+        <Header title="首页" HeaderRight={HeaderRight} />
+        <main className="cx-body">
+          <section className="article-body">
+            <Carousel posts={headlines} />
+            <PostNav />
+            { isLoading ? '正在加载' : (
+              <ul>
+                {posts.map((value, key) => {
+                  return <Post key={key} />
+                })}
+              </ul>
+            ) }
+          </section>
+        </main>
+        <Footer />
+      </div>
     )
   }
 }
@@ -70,9 +75,7 @@ List.contextTypes = {
   router: React.PropTypes.object
 }
 
-List.title = '首页'
-List.needBack = false
-List.HeaderRight = () => (
+const HeaderRight = () => (
   <div className="header-right">
     <Link className="fa fa-bell-o" to="/notifications"></Link>
     <Link className="fa fa-edit" to="/posts/new"></Link>

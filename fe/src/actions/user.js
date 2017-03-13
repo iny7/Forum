@@ -47,53 +47,7 @@ function login (user) {
   }
 }
 
-function fetchPosts (category) {
-  return (dispatch) => {
-    dispatch({
-      type: 'REQUEST_POSTS',
-      category
-    })
-    return myFetch.get({
-      url: '/posts',
-      data: category ? { type: category } : ''
-    }).then((result) => {
-      dispatch({
-        type: 'RECEIVE_POSTS',
-        posts: result.posts
-      })
-    })
-  }
-}
-
-function createPost (post) {
-  return (dispatch) => {
-    dispatch({
-      type: 'CREATE_POST'
-    })
-    return myFetch.post({
-      url: '/posts',
-      data: { post }
-    }).then((result) => {
-      if (result.status_code === 200) {
-        const id = result.post_id
-        dispatch({
-          type: 'CREATE_POST_SUCCESS',
-          post,
-          id
-        })
-      } else {
-        dispatch({
-          type: 'CREATE_POST_FAILED',
-          error: result.errors
-        })
-      }
-    })
-  }
-}
-
 export {
   createUser,
-  login,
-  fetchPosts,
-  createPost
+  login
 }

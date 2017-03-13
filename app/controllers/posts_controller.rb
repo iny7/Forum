@@ -24,15 +24,15 @@ class PostsController < ApplicationController
 	end
 
 	def destroy
-		@post = Post.find(params[:id])
-		@post.destroy
-		redirect_to post_path
+		post = Post.find(params[:id])
+		post.destroy
+		render json: post
 	end
 
 	def show
-		@post = Post.find_by_id(params[:id])
+		post = Post.find_by_id(params[:id])
 		render_json({
-			post: @post
+			post: post
 		})
 	end
 

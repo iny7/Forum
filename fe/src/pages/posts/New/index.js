@@ -1,5 +1,5 @@
 import React from 'react'
-import { createPost } from 'actions'
+import { createPost } from 'actions/user'
 
 // import MyEditor from './MyEditor'
 

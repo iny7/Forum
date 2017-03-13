@@ -5,23 +5,18 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
   }
   # resources :users, only: [:create]
-  # scope module: :users do
-  #   put '/profile' => 'profiles#update'
-  #   resources :login_sessions, only: [:create]
-  #   delete 'login_sessions' => 'login_sessions#logout'
-  # end
+  scope module: :users do
+    resources :profiles, only: [:update]
+  end
 
   # resource :wechat, only: [:show, :create]
-
-  # Example of regular route:
-  #   get 'products/:id' => 'catalog#view'
 
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
 
   # Example resource route (maps HTTP verbs to controller actions automatically):
 
-  resources :posts, except: [:new, :edit], defaults: { format: 'json' } do
+  resources :posts, except: [:new, :edit] do
     resources :comments, except: [:new, :edit]
   end
   # resources :messages
