@@ -6,10 +6,9 @@ function fetchPosts (category) {
     return myFetch.get({
       url: '/posts',
       data: category ? { type: category } : ''
-    }).then((result) => {
-      const { post } = result
+    }).then(({ posts }) => {
       dispatch({ type: 'fetching:data:success' })
-      dispatch({ type: 'RECEIVE_POSTS', payload: { post } })
+      dispatch({ type: 'RECEIVE_POSTS', payload: { posts } })
     })
   }
 }

@@ -8,13 +8,13 @@ import './style.sass'
 
 // 使用redux-router 把router数据同步到store
 export default {
-  New: connect((state) => {
+  List: connect((state) => {
     return {
       ui: state.ui,
       data: state.post,
       isLoading: state.common.isLoading
     }
-  })(New),
+  })(List),
   Show: connect((state) => {
     return {
       ui: state.ui,
@@ -22,11 +22,11 @@ export default {
       isLoading: state.common.isLoading
     }
   })(Show),
-  List: connect((state) => {
+  New: connect((state) => {
     return {
       ui: state.ui,
-      posts: state.post,
+      data: state.post,
       isLoading: state.common.isLoading
     }
-  })(List)
+  })(New)
 }

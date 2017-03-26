@@ -1,19 +1,22 @@
 import React from 'react'
+import sdf from 'utils/sdf'
+
 import { Link } from 'react-router'
 
-export default class Post extends React.Component {
+export default class PostItem extends React.Component {
   render () {
-    const key = 1
+    const { post } = this.props
+    const { id, title, author, content, comments, created_at } = post
     return (
       <li className="article-item">
-        <Link to={`/posts/${key}`}>
+        <Link to={`/posts/${id}`}>
           <div className="article-author">
             <img className="avatar" src="/images/avatar.png" />
-            <span className="name">要啥自行车啊</span>
+            <span className="name">{author}</span>
             <span className="fa fa-ellipsis-h"></span>
           </div>
-          <h6 className="article-title">请教下，PostCSS和rework有什么区别区区别...</h6>
-          <p className="article-content">如果你无法简洁的表达你的想法，那只说明你还不够了解它。如果你无法简洁的表达你的想法，那只说明你还不够了解它解它...</p>
+          <h6 className="article-title">{title}</h6>
+          <p className="article-content">{content}</p>
           <div className="article-info">
             <div className="like">
               <span className="fa fa-heart-o"></span>
@@ -21,10 +24,10 @@ export default class Post extends React.Component {
             </div>
             <div className="comment">
               <span className="fa fa-commenting-o"></span>
-              <span>13</span>
+              <span>{comments.length}</span>
             </div>
             <div className="time">
-              <time>12月13日 21:43</time>
+              <time>{sdf(created_at)}</time>
             </div>
           </div>
         </Link>

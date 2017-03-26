@@ -1,6 +1,6 @@
 var path = require('path')
 var StatsWriterPlugin = require('webpack-stats-plugin').StatsWriterPlugin
-var autoprefixer = require('autoprefixer')
+// var autoprefixer = require('autoprefixer')
 var mapValues = require('lodash/mapValues')
 
 // must match config.webpack.manifest_filename
@@ -53,9 +53,9 @@ module.exports = {
     ]
   },
   sassLoader: {
-    data: '@import "variable";@import "mixin";',
+    data: '@import "styles/variable";@import "styles/mixin";',
     includePaths: [
-      path.resolve(__dirname, "../src")
+      path.resolve(__dirname, '../src')
     ]
   },
   plugins: [

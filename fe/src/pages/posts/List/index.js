@@ -1,67 +1,66 @@
 import React from 'react'
 import { Link } from 'react-router'
 
+import { fetchPosts } from 'actions/post'
+
 import './style.sass'
 import Carousel from './Carousel'
-import Post from './Post'
+import PostItem from './PostItem'
 
 import Header from 'components/Header'
 import Footer from 'components/Footer'
 
 class PostNav extends React.Component {
   render () {
-    const { type } = this.context.router.location.query
+    const { type } = this.props
     return (
       <ul className="article-header">
         <li>
-          <Link
-            to={{pathname: '/posts'}}
-            className={!type ? 'active' : ''}>
-            最新
+          <Link to={{pathname: '/posts'}} className={!type ? 'active' : ''}>
+            {'最新'}
           </Link>
         </li>
+
         <li>
-          <Link
-            to={{pathname: '/posts', query: {type: 'picked'}}}
-            activeClassName="active">
-            精选
+          <Link to={{pathname: '/posts', query: {type: 'picked'}}} activeClassName="active">
+            {'精选'}
           </Link>
         </li>
+
         <li>
-          <Link
-            to={{pathname: '/posts', query: {type: 'anonymous'}}}
-            activeClassName="active">
-            匿名
+          <Link to={{pathname: '/posts', query: {type: 'anonymous'}}} activeClassName="active">
+            {'匿名'}
           </Link>
         </li>
       </ul>
     )
   }
 }
-PostNav.contextTypes = {
-  router: React.PropTypes.object
-}
 
 export default class List extends React.Component {
   componentWillMount () {
     document.body.className = 'posts-page'
+    const { dispatch } = this.props
+    dispatch(fetchPosts())
   }
   render () {
-    const { posts, isLoading } = this.props
+    const { data, isLoading, router } = this.props
+    console.log(isLoading)
+    const { posts } = data
+    const { type } = router.location.query
     const headlines = []
-    // const { router: { location } } = this.context
     return (
       <div className="application-page">
         <Header title="首页" HeaderRight={HeaderRight} />
         <main className="cx-body">
           <section className="article-body">
             <Carousel posts={headlines} />
-            <PostNav />
+            <PostNav type={type} />
             { isLoading ? '正在加载' : (
               <ul>
-                {posts.map((value, key) => {
-                  return <Post key={key} />
-                })}
+                { posts.map((p, k) => {
+                  return <PostItem key={k} post={p} />
+                }) }
               </ul>
             ) }
           </section>
@@ -71,7 +70,8 @@ export default class List extends React.Component {
     )
   }
 }
-List.contextTypes = {
+List.propTypes = {
+  dispatch: React.PropTypes.func,
   router: React.PropTypes.object
 }
 

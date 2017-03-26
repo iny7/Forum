@@ -11,8 +11,6 @@ import Message from './messages'
 import Account from './account'
 import './style.sass'
 
-import { fetchPosts, fetchPost } from 'actions/post'
-
 import { Provider } from 'react-redux'
 import configureStore from 'store/configureStore'
 
@@ -53,34 +51,19 @@ const ApplicationPage = () => (
     </Route>
     <Route onEnter={loginRequired}>
       <Route path="/posts" >
-        <IndexRoute
-          onEnter={(nState) => {
-            const { type } = nState.location.query
-            store.dispatch(fetchPosts(type))
-          }}
-          onChange={(pState, nState) => {
-            const { type } = nState.location.query
-            store.dispatch(fetchPosts(type))
-          }}
-          component={Post.List}
-        />
+        <IndexRoute component={Post.List} />
         <Route path="new" component={Post.New}></Route>
         <Route path="edit" component={Post.New}></Route>
-        <Route path=":id" component={Post.Show}
-          onEnter={(nState, replace, next) => {
-            const { id } = nState.params
-            store.dispatch(fetchPost(id, next))
-          }}
-        />
+        <Route path=":id" component={Post.Show}></Route>
       </Route>
-      <Route path="/messages" component={App} onEnter={loginRequired}>
+      <Route path="/messages" component={App}>
         <IndexRoute component={Message.List} />
         <Route path=":id" component={Message.Show}></Route>
         <Route path="new" component={Message.New}></Route>
         <Route path="edit" component={Message.Edit}></Route>
       </Route>
       <Route path="/account" component={App}>
-        <IndexRoute component={Account.Account} onEnter={loginRequired}/>
+        <IndexRoute component={Account.Account} />
         <Route path="edit" component={Account.Edit}></Route>
         <Route path="settings" component={Account.Settings}></Route>
       </Route>
