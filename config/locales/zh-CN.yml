@@ -1,2 +1,5 @@
 zh-CN:
   hello: 你好
+  time:
+    formats:
+      long: "%B %d, %Y"

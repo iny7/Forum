@@ -2,32 +2,15 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Router, IndexRoute, Route, browserHistory } from 'react-router'
 
-import Header from 'components/Header'
-import Footer from 'components/Footer'
-
 import Home from './home'
 import Post from './posts'
 import Message from './messages'
 import Account from './account'
+import User from './users'
 import './style.sass'
 
 import { Provider } from 'react-redux'
 import configureStore from 'store/configureStore'
-
-const App = ({ route, children, container, dispatch }) => {
-  const needHeader = ['/', '/signin', '/signup'].indexOf(route.path) === -1
-  const needFooter = ['/messages', '/posts', '/account'].indexOf(route.path) !== -1
-  if (children) {
-    var { title, needBack, HeaderRight } = children.type
-  }
-  return (
-    <div className="application-page">
-      { needHeader ? <Header {...{title, needBack, HeaderRight}} /> : null }
-      { React.cloneElement(children || <div />, { container, dispatch }) }
-      { needFooter ? <Footer /> : null }
-    </div>
-  )
-}
 
 const store = configureStore()
 window.store = store
@@ -36,7 +19,7 @@ function getToken () {
   return store.getState().user.token
 }
 
-const loginRequired = (nextState, replace) => {
+function loginRequired (nextState, replace) {
   if (!getToken()) {
     replace('/signin')
   }
@@ -50,22 +33,29 @@ const ApplicationPage = () => (
       <Route path="/signup" component={Home.SignUp} />
     </Route>
     <Route onEnter={loginRequired}>
-      <Route path="/posts" >
+      <Route path="/posts" onEnter={() => { document.body.className = 'posts-page' }}>
         <IndexRoute component={Post.List} />
         <Route path="new" component={Post.New}></Route>
         <Route path="edit" component={Post.New}></Route>
         <Route path=":id" component={Post.Show}></Route>
       </Route>
-      <Route path="/messages" component={App}>
+      <Route path="/messages" onEnter={() => { document.body.className = 'messages-page' }}>
         <IndexRoute component={Message.List} />
         <Route path=":id" component={Message.Show}></Route>
         <Route path="new" component={Message.New}></Route>
         <Route path="edit" component={Message.Edit}></Route>
       </Route>
-      <Route path="/account" component={App}>
+      <Route path="/account" onEnter={() => { document.body.className = 'account-page' }}>
         <IndexRoute component={Account.Account} />
         <Route path="edit" component={Account.Edit}></Route>
         <Route path="settings" component={Account.Settings}></Route>
+      </Route>
+      <Route path="/users/:id" onEnter={() => { document.body.className = '' }}>
+        <IndexRoute component={null} />
+        <Route path="posts" component={User.Posts}></Route>
+        <Route path="comments" component={User.Comments}></Route>
+        <Route path="follows" component={User.Follows}></Route>
+        <Route path="fans" component={User.Fans}></Route>
       </Route>
     </Route>
   </Router>

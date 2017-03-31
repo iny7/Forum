@@ -4,6 +4,10 @@ import sdf from 'utils/sdf'
 import { Link } from 'react-router'
 
 export default class PostItem extends React.Component {
+  handleClick = (e) => {
+    e.preventDefault()
+    alert('1.不显示本条\n2.屏蔽该作者')
+  }
   render () {
     const { post } = this.props
     const { id, title, author, content, comments, created_at } = post
@@ -13,7 +17,7 @@ export default class PostItem extends React.Component {
           <div className="article-author">
             <img className="avatar" src="/images/avatar.png" />
             <span className="name">{author}</span>
-            <span className="fa fa-ellipsis-h"></span>
+            <span className="fa fa-ellipsis-h" onClick={this.handleClick}></span>
           </div>
           <h6 className="article-title">{title}</h6>
           <p className="article-content">{content}</p>

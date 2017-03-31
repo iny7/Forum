@@ -23,12 +23,9 @@ const LoadingUI = () => (
 
 export default class Show extends React.Component {
   componentWillMount () {
-    document.body.className = 'posts-show-page'
     const { dispatch, router } = this.props
-    console.log(this.props.isLoading)
     const { id } = router.params
     dispatch(fetchPost(id))
-    console.log('hehe')
   }
   render () {
     const { isLoading, data: { posts }, params: { id } } = this.props
@@ -38,7 +35,7 @@ export default class Show extends React.Component {
 
     const comments = post && post.comments || []
     return (
-      <div className="application-page">
+      <div className="application-page posts-show-page">
         <Header title="文章详情" HeaderRight={HeaderRight} />
         { post ? (
           <main className="cx-body">

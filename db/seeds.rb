@@ -59,3 +59,5 @@ comments = Comment.create([
     updated_at: DateTime.now
   }
 ])
+
+AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password')

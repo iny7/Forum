@@ -39,13 +39,11 @@ class PostNav extends React.Component {
 
 export default class List extends React.Component {
   componentWillMount () {
-    document.body.className = 'posts-page'
     const { dispatch } = this.props
     dispatch(fetchPosts())
   }
   render () {
     const { data, isLoading, router } = this.props
-    console.log(isLoading)
     const { posts } = data
     const { type } = router.location.query
     const headlines = []

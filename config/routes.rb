@@ -1,10 +1,18 @@
 Rails.application.routes.draw do
 
+  ActiveAdmin.routes(self)
+  devise_for :admin_users, ActiveAdmin::Devise.config
   devise_for :users, controllers: {
     sessions: 'users/sessions',
     registrations: 'users/registrations'
   }
-  # resources :users, only: [:create]
+  # devise_for :users, ActiveAdmin::Devise.config.merge({
+  #   controllers: {
+  #     sessions: 'users/sessions',
+  #     registrations: 'users/registrations'
+  #   }
+  # })
+
   scope module: :users do
     resources :profiles, only: [:update]
   end
