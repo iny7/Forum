@@ -1,5 +1,3 @@
-const { localStorage } = window
-
 const initialState = {
   token: localStorage.getItem('token'),
   user: {},
@@ -25,10 +23,13 @@ export default function (state = initialState, action) {
         token
       })
     case 'user:signout':
-      return Object.assign({}, state, {
+      localStorage.removeItem('email')
+      localStorage.removeItem('token')
+      return {
+        ...state,
         user: {},
         token: ''
-      })
+      }
     default:
       return state
   }

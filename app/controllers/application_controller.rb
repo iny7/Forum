@@ -6,31 +6,17 @@ class ApplicationController < ActionController::Base
 
   acts_as_token_authentication_handler_for User#, unless: lambda { |controller| controller.request.format.html? }
 
-  before_action :authenticate_user!
+  # before_action :authenticate_user!
 
   def index
     layout_only
   end
 
-  private
+  def log(args)
+    Rails.logger.info args
+  end
 
-  # def authenticate_user!
-  #   if user_signed_in?
-  #     super
-  #   else
-  #     respond_to do |wants|
-  #       wants.html do
-  #         layout_only
-  #       end
-  #       wants.json do
-  #         render json: 'errors', status: 401
-  #       end
-  #     end
-  #     # redirect_to login_path, :notice => 'if you want to add a notice'
-  #     ## if you want render 404 page
-  #     ## render :file => File.join(Rails.root, 'public/404'), :formats => [:html], :status => 404, :layout => false
-  #   end
-  # end
+  private
 
   def layout_only
     render text: nil, layout: true
@@ -64,17 +50,6 @@ class ApplicationController < ActionController::Base
       wants.json do
         render json: data
       end
-    end
-  end
-
-  def access_denied
-    # render json: { errors: 'Access Denied' }, status: 401
-    respond_to do |wants|
-      wants.html do
-        session[:return_to] = request.fullpath
-        redirect_to '/'
-      end
-      wants.json { render :json => "Access denied.", :status => '403'}
     end
   end
 

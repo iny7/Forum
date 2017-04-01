@@ -3,6 +3,7 @@ import { browserHistory } from 'react-router'
 
 const SIGNIN_PATH = '/users/sign_in'
 const SIGNUP_PATH = '/users'
+const SIGNOUT_PATH = '/users/sign_out'
 
 function createUser (user) {
   return (dispatch) => {
@@ -34,10 +35,7 @@ function login (user) {
         // do not use dispatch action to redirect but react-router
         dispatch({
           type: 'LOGIN_SUCCESS',
-          payload: {
-            email,
-            token
-          }
+          payload: { email, token }
         })
         browserHistory.replace('/posts')
       } else {
@@ -47,7 +45,16 @@ function login (user) {
   }
 }
 
+function logout () {
+  return (dispatch) => {
+    dispatch({ type: 'user:signout' })
+    browserHistory.replace('/')
+    return myFetch.delete({ url: SIGNOUT_PATH })
+  }
+}
+
 export {
   createUser,
-  login
+  login,
+  logout
 }

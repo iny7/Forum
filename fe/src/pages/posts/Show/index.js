@@ -34,27 +34,25 @@ export default class Show extends React.Component {
     if (isLoading || !post) return LoadingUI()
 
     const comments = post && post.comments || []
+    const { title, author, created_at, liked, likes_count } = post
+    const likeIcon = liked ? 'fa fa-heart' : 'fa fa-heart-o'
     return (
       <div className="application-page posts-show-page">
         <Header title="文章详情" HeaderRight={HeaderRight} />
         { post ? (
           <main className="cx-body">
-            <h3 className="title">{post.title}</h3>
+            <h3 className="title">{title}</h3>
             <div className="info">
               <img className="avatar sm" src="/images/avatar.png" alt=""/>
-              <span>{post.author}</span>
-              <time>{sdf(post.created_at)}</time>
+              <span>{author}</span>
+              <time>{sdf(created_at)}</time>
               <span>{`阅读${4521}`}</span>
             </div>
             <section className="content" dangerouslySetInnerHTML={{ __html: post.content }}></section>
             <div className="operation">
-              <div className="mark">
-                <i className="fa fa-bookmark"></i>
-                <span>18</span>
-              </div>
               <div className="like">
-                <i className="fa fa-heart-o"></i>
-                <span>57</span>
+                <i className={likeIcon}></i>
+                <span>{likes_count}</span>
               </div>
             </div>
             <section className="comments">

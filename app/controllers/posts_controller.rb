@@ -5,13 +5,17 @@ class PostsController < ApplicationController
 
 	def index
 		if params[:type].present?
-			@posts = Post.where(category: params[:type])
+			posts = Post.where(category: params[:type])
 		else
-			@posts = Post.all
+			posts = Post.all
 		end
+		user_id = current_user.try(:id)
 		render_json({
-			posts: @posts
+			posts: posts.as_json(user_id: user_id)
 		})
+		# render_json({
+		# 	posts: posts.map { |p| p.as_json(user_id) }
+		# })
 	end
 
 	def update
@@ -31,8 +35,9 @@ class PostsController < ApplicationController
 
 	def show
 		post = Post.find_by_id(params[:id])
+		user_id = current_user.try(:id)
 		render_json({
-			post: post
+			post: post.as_json(user_id: user_id)
 		})
 	end
 

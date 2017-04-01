@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
 
   has_many :posts, dependent: :destroy
   # has_many :comments, dependent: :destroy#, class_name: 'Posts::Comment'
-  has_many :likes, as: :likeable
+  has_many :likes, dependent: :destroy#, as: :likeable
 
   # before_create :generate_auth_token
   after_create :create_profile

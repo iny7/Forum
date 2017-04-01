@@ -1,6 +1,7 @@
 import React from 'react'
-import { Link, browserHistory } from 'react-router'
+import { Link } from 'react-router'
 
+import { logout } from 'actions/user'
 import Header from 'components/Header'
 import Footer from 'components/Footer'
 import './style.sass'
@@ -14,8 +15,7 @@ const HeaderRight = () => (
 
 export default class Account extends React.Component {
   handleSignOut = () => {
-    this.props.dispatch({ type: 'user:signout' })
-    browserHistory.replace('/')
+    this.props.dispatch(logout())
   }
   render () {
     return (

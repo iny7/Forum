@@ -27,7 +27,13 @@ function request (params) {
 
   const url = `${params.url}.json${qs}`
 
-  return fetch(url, { method, credentials, headers, body }).then(response => response.json())
+  return fetch(url, {
+    method, credentials, headers, body
+  }).then(response => {
+    return response.text().then((text) => {
+      return text ? JSON.parse(text) : {}
+    })
+  })
 }
 
 export default {

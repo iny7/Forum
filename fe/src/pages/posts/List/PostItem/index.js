@@ -10,7 +10,8 @@ export default class PostItem extends React.Component {
   }
   render () {
     const { post } = this.props
-    const { id, title, author, content, comments, created_at } = post
+    const { id, title, author, content, comments, created_at, liked, likes_count } = post
+    const likeIcon = liked ? 'fa fa-heart' : 'fa fa-heart-o'
     return (
       <li className="article-item">
         <Link to={`/posts/${id}`}>
@@ -23,8 +24,8 @@ export default class PostItem extends React.Component {
           <p className="article-content">{content}</p>
           <div className="article-info">
             <div className="like">
-              <span className="fa fa-heart-o"></span>
-              <span>57</span>
+              <span className={likeIcon}></span>
+              <span>{likes_count}</span>
             </div>
             <div className="comment">
               <span className="fa fa-commenting-o"></span>

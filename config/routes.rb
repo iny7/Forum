@@ -6,12 +6,6 @@ Rails.application.routes.draw do
     sessions: 'users/sessions',
     registrations: 'users/registrations'
   }
-  # devise_for :users, ActiveAdmin::Devise.config.merge({
-  #   controllers: {
-  #     sessions: 'users/sessions',
-  #     registrations: 'users/registrations'
-  #   }
-  # })
 
   scope module: :users do
     resources :profiles, only: [:update]
@@ -23,10 +17,17 @@ Rails.application.routes.draw do
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
 
   # Example resource route (maps HTTP verbs to controller actions automatically):
+  concern :likeable do
+    member do
+      post :like
+      delete :unlike
+    end
+  end
 
-  resources :posts, except: [:new, :edit] do
+  resources :posts, except: [:new, :edit], concerns: :likeable do
     resources :comments, except: [:new, :edit]
   end
+  resources :comments, only: [], concerns: :likeable
   # resources :messages
 
   # Example resource route with options:
@@ -69,6 +70,5 @@ Rails.application.routes.draw do
   #     resources :products
   #   end
 
-  # root 'application#index'
   get '/(*all)' => 'application#index'
 end

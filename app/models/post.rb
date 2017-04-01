@@ -3,9 +3,9 @@ class Post < ActiveRecord::Base
   has_many :comments, dependent: :destroy#, class_name: 'Posts::Comment'
   has_many :likes, dependent: :destroy, as: :likeable
 
-  default_scope -> { where(headlines: false) }
+  default_scope     -> { where(headlines: false) }
   scope :picked,    -> { where(category: 'picked') }
-  scope :anonymous,    -> { where(category: 'anonymous') }
+  scope :anonymous, -> { where(category: 'anonymous') }
 
   validates :title, presence:true
 
@@ -24,6 +24,8 @@ class Post < ActiveRecord::Base
       content:        content,
       comments:       comments,
       created_at:     created_at,
+      liked:          is_liked(options[:user_id]),
+      likes_count:    likes.count,
       author:         user.try(:name),
       author_avatar:  user.try(:avatar)
       # category:       Post.human_attribute_name("categories.#{self.category}"),
@@ -34,4 +36,11 @@ class Post < ActiveRecord::Base
       # votes_count:    votes_count,
     }
   end
+
+  private
+
+  def is_liked(user_id)
+    likes.map(&:user_id).include?(user_id)
+  end
+
 end

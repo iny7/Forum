@@ -58,11 +58,13 @@ ActiveRecord::Schema.define(version: 20170331133553) do
   add_index "comments", ["user_id"], name: "comments_index_on_user_id", using: :btree
 
   create_table "likes", force: :cascade do |t|
-    t.integer  "likeable_id",   limit: 4
-    t.string   "likeable_type", limit: 255
+    t.integer  "user_id",       limit: 4,   null: false
+    t.integer  "likeable_id",   limit: 4,   null: false
+    t.string   "likeable_type", limit: 255, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+  add_index :likes, [:likeable_type, :likeable_id], name: 'likes_index_on_id_and_type'
 
   create_table "posts", force: :cascade do |t|
     t.string   "title",      limit: 255
