@@ -12,7 +12,14 @@ class User < ActiveRecord::Base
 
   has_many :posts, dependent: :destroy
   # has_many :comments, dependent: :destroy#, class_name: 'Posts::Comment'
-  has_many :likes, dependent: :destroy#, as: :likeable
+  # has_many :likes, dependent: :destroy#, as: :likeable
+
+  # 关注的人
+  has_many :relationships, foreign_key: "follower_id", dependent: :destroy
+  has_many :followed_users, through: :relationships, source: :followed
+  # 粉丝
+  has_many :reverse_relationships, foreign_key: "followed_id", class_name: "Relationship", dependent: :destroy
+  has_many :followers, through: :reverse_relationships, dependent: :destroy#, source: :follower
 
   # before_create :generate_auth_token
   after_create :create_profile
@@ -20,6 +27,18 @@ class User < ActiveRecord::Base
   # validates :name, presence: true
 
   def generate_profile(nickname)
+  end
+
+  def following?(other_user)
+    relationships.find_by_followed_id(other_user.id)
+  end
+
+  def follow!(other_ser)
+    relationships.create!(followed_id: other_user.id)
+  end
+
+  def unfollow!(other_user)
+    relationships.find_by_followed_id(other_user.id).destroy
   end
 
 end

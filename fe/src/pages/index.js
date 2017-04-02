@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Router, IndexRoute, Route, browserHistory } from 'react-router'
+import { Router, IndexRoute, Route, Redirect, browserHistory } from 'react-router'
 
 import Home from './home'
 import Post from './posts'
@@ -21,16 +21,21 @@ function getToken () {
 
 function loginRequired (nextState, replace) {
   if (!getToken()) {
-    replace('/signin')
+    replace('/users/signin')
+  }
+}
+function loginRedirect (nextState, replace) {
+  if (getToken()) {
+    replace('/posts')
   }
 }
 
 const ApplicationPage = () => (
   <Router history={browserHistory}>
-    <Route path="/">
+    <Route path="/" onEnter={loginRedirect}>
       <IndexRoute component={Home.Welcome} />
       <Route path="/users/sign_in" component={Home.SignIn} />
-      <Route path="/signup" component={Home.SignUp} />
+      <Route path="/users/sign_up" component={Home.SignUp} />
     </Route>
     <Route onEnter={loginRequired}>
       <Route path="/posts" onEnter={() => { document.body.className = 'posts-page' }}>
@@ -57,6 +62,7 @@ const ApplicationPage = () => (
         <Route path="follows" component={User.Follows}></Route>
         <Route path="fans" component={User.Fans}></Route>
       </Route>
+      <Redirect from='*' to='/' />
     </Route>
   </Router>
 )

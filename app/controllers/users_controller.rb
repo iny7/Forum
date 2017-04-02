@@ -2,13 +2,16 @@ class UsersController < ApplicationController
   skip_before_action :verify_authenticity_token
   skip_before_action :login_required, only: [:create]
 
-  def create
-    @user = User.new(user_params)
-    if @user.save
-      render json: { token: @user.auth_token }
-    else
-      render json: { erros: @user.errors }
-    end
+  def show
+    u = User.find(params[:id])
+    render_json({
+      user: {
+        id: u.id,
+        name: u.name,
+        followers_count: u.followers.count,
+        following_count: u.followed_users.count,
+      }
+    })
   end
 
   private

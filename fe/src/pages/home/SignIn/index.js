@@ -58,7 +58,7 @@ export default class SignIn extends React.Component {
           </form>
         </main>
         <footer>
-          <Link className="link" to="/signup">新用户注册</Link>
+          <Link className="link" to="/users/sign_up">新用户注册</Link>
         </footer>
       </div>
     )

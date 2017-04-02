@@ -11,6 +11,15 @@ Rails.application.routes.draw do
     resources :profiles, only: [:update]
   end
 
+  resources :users, only: [:show] do
+    scope module: :users do
+      resource :relationship, only: [:create, :destroy] do
+        get :following
+        get :followers
+      end
+    end
+  end
+
   # resource :wechat, only: [:show, :create]
 
   # Example of named route that can be invoked with purchase_url(id: product.id)
@@ -25,7 +34,7 @@ Rails.application.routes.draw do
   end
 
   resources :posts, except: [:new, :edit], concerns: :likeable do
-    resources :comments, except: [:new, :edit]
+    resources :comments, only: [:index, :create, :destroy]
   end
   resources :comments, only: [], concerns: :likeable
   # resources :messages

@@ -14,7 +14,16 @@ function createUser (user) {
       url: SIGNUP_PATH,
       data: { user }
     }).then((result) => {
-      console.log(result)
+      const { email, authentication_token: token } = result
+      if (token) {
+        dispatch({
+          type: 'LOGIN_SUCCESS',
+          payload: { email, token }
+        })
+        browserHistory.replace('/posts')
+      } else {
+        location.reaload()
+      }
     }).catch(e => console.log('Oops, error'))
   }
 }
@@ -39,7 +48,7 @@ function login (user) {
         })
         browserHistory.replace('/posts')
       } else {
-        // this.setState({})
+        location.reaload()
       }
     }).catch(e => console.log('sign in error'))
   }

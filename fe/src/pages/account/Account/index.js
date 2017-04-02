@@ -9,7 +9,7 @@ import './style.sass'
 const HeaderRight = () => (
   <div className="header-right">
     <Link className="fa fa-id-card-o" to="/account/edit"></Link>
-    <Link className="fa fa-cog" to="/account/settings"></Link>
+    {/* <Link className="fa fa-cog" to="/account/settings"></Link> */}
   </div>
 )
 

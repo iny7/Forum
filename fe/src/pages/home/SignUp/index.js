@@ -10,32 +10,25 @@ export default class SignIn extends React.Component {
   constructor () {
     super()
     this.state = {
-      name: '',
+      email: '',
       password: '',
       password2: ''
     }
   }
   handleChange = (e) => {
     const { name, value } = e.target
-    this.setState(Object.assign({}, this.state, {
-      [name]: value
-    }))
+    this.setState({ [name]: value })
   }
   handleSubmit = (e) => {
     e.preventDefault()
-    console.log(e)
-    const { name, password, password2 } = this.state
+    const { email, password, password2 } = this.state
     if (password !== password2) {
       return alert('请确认两次输入的密码相同')
     }
-    const user = {
-      name,
-      password
-    }
-    this.props.dispatch(createUser(user))
+    this.props.dispatch(createUser({ email, password }))
   }
   render () {
-    const { name, password, password2 } = this.state
+    const { email, password, password2 } = this.state
     return (
       <div className="signin-page">
         <header>
@@ -43,12 +36,12 @@ export default class SignIn extends React.Component {
         </header>
         <main>
           <h1 className="logo">论坛</h1>
-          <form action="/create_login_session" onSubmit={this.handleSubmit}>
+          <form onSubmit={this.handleSubmit}>
             <div className="form-group">
               <input
-                type="text"
-                value={name}
-                name="name"
+                type="email"
+                name="email"
+                value={email}
                 onChange={this.handleChange}
                 className="form-control"
                 placeholder="用户名" />
@@ -80,7 +73,7 @@ export default class SignIn extends React.Component {
           </form>
         </main>
         <footer>
-          <Link className="link" to="/signin">已有帐号登录</Link>
+          <Link className="link" to="/users/sign_in">已有帐号登录</Link>
         </footer>
       </div>
     )

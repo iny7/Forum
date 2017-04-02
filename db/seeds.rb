@@ -46,7 +46,7 @@ comments = Comment.create([
   },
   {
     post_id: 1,
-    user_id: 1,
+    user_id: 2,
     content: '我是111评论内容!!!!',
     created_at: DateTime.now,
     updated_at: DateTime.now
@@ -57,7 +57,20 @@ comments = Comment.create([
     content: '我是222评论内容!!!!',
     created_at: DateTime.now,
     updated_at: DateTime.now
+  },
+  {
+    post_id: 3,
+    user_id: 2,
+    content: '我是222评论内容!!!!',
+    created_at: DateTime.now,
+    updated_at: DateTime.now
   }
 ])
 
-AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password')
+AdminUser.create([
+  {
+    email: 'admin@example.com',
+    password: 'password',
+    password_confirmation: 'password'
+  }
+])
