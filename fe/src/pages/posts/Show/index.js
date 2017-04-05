@@ -3,7 +3,6 @@ import sdf from 'utils/sdf'
 
 import Header from 'components/Header'
 import Comment from './Comment'
-import { fetchPost } from 'actions/post'
 
 import './style.sass'
 
@@ -25,7 +24,7 @@ export default class Show extends React.Component {
   componentWillMount () {
     const { dispatch, router } = this.props
     const { id } = router.params
-    dispatch(fetchPost(id))
+    dispatch({ type: 'fetch:post', payload: { id } })
   }
   render () {
     const { isLoading, data: { posts }, params: { id } } = this.props
@@ -59,7 +58,7 @@ export default class Show extends React.Component {
               <h4 className="comments-title">{`评论 ${comments.length}`} </h4>
               { comments.map((c, i) => {
                 return <Comment key={i} comment={c}/>
-              })}
+              }) }
             </section>
           </main>
         ) : <div>Loading</div>}
@@ -70,6 +69,3 @@ export default class Show extends React.Component {
 Show.propTypes = {
   dispatch: PropTypes.func
 }
-// Show.contextTypes = {
-//   router: React.PropTypes.object
-// }

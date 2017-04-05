@@ -1,6 +1,7 @@
 import React from 'react'
+import { browserHistory } from 'react-router'
 import Header from 'components/Header'
-import { createPost } from 'actions/user'
+import { createPost } from 'actions/post'
 // import MyEditor from './MyEditor'
 
 import './style.sass'
@@ -13,7 +14,9 @@ export default class New extends React.Component {
       title: title.value,
       content: content.value
     }
-    this.props.dispatch(createPost(post))
+    this.props.dispatch(createPost(post, () => {
+      browserHistory.replace('/posts')
+    }))
   }
   render () {
     return (

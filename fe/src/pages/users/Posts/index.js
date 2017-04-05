@@ -3,6 +3,9 @@ import Header from 'components/Header'
 import Footer from 'components/Footer'
 
 export default class Posts extends Component {
+  componentWillMount () {
+    // dispatch()
+  }
   render () {
     return (
       <div className="application-page">

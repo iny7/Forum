@@ -1,8 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router'
 
-import { fetchPosts } from 'actions/post'
-
 import './style.sass'
 import Carousel from './Carousel'
 import PostItem from './PostItem'
@@ -40,7 +38,7 @@ class PostNav extends React.Component {
 export default class List extends React.Component {
   componentWillMount () {
     const { dispatch } = this.props
-    dispatch(fetchPosts())
+    dispatch({ type: 'fetch:posts' })
   }
   render () {
     const { data, isLoading, router } = this.props

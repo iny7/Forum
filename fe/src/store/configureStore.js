@@ -1,26 +1,19 @@
-import thunkMiddleware from 'redux-thunk'
+// import thunkMiddleware from 'redux-thunk'
 // import createLogger from 'redux-logger'
+import createSagaMiddleware from 'redux-saga'
 import { createStore, applyMiddleware } from 'redux'
 import rootReducer from 'pages/reducers'
+import rootSaga from 'sagas/rootSaga'
 
 // const loggerMiddleware = createLogger()
+const sageMiddleware = createSagaMiddleware()
 
 export default function configureStore () {
   const store = createStore(
     rootReducer,
-    applyMiddleware(
-      thunkMiddleware // 允许我们 dispatch() 函数
-      // loggerMiddleware
-    )
+    applyMiddleware(sageMiddleware)
   )
-
-  // if (module.hot) {
-  //   // Enable Webpack hot module replacement for reducers
-  //   module.hot.accept('../reducers', () => {
-  //     const nextReducer = require('../reducers').default
-  //     store.replaceReducer(nextReducer)
-  //   })
-  // }
+  sageMiddleware.run(rootSaga)
 
   return store
 }

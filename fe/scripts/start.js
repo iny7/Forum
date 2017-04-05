@@ -1,19 +1,118 @@
+process.env.NODE_ENV = 'development'
+
+var chalk = require('chalk')
+var formatWebpackMessages = require('react-dev-utils/formatWebpackMessages')
 var webpack = require('webpack')
 var WebpackDevServer = require('webpack-dev-server')
 var config = require('../configs/webpack.config.dev.js')
 
-new WebpackDevServer(webpack(config), {
-  publicPath: config.output.publicPath,
-  hot: true,
-  historyApiFallback: true,
-  headers: { 'Access-Control-Allow-Origin': '*' },
-  stats: {
-    colors: true,
-    chunks: false
-  }
-}).listen(config.devServerPort, config.devServerHost, function (err, result) {
-  if (err) {
-    return console.log(err)
-  }
-  console.log('Listening at http://' + config.devServerHost + ':' + config.devServerPort)
-})
+var devServerHost = '0.0.0.0'
+// must match config.webpack.dev_server.port
+var devServerPort = 3808
+
+var compiler
+
+function setupCompiler (host, port) {
+  // "Compiler" is a low-level interface to Webpack.
+  // It lets us listen to some events and provide our own custom messages.
+  compiler = webpack(config)
+
+  // "invalid" event fires when you have changed a file, and Webpack is
+  // recompiling a bundle. WebpackDevServer takes care to pause serving the
+  // bundle, so if you refresh, it'll wait instead of serving the old one.
+  // "invalid" is short for "bundle invalidated", it doesn't imply any errors.
+  compiler.plugin('invalid', function() {
+    console.log('Compiling...')
+  })
+
+  var isFirstCompile = true
+
+  // "done" event fires when Webpack has finished recompiling the bundle.
+  // Whether or not you have warnings or errors, you will get this event.
+  compiler.plugin('done', function(stats) {
+    // We have switched off the default Webpack output in WebpackDevServer
+    // options so we are going to "massage" the warnings and errors and present
+    // them in a readable focused way.
+    var messages = formatWebpackMessages(stats.toJson({}, true))
+    var isSuccessful = !messages.errors.length && !messages.warnings.length
+    var showInstructions = isSuccessful && isFirstCompile
+
+    if (isSuccessful) {
+      console.log(chalk.green('Compiled successfully!'))
+    }
+
+    if (showInstructions) {
+      isFirstCompile = false
+    }
+
+    // If errors exist, only show errors.
+    if (messages.errors.length) {
+      console.log(chalk.red('Failed to compile.'))
+      console.log()
+      messages.errors.forEach(message => {
+        console.log(message)
+        console.log()
+      })
+      return
+    }
+
+    // Show warnings if no errors were found.
+    if (messages.warnings.length) {
+      console.log(chalk.yellow('Compiled with warnings.'))
+      console.log()
+      messages.warnings.forEach(message => {
+        console.log(message)
+        console.log()
+      })
+      // Teach some ESLint tricks.
+      console.log('You may use special comments to disable some warnings.')
+      console.log('Use ' + chalk.yellow('// eslint-disable-next-line') + ' to ignore the next line.')
+      console.log('Use ' + chalk.yellow('/* eslint-disable */') + ' to ignore all warnings in a file.')
+    }
+  })
+}
+
+function runDevServer (host, port, protocol) {
+  var devServer = new WebpackDevServer(compiler, {
+    // Silence WebpackDevServer's own logs since they're generally not useful.
+    // It will still show compile warnings and errors with this setting.
+    clientLogLevel: 'none',
+    // Enable hot reloading server. It will provide /sockjs-node/ endpoint
+    // for the WebpackDevServer client so it can learn when the files were
+    // updated. The WebpackDevServer client is included as an entry point
+    // in the Webpack development configuration. Note that only changes
+    // to CSS are currently hot reloaded. JS changes will refresh the browser.
+    hot: true,
+    // It is important to tell WebpackDevServer to use the same "root" path
+    // as we specified in the config. In development, we always serve from /.
+    publicPath: config.output.publicPath,
+    // WebpackDevServer is noisy by default so we emit custom message instead
+    // by listening to the compiler events with `compiler.plugin` calls above.
+    quiet: true,
+    // Reportedly, this avoids CPU overload on some systems.
+    // https://github.com/facebookincubator/create-react-app/issues/293
+    watchOptions: {
+      ignored: /node_modules/
+    },
+    host: host,
+    headers: { 'Access-Control-Allow-Origin': '*' }
+  })
+
+  // Launch WebpackDevServer.
+  devServer.listen(port, (err, result) => {
+    if (err) {
+      return console.log(err)
+    }
+
+    console.log(chalk.cyan('Starting the development server...'))
+    console.log()
+  })
+}
+
+function run (port) {
+  var host = devServerHost
+  setupCompiler(host, port, 'http')
+  runDevServer(host, port, 'http')
+}
+
+run(devServerPort)

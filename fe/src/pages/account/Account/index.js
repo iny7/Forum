@@ -44,13 +44,13 @@ export default class Account extends React.Component {
           </section>
           <section className="section-3">
             <div className="item">
-              <span className="fa fa-star"></span>
-              <h4>我的收藏</h4>
+              <span className="fa fa-minus-square"></span>
+              <h4>黑名单</h4>
               <span className="fa fa-angle-right"></span>
             </div>
             <div className="item">
-              <span className="fa fa-group"></span>
-              <h4>我的好友</h4>
+              <span className="fa fa-history"></span>
+              <h4>浏览历史</h4>
               <span className="fa fa-angle-right"></span>
             </div>
             <div className="item" onClick={this.handleSignOut}>

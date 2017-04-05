@@ -14,6 +14,17 @@ class UsersController < ApplicationController
     })
   end
 
+  def posts
+    u = User.find(params[:id])
+    render_json({ posts: u.posts })
+  end
+
+  def comments
+    # TODO user comment :through
+    u = User.find(params[:id])
+    render_json({ comments: u.comments })
+  end
+
   private
   def user_params
     params.fetch(:user, {}).permit(

@@ -1,6 +1,6 @@
 import myFetch from 'utils/myFetch'
 
-function fetchPosts (category) {
+export function fetchPosts (category) {
   return (dispatch) => {
     dispatch({ type: 'fetching:data' })
     return myFetch.get({
@@ -13,7 +13,7 @@ function fetchPosts (category) {
   }
 }
 
-function fetchPost (id, cb) {
+export function fetchPost (id, cb) {
   return (dispatch) => {
     dispatch({ type: 'fetching:data' })
     return myFetch.get({
@@ -27,7 +27,7 @@ function fetchPost (id, cb) {
   }
 }
 
-function createPost (post) {
+export function createPost (post, cb) {
   return (dispatch) => {
     dispatch({ type: 'fetching:data' })
     return myFetch.post({
@@ -37,18 +37,12 @@ function createPost (post) {
       dispatch({ type: 'fetching:data:success' })
       if (result.status_code === 200) {
         const { post } = result
-        dispatch({ type: 'CREATE_POST_SUCCESS', payload: { post }
-        })
+        dispatch({ type: 'CREATE_POST_SUCCESS', payload: { post } })
+        cb && cb()
       } else {
         const { error } = result
         console.error('创建post失败了!!!!', error)
       }
     })
   }
-}
-
-export {
-  fetchPosts,
-  fetchPost,
-  createPost
 }

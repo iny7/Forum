@@ -25,21 +25,14 @@ module.exports = {
     filename: '[name].js'
   },
   resolve: {
-    modulesDirectories: [
+    modules: [
       path.join(__dirname, '../src'),
       path.join(__dirname, '../node_modules')
     ],
-    extensions: ['', '.js']
+    extensions: ['.js']
   },
   module: {
-    preLoaders: [
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loader: 'eslint'
-      }
-    ],
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
         exclude: /node_modules/,
@@ -48,14 +41,24 @@ module.exports = {
       {
         test: /\.sass$/,
         exclude: /node_modules/,
-        loaders: ['style-loader', 'css-loader', 'sass-loader']
+        loaders: [
+          {
+            loader: 'style-loader'
+          },
+          {
+            loader: 'css-loader'
+          },
+          {
+            loader: 'sass-loader',
+            options: {
+              data: '@import "styles/variable";@import "styles/mixin";',
+              includePaths: [
+                path.resolve(__dirname, '../src')
+              ]
+            }
+          }
+        ]
       }
-    ]
-  },
-  sassLoader: {
-    data: '@import "styles/variable";@import "styles/mixin";',
-    includePaths: [
-      path.resolve(__dirname, '../src')
     ]
   },
   plugins: [

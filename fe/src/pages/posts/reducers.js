@@ -15,7 +15,6 @@ export default function (state = initialState, action) {
       }
 
     case 'RECEIVE_POST':
-      console.log('RECEIVE_POST')
       return {
         ...state,
         isFetching: false,
