@@ -12,9 +12,11 @@
   "rules": {
     "arrow-parens": 0,
     "semi": [2, "never"],
-    "no-console": 0
+    "no-console": 0,
+    "react/prop-types": 0
   },
   "env": {
+    "browser": true,
     "amd": true,
     "es6": true,
     "node": true

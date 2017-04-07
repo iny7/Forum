@@ -1,57 +1,50 @@
 import React, {Component} from 'react'
 import {
-  TouchableOpacity,
   StyleSheet,
-  Text,
-  View,
+  TabBarIOS,
+  Icon,
+  Text
 } from 'react-native'
 
 export default class Footer extends Component {
   render() {
     return (
-      <View style={styles.wrap}>
-        <TouchableOpacity
-            onPress={this.props.clickLeft}
-            activeOpacity={0.8}
-            style={styles.button}>
-          <Text>我的</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-            onPress={this.props.clickRight}
-            activeOpacity={0.8}
-            style={styles.button}>
-          <Text>设置</Text>
-        </TouchableOpacity>
-      </View>
+      <TabBarIOS
+        barTintColor="#fff"
+        tintColor="#1b95e0">
+        <Icon.TabBarItem
+        title="主页"
+        iconName="ios-home-outline"
+        selectedIconName="ios-home"
+        onPress={ () => this.changeTab('主页') }
+        selected={ this.state.selectedTab === '主页' }>
+          <Text>主页</Text>
+        </Icon.TabBarItem>
+        <Icon.TabBarItem
+        title="通知"
+        iconName="ios-notifications-outline"
+        selectedIconName="ios-notifications"
+        onPress={ () => this.changeTab('通知') }
+        selected={ this.state.selectedTab === '通知'}>
+          <Text>通知</Text>
+        </Icon.TabBarItem>
+        <Icon.TabBarItem
+        title="私信"
+        iconName="ios-mail-outline"
+        selectedIconName="ios-mail"
+        onPress={ () => this.changeTab('私信') }
+        selected={ this.state.selectedTab === '私信'}>
+          <Text>私信</Text>
+        </Icon.TabBarItem>
+        <Icon.TabBarItem
+        title="我"
+        iconName="ios-person-outline"
+        selectedIconName="ios-person"
+        onPress={ () => this.changeTab('我') }
+        selected={ this.state.selectedTab === '我'}>
+          <Text>我</Text>
+        </Icon.TabBarItem>
+      </TabBarIOS>
     )
   }
 }
-
-var styles = StyleSheet.create({
-  wrap: {
-    position: 'absolute',
-    bottom: 15,
-    left: 0,
-    right: 0,
-    height: 50,
-    borderWidth: 1,
-    borderColor: 'red',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    backgroundColor: '#FFF'
-  },
-  button: {
-    width: 50,
-    height: 50,
-    marginHorizontal: 15,
-    borderWidth: 3,
-    borderRadius: 10,
-    borderColor: 'green',
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  textActive: {
-    color: '#5288D9',
-  }
-})

@@ -1,10 +1,6 @@
-import React, {Component} from 'react'
-import {
-  AppRegistry,
-  Navigator
-} from 'react-native'
-
+import { AppRegistry } from 'react-native'
 import App from './src/App'
+
 AppRegistry.registerComponent('Forum', () => App)
 
 // import LoginPage from './src/LoginPage';

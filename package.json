@@ -1,6 +1,6 @@
 {
   "name": "Forum",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "and": "react-native run-android",
@@ -9,18 +9,22 @@
   "dependencies": {
     "babel": "^6.23.0",
     "isomorphic-fetch": "^2.2.1",
-    "native-base": "^2.0.12",
+    "native-base": "^2.1.0",
     "react": "^15.4.2",
-    "react-native": "^0.42.0",
-    "react-native-router-flux": "^3.38.0"
+    "react-native": "^0.42.3",
+    "react-native-router-flux": "^3.38.0",
+    "react-native-swiper": "^1.5.4",
+    "react-native-vector-icons": "^4.0.0"
   },
   "devDependencies": {
     "babel-eslint": "^7.1.1",
     "babel-plugin-import": "^1.1.1",
+    "babel-plugin-module-resolver": "^2.7.0",
     "eslint": "^3.17.1",
     "eslint-config-standard": "^7.0.0",
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-react": "^6.10.0",
+    "eslint-plugin-react-native": "^2.3.1",
     "eslint-plugin-standard": "^2.1.1"
   }
 }

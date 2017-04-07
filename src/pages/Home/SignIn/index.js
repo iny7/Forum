@@ -1,13 +1,49 @@
 import React, { Component } from 'react'
 import { TouchableOpacity } from 'react-native'
 import { Actions } from 'react-native-router-flux'
-import { Container, Header, Content, Left, Body, Title, Button, Icon, Text, Form, Item, Input, Label } from 'native-base'
+import { Container, Content, Button, Icon, Text, Form, Item, Input } from 'native-base'
 
 import Logo from 'Forum/src/components/Logo'
 import Util from 'Forum/src/utils'
 
-const { width, height } = Util.size
+const { width } = Util.size
 
+// TODO 定制full button 的borderRadius为6
+export default class SignIn extends Component {
+  handleSignIn () {
+    alert('登录')
+    // Actions.welcome()
+  }
+  render () {
+    return (
+      <Container style={styles.container}>
+        <Icon onPress={Actions.pop} name='close' style={styles.close} />
+        <Content style={styles.content}>
+          <Form style={{backgroundColor: '#fff'}}>
+            <Logo />
+            <Item regular style={styles.item}>
+              <Icon active name='person' style={styles.icon} />
+              <Input placeholder='用户名'/>
+            </Item>
+            <Item regular style={styles.item}>
+              <Icon active name='lock' style={styles.icon} />
+              <Input placeholder='密码'/>
+            </Item>
+            <Button full onPress={this.handleSignIn}><Text>登录</Text></Button>
+            <TouchableOpacity style={styles.bottom}>
+              <Text style={styles.tip}>还没有帐号?</Text>
+              <Text
+                style={{...styles.tip, ...styles.signup}}
+                onPress={() => Actions.signup({type: 'replace', direcion: 'horizontal'})}>
+                点击注册
+              </Text>
+            </TouchableOpacity>
+          </Form>
+        </Content>
+      </Container>
+    )
+  }
+}
 const styles = {
   container: {
     flex: 1,
@@ -59,44 +95,5 @@ const styles = {
     color: '#27364E',
     textDecorationLine: 'underline',
     textDecorationColor: 'red'
-  }
-}
-
-// TODO 定制full button 的borderRadius为6
-export default class SignIn extends Component {
-  handleSignIn () {
-    Actions.welcome()
-  }
-  handleSignUp () {
-    Actions.signin()
-  }
-  render () {
-    return (
-      <Container style={styles.container}>
-        <Icon onPress={Actions.pop} name='close' style={styles.close} />
-        <Content style={styles.content}>
-          <Form style={{backgroundColor: '#fff'}}>
-            <Logo />
-            <Item regular style={styles.item}>
-              <Icon name='happy' style={styles.icon} />
-              <Input placeholder='Icon Textbox'/>
-            </Item>
-            <Item regular style={styles.item}>
-              <Icon active name='person' style={styles.icon} />
-              <Input placeholder='Icon Textbox'/>
-            </Item>
-            <Item regular style={styles.item}>
-              <Icon active name='lock' style={styles.icon} />
-              <Input placeholder='Icon Textbox'/>
-            </Item>
-            <Button full onPress={this.handleSignUp}><Text>登录</Text></Button>
-            <TouchableOpacity style={styles.bottom} onPress={Actions.signup}>
-              <Text style={styles.tip}>还没有帐号?</Text>
-              <Text style={{...styles.tip, ...styles.signup}}>点击注册</Text>
-            </TouchableOpacity>
-          </Form>
-        </Content>
-      </Container>
-    )
   }
 }
