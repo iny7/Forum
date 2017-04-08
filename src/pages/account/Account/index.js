@@ -168,70 +168,80 @@ export default class Account extends Component{
     </AnimatableView>
   )
   handleFollowing = () => {
-    Actions.following
+    Actions.following()
   }
   handleFollowers = () => {
-    Actions.followings
+    Actions.followers()
   }
   handlePosts = () => {
-    Actions.followings
+    Actions.myPosts()
   }
   render() {
     return(
-      <HeaderImageScrollView
-        minHeight={64} maxHeight={230}
-        minOverlayOpacity={0.3} maxOverlayOpacity={0.6}
-        fadeOutForeground
-        renderHeader={renderHeader}
-        renderForeground={renderForeground}
-        renderFixedForeground={this.renderFixedForeground}>
+      <View style={{ position: 'absolute', top: 0 }}>
 
-        <TriggeringView
-          onBeginHidden={() => {
-            this.navTitleView.fadeInUp(200)
-          }}
-          onDisplay={() => {
-            this.navTitleView.fadeOut(200)
-          }}>
-        </TriggeringView>
+        <HeaderImageScrollView
+          minHeight={64} maxHeight={230}
+          minOverlayOpacity={0.3} maxOverlayOpacity={0.6}
+          fadeOutForeground
+          renderHeader={renderHeader}
+          renderForeground={renderForeground}
+          renderFixedForeground={this.renderFixedForeground}>
 
-        {/* 关注 / 粉丝 / 帖子 */}
-        <View style={styless.infoBar}>
-          <TouchableOpacity style={styless.info} onPress={this.handleFollowing}>
-            <Text style={styless.num}>22</Text>
-            <Text style={styless.label}>关注</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styless.info} onPress={this.handleFollowers}>
-            <Text>5</Text>
-            <Text>粉丝</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styless.info} onPress={this.handlePosts}>
-            <Text>399</Text>
-            <Text>帖子</Text>
-          </TouchableOpacity>
-        </View>
+          <TriggeringView
+            onBeginHidden={() => {
+              this.navTitleView.fadeInUp(200)
+            }}
+            onDisplay={() => {
+              this.navTitleView.fadeOut(200)
+            }}>
+          </TriggeringView>
 
-        <View>
-          <List containerStyle={styless.list}>
-            <ListItem
-              title={'收藏'}
-              leftIcon={{ name: 'star' }}
-              onPress={() => { alert(1)}}
-            />
-            <ListItem
-              title={'黑名单'}
-              leftIcon={{ name: 'block' }}
-              onPress={() => { alert(1)}}
-            />
-            <ListItem
-              title={'退出登录'}
-              leftIcon={{ name: 'exit-to-app' }}
-              onPress={() => { alert(1)}}
-            />
-          </List>
-        </View>
+          {/* 关注 / 粉丝 / 帖子 */}
+          <View style={styless.infoBar}>
+            <TouchableOpacity style={styless.info} onPress={this.handleFollowing}>
+              <Text style={styless.num}>22</Text>
+              <Text style={styless.label}>关注</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styless.info} onPress={this.handleFollowers}>
+              <Text>5</Text>
+              <Text>粉丝</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styless.info} onPress={this.handlePosts}>
+              <Text>399</Text>
+              <Text>帖子</Text>
+            </TouchableOpacity>
+          </View>
 
-      </HeaderImageScrollView>
+          <View>
+            <List containerStyle={styless.list}>
+              <ListItem
+                title={'个人资料'}
+                leftIcon={{ name: 'account-circle' }}
+                onPress={() => { alert(1)}}
+              />
+              <ListItem
+                title={'收藏'}
+                leftIcon={{ name: 'star' }}
+                onPress={() => { alert(1)}}
+              />
+              <ListItem
+                title={'黑名单'}
+                leftIcon={{ name: 'block' }}
+                onPress={() => { alert(1)}}
+              />
+              <ListItem
+                title={'退出登录'}
+                leftIcon={{ name: 'exit-to-app' }}
+                onPress={() => { alert(1)}}
+              />
+            </List>
+          </View>
+
+          <View style={{ height: 400 }}></View>
+
+        </HeaderImageScrollView>
+      </View>
     )
   }
 }
