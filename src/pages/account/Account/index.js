@@ -1,281 +1,237 @@
 import React, { Component } from 'react'
 
 import { Image, StyleSheet, Text, TouchableHighlight, PanResponder,
-  ScrollView, TabBarIOS, StatusBar, SegmentedControlIOS,View
+  ScrollView, TouchableOpacity, StatusBar, SegmentedControlIOS,View
 } from 'react-native'
-import { Container, Content, Left, Body, Right, ListItem, Thumbnail } from 'native-base'
 
-import Icon from 'react-native-vector-icons/Ionicons'
+// import { Container, Content, Left, Body, Right, Icon, List, ListItem, Thumbnail } from 'native-base'
+import { Actions } from 'react-native-router-flux'
+
+import HeaderImageScrollView, { TriggeringView } from 'react-native-image-header-scroll-view'
+import { View as AnimatableView } from 'react-native-animatable'
+import { List, ListItem } from 'react-native-elements'
+
+import rem from 'images/rem.png'
+import source from 'images/cmw.jpg'
+
+// import Icon from 'react-native-vector-icons/Ionicons'
 import Util from 'Forum/src/utils'
+
+import styless from './styles'
+
+const styles1 = StyleSheet.create({
+  header: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+  },
+  bg: {
+    width: '100%',
+    height: '100%'
+  },
+})
+const renderHeader = (props) => {
+  // alert(Object.keys(props).join(','))
+  // alert(props._offset)
+  return (
+    <View style={styles1.header}>
+      <Image source={rem} blurRadius={10} style={styles1.bg} />
+    </View>
+  )
+}
+
+const avatarWidth = 80
+const styles2 = StyleSheet.create({
+  navbar: {
+    position: 'absolute',
+    top: 0,
+    paddingTop: 18,
+    width: '100%',
+    height: 64,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  title: {
+    backgroundColor: 'transparent',
+    fontSize: 18
+  },
+  avatar: {
+    position: 'absolute',
+    bottom: 80,
+    left: '50%',
+    width: avatarWidth,
+    height: avatarWidth,
+    marginLeft: -avatarWidth / 2,
+    borderRadius: avatarWidth / 2,
+  }
+})
+
+const renderForeground = () => {
+  return (
+    <View style={styles1.header}>
+      <View style={styles2.navbar}>
+        <Text style={styles2.title}>我的</Text>
+      </View>
+      <Image source={source} style={styles2.avatar} />
+    </View>
+  )
+}
+
+const styles3 = StyleSheet.create({
+  image: {
+    height: 230,
+    width: '100%',
+    alignSelf: 'stretch',
+    resizeMode: 'cover',
+  },
+  title: {
+    fontSize: 20,
+  },
+  name: {
+    fontWeight: 'bold',
+  },
+  section: {
+    padding: 20,
+    borderBottomWidth: 1,
+    borderBottomColor: '#cccccc',
+    backgroundColor: 'white',
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  sectionContent: {
+    fontSize: 16,
+    textAlign: 'justify',
+  },
+  keywords: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    flexWrap: 'wrap',
+  },
+  keywordContainer: {
+    backgroundColor: '#999999',
+    borderRadius: 10,
+    margin: 10,
+    padding: 10,
+  },
+  keyword: {
+    fontSize: 16,
+    color: 'white',
+  },
+  titleContainer: {
+    flex: 1,
+    alignSelf: 'stretch',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  imageTitle: {
+    color: 'white',
+    backgroundColor: 'transparent',
+    fontSize: 24,
+  },
+  navTitleView: {
+    height: 64,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: 16,
+    opacity: 0,
+  },
+  navTitle: {
+    color: 'white',
+    fontSize: 18,
+    backgroundColor: 'transparent',
+  },
+  sectionLarge: {
+    height: 600,
+  },
+})
+const renderFixedForeground = () => {
+  return (
+    <Animatable.View
+      style={styles3.navTitleView}
+      ref={(navTitleView) => { this.navTitleView = navTitleView }}>
+      <Text style={styles3.navTitle}>123</Text>
+    </Animatable.View>
+  )
+}
 
 export default class Account extends Component{
   componentDidMount() {
     StatusBar.setBarStyle(0)
   }
-
+  renderFixedForeground = () => (
+    <AnimatableView style={styles3.navTitleView}
+      ref={(ref) => { this.navTitleView = ref }}>
+      <Text style={styles3.navTitle}>12344</Text>
+    </AnimatableView>
+  )
+  handleFollowing = () => {
+    Actions.following
+  }
+  handleFollowers = () => {
+    Actions.followings
+  }
+  handlePosts = () => {
+    Actions.followings
+  }
   render() {
     return(
-      <ScrollView>
-        <TwitterUser />
-      </ScrollView>
-    )
-  }
-}
+      <HeaderImageScrollView
+        minHeight={64} maxHeight={230}
+        minOverlayOpacity={0.3} maxOverlayOpacity={0.6}
+        fadeOutForeground
+        renderHeader={renderHeader}
+        renderForeground={renderForeground}
+        renderFixedForeground={this.renderFixedForeground}>
 
-class TwitterUser extends Component {
-  constructor() {
-    super()
-    this.state = {
-      scrollEnabled: false,
-      scale: 1,
-      iconTop: 95,
-      bannerTop:0,
-      opacity:0,
-    }
-  }
+        <TriggeringView
+          onBeginHidden={() => {
+            this.navTitleView.fadeInUp(200)
+          }}
+          onDisplay={() => {
+            this.navTitleView.fadeOut(200)
+          }}>
+        </TriggeringView>
 
-  _scrollEnabled = false
-  _previousTop = 0
-  _iconTop = 95
-  _scale = 1
-  _bannerTop = 0
-  _opacity = 0
-  _minTop = -192
-  _userStyle = {}
-  user = (null : ?{ setNativeProps(props: Object): void })
-
-  _updatePosition() {
-     this.user && this.user.setNativeProps(this._userStyles)
-  }
-
-  _endMove(evt, gestureState) {
-    this._previousTop = this._userStyles.style.top
-  }
-
-  componentWillMount() {
-    this._panResponder = PanResponder.create({
-      onStartShouldSetPanResponder: (evt, gestureState) => true,
-      onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
-      onMoveShouldSetPanResponder: (evt, gestureState) => {
-        return gestureState.dy/gestureState.dx!=0
-      },
-      onPanResponderGrant: (evt, gestureState) => {
-
-      },
-      onPanResponderMove: (evt, gestureState) => {
-        this._userStyles.style.top = this._previousTop + gestureState.dy
-        this._scale = 1+this._userStyles.style.top/162.5
-        this._iconTop = 95 - this._userStyles.style.top/4.16
-        this._bannerTop = 0
-        this._opacity = 0
-        // this._scrollEnabled = false
-        if (this._userStyles.style.top< -62.5) {
-          this._scale = 0.6
-          this._iconTop = 110
-          this._bannerTop = -this._userStyles.style.top-62.5
-          this._opacity = Math.pow((-this._userStyles.style.top-62.5)/129.5,0.5)
-        }
-        if (this._userStyles.style.top>0) {
-          this._userStyles.style.top = 0
-          this._scale = 1
-          this._iconTop = 95
-        }
-        if (this._userStyles.style.top < this._minTop) {
-          this._userStyles.style.top = this._minTop
-          this._opacity = 1
-          this._bannerTop = 129.5
-          // this._scrollEnabled = true
-        }
-
-        this.setState({
-          // scrollEnabled: this._scrollEnabled,
-          scale: this._scale,
-          iconTop: this._iconTop,
-          bannerTop: this._bannerTop,
-          opacity: this._opacity
-        })
-
-        this._updatePosition()
-      },
-      onPanResponderTerminationRequest: (evt, gestureState) => true,
-      onPanResponderRelease: (evt, gestureState) => this._endMove(evt, gestureState),
-      onPanResponderTerminate: (evt, gestureState) => this._endMove(evt, gestureState),
-      onShouldBlockNativeResponder: (event, gestureState) => true,
-    })
-
-    this._userStyles = {
-      style: {
-        top: this._previousTop,
-      },
-    }
-
-  }
-
-  componentDidMount() {
-    this._updatePosition()
-  }
-
-  render () {
-    let panProps = this.state.scrollEnabled?{}:{...this._panResponder.panHandlers}
-    return(
-      <View ref={(user) => {this.user = user}} style={styles.userContainer} {...panProps}>
-        <View style={styles.userPanel}>
-          <Image style={[styles.banner,{top: this.state.bannerTop}]} source={{uri:'banner'}}></Image>
-          <View style={[styles.iconContainer,{top:this.state.iconTop,transform:[{scale:this.state.scale}]}]}><Image style={styles.icon} source={{uri:"icon"}}></Image></View>
-          <View style={styles.userControl}>
-            <TouchableHighlight style={styles.controlIcon}>
-              <Icon name="ios-settings" color="#8999a5" size={20}></Icon>
-            </TouchableHighlight>
-            <TouchableHighlight style={styles.controlBtn}>
-              <Icon name="ios-people" color="#8999a5" size={20}></Icon>
-            </TouchableHighlight>
-            <TouchableHighlight style={styles.controlBtn2}>
-              <Text style={styles.controlBtnText}>编辑个人资料</Text>
-            </TouchableHighlight>
-          </View>
-          <View style={styles.userInfo}>
-            <Text style={styles.userInfoName}>Github</Text>
-            <Text style={styles.userInfoAccount}>@Github</Text>
-            <View style={styles.userInfoFollow}>
-              <Text style={styles.userInfoFollowing}><Text style={styles.fontEm}>183</Text> 正在关注</Text>
-              <Text style={styles.userInfoFollower}><Text style={styles.fontEm}>830k</Text> 关注者</Text>
-            </View>
-          </View>
-          {this.state.bannerTop<=0?<View></View>:<Image style={[styles.banner,{top: this.state.bannerTop}]} source={{uri:'banner'}}></Image>}
-          {this.state.bannerTop<=0?<View></View>:<Image style={[styles.banner,{top: this.state.bannerTop, opacity:this.state.opacity}]} source={{uri:'bannerBlur'}}></Image>}
-          <Text style={{position:"absolute",left:Util.size.width/2-30, fontSize:20, fontWeight:"500", top: this.state.bannerTop+90,opacity:this.state.opacity, backgroundColor:"transparent", color:"#fff"}}>Github</Text>
-          <View style={styles.segment}>
-            <SegmentedControlIOS values={['推文', '媒体', '喜欢']}  selectedIndex={0} tintColor="#2aa2ef"/>
-          </View>
+        {/* 关注 / 粉丝 / 帖子 */}
+        <View style={styless.infoBar}>
+          <TouchableOpacity style={styless.info} onPress={this.handleFollowing}>
+            <Text style={styless.num}>22</Text>
+            <Text style={styless.label}>关注</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styless.info} onPress={this.handleFollowers}>
+            <Text>5</Text>
+            <Text>粉丝</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styless.info} onPress={this.handlePosts}>
+            <Text>399</Text>
+            <Text>帖子</Text>
+          </TouchableOpacity>
         </View>
-        <ScrollView contentInset={{top:0}} style={styles.detailScroll} scrollEnabled={this.state.scrollEnabled}>
-          <View style={{width:Util.size.width,backgroundColor:"#f5f8fa"}}>
-            <Image style={{width:Util.size.width, height:0.835*Util.size.width, resizeMode:"contain"}} source={{uri:'moreinfo'}}></Image>
-          </View>
-        </ScrollView>
-      </View>
+
+        <View>
+          <List containerStyle={styless.list}>
+            <ListItem
+              title={'收藏'}
+              leftIcon={{ name: 'star' }}
+              onPress={() => { alert(1)}}
+            />
+            <ListItem
+              title={'黑名单'}
+              leftIcon={{ name: 'block' }}
+              onPress={() => { alert(1)}}
+            />
+            <ListItem
+              title={'退出登录'}
+              leftIcon={{ name: 'exit-to-app' }}
+              onPress={() => { alert(1)}}
+            />
+          </List>
+        </View>
+
+      </HeaderImageScrollView>
     )
   }
 }
-
-const styles = StyleSheet.create({
-  userContainer:{
-    width: Util.size.width,
-    height: Util.size.height-50,
-    backgroundColor:"#fff",
-    position:"absolute",
-    top:0,
-    left:0,
-  },
-  detailScroll:{
-    position:"absolute",
-    top: 300,
-    backgroundColor:"#f5f8fa",
-    width: Util.size.width,
-    height: Util.size.height-350,
-    left:0,
-    borderTopWidth:Util.pixel,
-    borderTopColor:"#9eacb6"
-  },
-  userPanel:{
-    flex:1,
-    height:300,
-  },
-  banner:{
-    width: Util.size.width,
-    height:125,
-    position:"absolute",
-    top:0,
-    left:0
-  },
-  iconContainer:{
-    position:"absolute",
-    left:10,
-    top:95,
-    borderWidth:5,
-    borderColor:"#fff",
-    borderRadius:5,
-  },
-  icon:{
-    width:68,
-    height:68
-  },
-  userControl:{
-    height:55,
-    position:"absolute",
-    top:125,
-    width: 200,
-    right:10,
-    flexDirection:"row",
-    alignItems:"center",
-    justifyContent:"space-between"
-  },
-  controlBtn:{
-    borderColor:"#8999a5",
-    borderWidth:1,
-    paddingTop:3,paddingLeft:5,paddingBottom:3,paddingRight:5,
-    borderRadius:3,
-    width:40,
-    height:30,
-    alignItems:"center",
-    justifyContent:"center"
-  },
-  controlBtn2:{
-    borderColor:"#8999a5",
-    borderWidth:1,
-    paddingTop:3,paddingLeft:5,paddingBottom:3,paddingRight:5,
-    borderRadius:3,
-    width:120,
-    height:30,
-    alignItems:"center",
-    justifyContent:"center"
-  },
-  controlIcon:{
-    width: 30
-  },
-  controlBtnText:{
-    color:"#8999a5",
-    fontSize:14
-  },
-  userInfo:{
-    width: Util.size.width,
-    position:"absolute",
-    top: 165,
-    paddingTop:15, paddingLeft:15, paddingBottom:15,
-    left:0,
-    height:90,
-  },
-  userInfoName:{
-    color:"#292f33",
-    fontSize:20,
-    fontWeight:"500",
-    paddingBottom:5
-  },
-  userInfoAccount:{
-    color:"#66757f",
-    paddingBottom:5
-  },
-  userInfoFollower:{
-    color:"#95a4ae",
-    width:110
-  },
-  userInfoFollowing:{
-    color:"#95a4ae",
-    width:110
-  },
-  userInfoFollow:{
-    flexDirection:"row"
-  },
-  fontEm:{
-    color:"#292f33",
-    fontWeight:"500"
-  },
-  segment:{
-    position: "absolute",
-    top: 263,
-    left:0,
-    width: Util.size.width-15,
-    paddingLeft:15,
-    height:40,
-  },
-})

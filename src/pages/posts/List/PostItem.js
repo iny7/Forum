@@ -4,7 +4,7 @@ import { StyleSheet, View, Image, TouchableOpacity, Text } from 'react-native'
 import { Actions } from 'react-native-router-flux'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
-const source = {uri: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1491500452747&di=4c7c6e59925883f3926f18516ae3285b&imgtype=0&src=http%3A%2F%2Fi.guancha.cn%2Fnews%2F2015%2F10%2F16%2F20151016135551745.jpg'}
+import source from 'images/cmw.jpg'
 
 export default class PostItem extends Component {
   handleEnter = () => {
@@ -68,6 +68,7 @@ const styles = StyleSheet.create({
   avatar: {
     width: 24,
     height: 24,
+    borderRadius: 12,
     marginRight: 10
   },
   author: {

@@ -5,13 +5,13 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 const I18N = {
   posts: '首页',
   messages: '私信',
-  account: '我的'
+  mine: '我的'
 }
 
 const iconMap = {
   posts: 'home',
   messages: 'commenting',
-  account: 'user'
+  mine: 'user'
 }
 const styles = StyleSheet.create({
   button: {

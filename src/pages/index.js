@@ -53,9 +53,10 @@ export default class Application extends Component {
           <Scene key="main" tabs initial
             tabBarStyle={styles.tabBarStyle}
             tabBarSelectedItemStyle={styles.tabBarSelectedItemStyle}>
+
             <Scene key="posts" icon={TabIcon}>
               {/* 文章列表 */}
-              <Scene initial title="首页" key="post-list" component={Post.List} />
+              <Scene  title="首页" key="post-list" component={Post.List} />
               {/* 文章详情 */}
               <Scene key="post-show" title="详情" component={Post.Show} />
             </Scene>
@@ -64,7 +65,10 @@ export default class Application extends Component {
             {/* 私信 */}
             <Scene key="messages" title="私信" component={Message.List} icon={TabIcon} />
             {/* 我的 */}
-            <Scene key="account" hideNavBar component={Account.Account} icon={TabIcon} />
+            <Scene key="account" />
+              <Scene initial key="mine" icon={TabIcon} hideNavBar component={Account.Account}></Scene>
+              <Scene key="following" component={Account.Following}></Scene>
+              <Scene key="followers" component={Account.Followers}></Scene>
           </Scene>
 
         </Scene>
