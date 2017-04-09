@@ -28,7 +28,7 @@ const getSceneStyle = (/* NavigationSceneRendererProps */ props, computedProps) 
   const isMinePage = ['mine'].indexOf(sceneName) !== -1
 
   const noMarginTop = computedProps.hideNavBar || isMinePage
-  const noMarginBottom = !computedProps.hideTabBar
+  const noMarginBottom = computedProps.hideTabBar
   if (computedProps.isActive) {
     style.marginTop = noMarginTop ? 0 : 64
     style.marginBottom = noMarginBottom ? 0 : 50
@@ -70,20 +70,20 @@ export default class Application extends Component {
             {/* 文章 */}
             <Scene key="posts" icon={TabIcon}>
               {/* 文章列表 */}
-              <Scene  title="首页" key="post-list" component={Post.List} />
+              <Scene title="首页" key="post-list" component={Post.List} />
               {/* 文章详情 */}
-              <Scene key="post-show" title="详情" component={Post.Show} />
+              <Scene initial key="post-show" title="详情" component={Post.Show} />
             </Scene>
 
             {/* 私信 */}
             <Scene key="messages" title="私信" component={Message.List} icon={TabIcon} />
 
             {/* 我的 */}
-            <Scene initial key="account" icon={TabIcon}>
-              <Scene key="mine" title="我的" initial navigationBarStyle={styles.fixedNavBar} component={Account.Account}></Scene>
-              <Scene key="following" title="关注" hideNavBar={false} component={Account.Following}></Scene>
-              <Scene key="followers" title="粉丝" hideNavBar={false} component={Account.Followers}></Scene>
-              <Scene key="myPosts" title="发表" hideNavBar={false} component={Account.Followers}></Scene>
+            <Scene key="account" icon={TabIcon}>
+              <Scene key="mine" title="我的" navigationBarStyle={styles.fixedNavBar} component={Account.Account}></Scene>
+              <Scene key="following" title="关注" component={Account.Following}></Scene>
+              <Scene key="followers" title="粉丝" component={Account.Followers}></Scene>
+              <Scene key="myPosts" title="发表" component={Account.Followers}></Scene>
             </Scene>
 
           </Scene>
