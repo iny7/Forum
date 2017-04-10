@@ -8,42 +8,47 @@ import PostItem from './PostItem'
 import Header from 'components/Header'
 import Footer from 'components/Footer'
 
-class PostNav extends React.Component {
-  render () {
-    const { type } = this.props
-    return (
-      <ul className="article-header">
-        <li>
-          <Link to={{pathname: '/posts'}} className={!type ? 'active' : ''}>
-            {'最新'}
-          </Link>
-        </li>
+const PostNav = ({ category }) => (
+  <ul className="article-header">
+    <li>
+      <Link to={{pathname: '/posts'}} className={!category ? 'active' : ''}>
+        {'最新'}
+      </Link>
+    </li>
 
-        <li>
-          <Link to={{pathname: '/posts', query: {type: 'picked'}}} activeClassName="active">
-            {'精选'}
-          </Link>
-        </li>
+    <li>
+      <Link to={{pathname: '/posts', query: {category: 'picked'}}} activeClassName="active">
+        {'精选'}
+      </Link>
+    </li>
 
-        <li>
-          <Link to={{pathname: '/posts', query: {type: 'anonymous'}}} activeClassName="active">
-            {'匿名'}
-          </Link>
-        </li>
-      </ul>
-    )
-  }
-}
+    <li>
+      <Link to={{pathname: '/posts', query: {category: 'anonymous'}}} activeClassName="active">
+        {'匿名'}
+      </Link>
+    </li>
+  </ul>
+)
 
 export default class List extends React.Component {
   componentWillMount () {
-    const { dispatch } = this.props
-    dispatch({ type: 'fetch:posts' })
+    const { dispatch, location } = this.props
+    const { category } = location.query
+    this.category = category
+    dispatch({ type: 'fetch:post:by:category', payload: { category } })
+  }
+  componentWillReceiveProps (nProps) {
+    const { dispatch, location } = nProps
+    const { category } = location.query
+    if (category !== this.category) {
+      this.category = category
+      dispatch({ type: 'fetch:post:by:category', payload: { category } })
+    }
   }
   render () {
     const { data, isLoading, router } = this.props
     const { posts } = data
-    const { type } = router.location.query
+    const { category } = router.location.query
     const headlines = []
     return (
       <div className="application-page">
@@ -51,7 +56,7 @@ export default class List extends React.Component {
         <main className="cx-body">
           <section className="article-body">
             <Carousel posts={headlines} />
-            <PostNav type={type} />
+            <PostNav category={category} />
             { isLoading ? '正在加载' : (
               <ul>
                 { posts.map((p, k) => {

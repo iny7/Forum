@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   skip_before_action :login_required, only: [:create]
 
   def show
-    u = User.find(params[:id])
+    u = User.find_by_id(params[:id])
     render_json({
       user: {
         id: u.id,

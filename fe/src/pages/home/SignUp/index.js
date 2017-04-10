@@ -73,7 +73,7 @@ export default class SignIn extends React.Component {
           </form>
         </main>
         <footer>
-          <Link className="link" to="/users/sign_in">已有帐号登录</Link>
+          <Link className="link" to="/signin">已有帐号登录</Link>
         </footer>
       </div>
     )

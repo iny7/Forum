@@ -21,9 +21,10 @@ function getToken () {
 
 function loginRequired (nextState, replace) {
   if (!getToken()) {
-    replace('/users/signin')
+    replace('/')
   }
 }
+
 function loginRedirect (nextState, replace) {
   if (getToken()) {
     replace('/posts')
@@ -32,10 +33,10 @@ function loginRedirect (nextState, replace) {
 
 const ApplicationPage = () => (
   <Router history={browserHistory}>
-    <Route path="/" onEnter={loginRedirect}>
+    <Route name="home" path="/" onEnter={loginRedirect}>
       <IndexRoute component={Home.Welcome} />
-      <Route path="/users/sign_in" component={Home.SignIn} />
-      <Route path="/users/sign_up" component={Home.SignUp} />
+      <Route path="signin" component={Home.SignIn} />
+      <Route path="signup" component={Home.SignUp} />
     </Route>
     <Route onEnter={loginRequired}>
       <Route path="/posts" onEnter={() => { document.body.className = 'posts-page' }}>
@@ -62,8 +63,8 @@ const ApplicationPage = () => (
         <Route path="follows" component={User.Follows}></Route>
         <Route path="fans" component={User.Fans}></Route>
       </Route>
-      <Redirect from='*' to='/' />
     </Route>
+    <Redirect from="*" to='/' />
   </Router>
 )
 

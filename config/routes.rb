@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     resources :profiles, only: [:update]
   end
 
+  get 'users/signin' => 'application#index'
   resources :users, only: [:show] do
     scope module: :users do
       resource :relationship, only: [:create, :destroy] do
@@ -66,13 +67,6 @@ Rails.application.routes.draw do
   #       get 'recent', on: :collection
   #     end
   #   end
-
-  # Example resource route with concerns:
-  #   concern :toggleable do
-  #     post 'toggle'
-  #   end
-  #   resources :posts, concerns: :toggleable
-  #   resources :photos, concerns: :toggleable
 
   # Example resource route within a namespace:
   #   namespace :admin do

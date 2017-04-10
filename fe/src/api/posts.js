@@ -1,10 +1,19 @@
 import myFetch from 'utils/myFetch'
 
-export function fetchPosts (category) {
+export function fetchPostsByUserId (userId) {
+  return new Promise((resolve) => {
+    myFetch.get({
+      url: `users/${userId}/posts`
+    }).then(({ posts }) => {
+      resolve(posts)
+    })
+  })
+}
+export function fetchPostsByCategory (category) {
   return new Promise((resolve) => {
     myFetch.get({
       url: '/posts',
-      data: category ? { type: category } : ''
+      data: { category }
     }).then(({ posts }) => {
       resolve(posts)
     }).catch((err) => {

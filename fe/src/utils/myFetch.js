@@ -1,10 +1,14 @@
-const { localStorage } = window
 import fetch from 'isomorphic-fetch'
 
 function getQueryString (params = {}) {
   const esc = encodeURIComponent
   return Object.keys(params).map((k) => {
-    return esc(k) + '=' + esc(params[k])
+    const val = params[k]
+    if (val) {
+      return esc(k) + '=' + esc(val)
+    } else {
+      return ''
+    }
   }).join('&')
 }
 

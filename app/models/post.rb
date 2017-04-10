@@ -21,6 +21,7 @@ class Post < ActiveRecord::Base
     {
       id:             id,
       title:          title,
+      category:       category,
       content:        content,
       comments:       comments,
       created_at:     created_at,

@@ -4,22 +4,16 @@ class PostsController < ApplicationController
 	# http_basic_authenticate_with name: "dhh", password: "secret", except: [:index, :show]
 
 	def index
-		if params[:type].present?
-			posts = Post.where(category: params[:type])
-		else
-			posts = Post.all
-		end
+		category = params[:category].present? ? params[:category] : 'newest'
+		posts = Post.where(category: category)
 		user_id = current_user.try(:id)
 		render_json({
 			posts: posts.as_json(user_id: user_id)
 		})
-		# render_json({
-		# 	posts: posts.map { |p| p.as_json(user_id) }
-		# })
 	end
 
 	def update
-		@post = Post.find(params[:id])
+		post = Post.find(params[:id])
 		if @post.update(post_params)
 			redirect_to @post
 		else
@@ -58,6 +52,6 @@ class PostsController < ApplicationController
 
 	private
   def post_params
-    params.require(:post).permit(:title, :content)
+    params.require(:post).permit(:title, :category, :content)
   end
 end
