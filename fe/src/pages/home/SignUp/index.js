@@ -2,17 +2,15 @@ const { alert } = window
 import React from 'react'
 import { Link } from 'react-router'
 
-import { createUser } from 'actions/user'
-
 import './style.sass'
 
 export default class SignIn extends React.Component {
   constructor () {
     super()
     this.state = {
-      email: '',
-      password: '',
-      password2: ''
+      email: 'b@b.com',
+      password: '12345678',
+      password2: '12345678'
     }
   }
   handleChange = (e) => {
@@ -25,7 +23,7 @@ export default class SignIn extends React.Component {
     if (password !== password2) {
       return alert('请确认两次输入的密码相同')
     }
-    this.props.dispatch(createUser({ email, password }))
+    this.props.dispatch({ type: 'signup:request', payload: { email, password } })
   }
   render () {
     const { email, password, password2 } = this.state

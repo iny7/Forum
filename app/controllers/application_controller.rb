@@ -1,12 +1,13 @@
 class ApplicationController < ActionController::Base
-
+  # before_action :skip_session
   protect_from_forgery with: :null_session
   # 422 unprocessable entity
   skip_before_action :verify_authenticity_token
 
-  acts_as_token_authentication_handler_for User#, unless: lambda { |controller| controller.request.format.html? }
+  # before_filter :authenticate_user!, unless: lambda { |controller| controller.request.format == :json }
+  before_filter :layout_only, :if => lambda { |controller| controller.request.format == :html }
 
-  # before_action :authenticate_user!
+  acts_as_token_authentication_handler_for User#, unless: lambda { |controller| controller.request.format.html? }
 
   def index
     layout_only
@@ -17,6 +18,10 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  # def skip_session
+  #   request.session_options[:skip] = true
+  # end
 
   def layout_only
     render text: nil, layout: true

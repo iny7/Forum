@@ -9,9 +9,11 @@ Rails.application.routes.draw do
 
   scope module: :users do
     resources :profiles, only: [:update]
+    get '/account' => 'account#show'
+    # resource :account, only: [:show]
   end
 
-  get 'users/signin' => 'application#index'
+  # get 'users/signin' => 'application#index'
   resources :users, only: [:show] do
     scope module: :users do
       resource :relationship, only: [:create, :destroy] do
@@ -74,6 +76,7 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
-
+  get 'users/sign_in' => 'application#index'
+  get 'users/sign_up' => 'application#index'
   get '/(*all)' => 'application#index'
 end

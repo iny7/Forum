@@ -7,9 +7,9 @@ class PostsController < ApplicationController
 		category = params[:category].present? ? params[:category] : 'newest'
 		posts = Post.where(category: category)
 		user_id = current_user.try(:id)
-		render_json({
+		render json: {
 			posts: posts.as_json(user_id: user_id)
-		})
+		}
 	end
 
 	def update

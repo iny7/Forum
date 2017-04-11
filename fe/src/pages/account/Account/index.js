@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router'
+import myFetch from 'utils/myFetch'
 
-import { logout } from 'actions/user'
 import Header from 'components/Header'
 import Footer from 'components/Footer'
 import './style.sass'
@@ -13,35 +13,66 @@ const HeaderRight = () => (
   </div>
 )
 
+const InfoBar = ({ user }) => {
+  const { followers_count, following_count, posts_count } = user
+  return (
+    <section className="section-2">
+      <Link className="item focus" to="/users/1/follows">
+        <div className="num">{following_count}</div>
+        <div className="attr">关注</div>
+      </Link>
+      <Link className="item fans" to="/users/1/fans">
+        <div className="num">{followers_count}</div>
+        <div className="attr">粉丝</div>
+      </Link>
+      <Link className="item posts" to="/users/1/posts">
+        <div className="num">{posts_count}</div>
+        <div className="attr">帖子</div>
+      </Link>
+    </section>
+  )
+}
+
+const Profile = ({ user }) => (
+  <section className="section-1">
+    <img src="/images/bg.jpeg" alt="" className="account-bg"/>
+    <img src="/images/avatar.png" alt="" className="avatar"/>
+    <h3 className="name">{user.name}</h3>
+    <p className="desc">一个脱离了高级趣味的人</p>
+  </section>
+)
+
 export default class Account extends React.Component {
+  state = {
+    loading: false,
+    user: {}
+  }
+  componentWillMount () {
+    this.setState({
+      loading: true
+    })
+    myFetch.get({
+      url: '/account'
+    }).then(res => {
+      this.setState({
+        loading: false,
+        user: res.user
+      })
+    })
+  }
   handleSignOut = () => {
-    this.props.dispatch(logout())
+    this.props.dispatch({ type: 'signout:request' })
   }
   render () {
+    const { loading, user } = this.state
+    if (loading) return null
+
     return (
       <div className="application-page account-index">
         <Header title="我的" HeaderRight={HeaderRight} />
         <main className="cx-body">
-          <section className="section-1">
-            <img src="/images/bg.jpeg" alt="" className="account-bg"/>
-            <img src="/images/avatar.png" alt="" className="avatar"/>
-            <h3 className="name">JAY西元前</h3>
-            <p className="desc">一个脱离了高级趣味的人</p>
-          </section>
-          <section className="section-2">
-            <Link className="item focus" to="/users/1/follows">
-              <div className="num">22</div>
-              <div className="attr">关注</div>
-            </Link>
-            <Link className="item fans" to="/users/1/fans">
-              <div className="num">5</div>
-              <div className="attr">粉丝</div>
-            </Link>
-            <Link className="item posts" to="/users/1/posts">
-              <div className="num">399</div>
-              <div className="attr">帖子</div>
-            </Link>
-          </section>
+          <Profile user={user} />
+          <InfoBar user={user} />
           <section className="section-3">
             <div className="item">
               <span className="fa fa-minus-square"></span>

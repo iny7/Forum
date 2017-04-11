@@ -3,7 +3,9 @@
 import createSagaMiddleware from 'redux-saga'
 import { createStore, applyMiddleware } from 'redux'
 import rootReducer from 'pages/reducers'
-import rootSaga from 'sagas/rootSaga'
+
+import userSaga from 'sagas/userSaga'
+import postSaga from 'sagas/postSaga'
 
 // const loggerMiddleware = createLogger()
 const sageMiddleware = createSagaMiddleware()
@@ -11,9 +13,10 @@ const sageMiddleware = createSagaMiddleware()
 export default function configureStore () {
   const store = createStore(
     rootReducer,
-    applyMiddleware(sageMiddleware)
+    applyMiddleware(sageMiddleware),
   )
-  sageMiddleware.run(rootSaga)
+  sageMiddleware.run(userSaga)
+  sageMiddleware.run(postSaga)
 
   return store
 }

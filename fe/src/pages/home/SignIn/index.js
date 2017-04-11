@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link } from 'react-router'
-import { login } from 'actions/user'
 
 import './style.sass'
 
@@ -27,7 +26,6 @@ export default class SignIn extends React.Component {
   }
   render () {
     const { statucCode } = this.state
-    console.log(this.props)
     return (
       <div className="signin-page">
         <header>

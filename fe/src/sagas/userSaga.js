@@ -7,10 +7,10 @@ import * as Api from 'Api'
 
 function* signin (user) {
   try {
-    const { email, token, msg } = yield call(Api.signin, user)
+    const { email, authentication_token: token, msg } = yield call(Api.signin, user)
     if (token) {
       yield put({ type: 'signin:success', payload: { email, token } })
-      return token
+      return { email, token }
     } else {
       yield put({ type: 'signin:failed', payload: { error: msg } })
     }
@@ -32,16 +32,45 @@ function* signup (user) {
   }
 }
 
+function fromLocal () {
+  const userId = localStorage.getItem('userId')
+  const email = localStorage.getItem('email')
+  const token = localStorage.getItem('token')
+  if (userId && email && token) {
+    return { userId, email, token }
+  }
+}
+
 export default function* userSaga () {
   while (true) {
-    const [ loginUser, signupUser ] = yield [
-      take('signin:request'),
-      take('signup:request')
-    ]
-    console.log(loginUser, signupUser)
-    // const token = yield call(authorize, user)
-    // if (token) {
-    //   yield take()
-    // }
+    console.log('启动user saga, 等待操作')
+    const action = yield take([
+      'auth:request',
+      'signin:request',
+      'signup:request'
+    ])
+    const { type, payload } = action
+    let user
+    switch (type) {
+      case 'auth:request':
+        console.log('从本地读取')
+        user = yield call(fromLocal)
+        break
+      case 'signin:request':
+        console.log('server登录')
+        user = yield call(signin, payload.user)
+        break
+      case 'signup:request':
+        console.log('server注册')
+        user = yield call(signup, payload.user)
+        break
+    }
+    if (user) {
+      yield put({ type: 'auth:success', payload: { user } })
+      console.log('认证成功, 等待登出')
+      yield take('signout:request')
+    } else {
+      console.log('认证失败')
+    }
   }
 }

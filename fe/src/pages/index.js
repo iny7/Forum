@@ -13,10 +13,16 @@ import { Provider } from 'react-redux'
 import configureStore from 'store/configureStore'
 
 const store = configureStore()
+
+store.dispatch({ type: 'auth:request' })
+
 window.store = store
 
 function getToken () {
-  return store.getState().user.token
+  const userId = localStorage.getItem('userId')
+  const email = localStorage.getItem('email')
+  const token = localStorage.getItem('token')
+  return userId && email && token
 }
 
 function loginRequired (nextState, replace) {
@@ -35,8 +41,8 @@ const ApplicationPage = () => (
   <Router history={browserHistory}>
     <Route name="home" path="/" onEnter={loginRedirect}>
       <IndexRoute component={Home.Welcome} />
-      <Route path="signin" component={Home.SignIn} />
-      <Route path="signup" component={Home.SignUp} />
+      <Route path="users/sign_in" component={Home.SignIn} />
+      <Route path="users/sign_up" component={Home.SignUp} />
     </Route>
     <Route onEnter={loginRequired}>
       <Route path="/posts" onEnter={() => { document.body.className = 'posts-page' }}>
