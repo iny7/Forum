@@ -3,31 +3,32 @@ import { StyleSheet } from 'react-native'
 const avatarWidth = 80
 
 const styles = StyleSheet.create({
-  header: {
-    position: 'absolute',
-    width: '100%',
-    height: '100%',
-  },
   bg: {
     width: '100%',
     height: '100%'
   },
+  header: {
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
   avatar: {
-    position: 'absolute',
-    bottom: 80,
-    left: '50%',
     width: avatarWidth,
     height: avatarWidth,
-    marginLeft: -avatarWidth / 2,
     borderRadius: avatarWidth / 2,
+  },
+  name: {
+    top: 15,
+    fontSize: 16,
+    backgroundColor: 'transparent',
   },
   infoBar: {
     width: '100%',
     height: 60,
-    paddingVertical: 10,
     flexDirection: 'row',
   },
   info: {
+    paddingVertical: 10,
     alignSelf: 'stretch',
     justifyContent: 'space-around',
     alignItems: 'center',

@@ -19,5 +19,8 @@
     "amd": true,
     "es6": true,
     "node": true
+  },
+  "globals": {
+    "alert": false
   }
 }

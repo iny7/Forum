@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, Text } from 'react-native'
-
+import { StatusBar } from 'react-native'
 import { Scene, Router } from 'react-native-router-flux'
 
 import TabIcon from 'components/TabIcon'
+
+import styles from './styles'
 
 import Home from './home'
 import Post from './posts'
@@ -19,13 +20,11 @@ const getSceneStyle = (/* NavigationSceneRendererProps */ props, computedProps) 
     shadowOpacity: null,
     shadowRadius: null,
   }
-  // alert(Object.keys(props.scene).join(', '))
-  // alert(Object.keys(props.navigationState).join(', '))
-  // alert(props.navigationState.key, props.navigationState.sceneKey)
-  // alert(Object.keys(props).join(', '))
   const sceneName = props.scene.navigationState.name
-  console.log(sceneName)
+  // "我的"页面使用fixed Navbar, 所以不需要marginTop
   const isMinePage = ['mine'].indexOf(sceneName) !== -1
+  // StatusBar.setBarStyle(isMinePage ? 'light-content' : 'dark-content')
+  // StatusBar.setBarStyle('dark-content')
 
   const noMarginTop = computedProps.hideNavBar || isMinePage
   const noMarginBottom = computedProps.hideTabBar
@@ -35,44 +34,40 @@ const getSceneStyle = (/* NavigationSceneRendererProps */ props, computedProps) 
   }
   return style
 }
-const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: 'transparent', justifyContent: 'center',
-    alignItems: 'center',
-  },
-  tabBarStyle: {
-    backgroundColor: '#f8f8f8',
-  },
-  tabBarSelectedItemStyle: {
-  },
-  fixedNavBar: {
-    backgroundColor: 'transparent',
-    borderBottomWidth: 0
-  }
-})
 
 export default class Application extends Component {
   render () {
     return (
-      <Router getSceneStyle={getSceneStyle}>
-        <Scene key="root">
+      <Router
+        getSceneStyle={getSceneStyle}
+        /* 顶栏样式 */
+        titleStyle={styles.navBarTitle}
+        navigationBarStyle={styles.navBar}
+        barButtonTextStyle={styles.barButtonTextStyle}
+        barButtonIconStyle={styles.barButtonIconStyle}
+        /* 底栏样式 */
+        tabBarStyle={styles.tabBarStyle}
+        tabBarSelectedItemStyle={styles.tabBarSelectedItemStyle}>
 
-          <Scene key="home" hideNavBar hideTabBar>
+        <Scene key="root">
+          {/* 登录前 */}
+          <Scene initial key="home" hideNavBar hideTabBar>
             {/* 欢迎 */}
             <Scene key="welcome" component={Home.Welcome} />
             {/* 登录 */}
-            <Scene key="signin" direction="vertical" component={Home.SignIn} title="Register" />
+            <Scene initial key="signin" direction="vertical" component={Home.SignIn} title="Register" />
             {/* 注册 */}
-            <Scene key="signup" direction="vertical" component={Home.SignUp} title="Login" />
+            <Scene  key="signup" direction="vertical" component={Home.SignUp} title="Login" />
           </Scene>
 
-          <Scene key="main" tabs initial tabBarStyle={styles.tabBarStyle} tabBarSelectedItemStyle={styles.tabBarSelectedItemStyle}>
-
+          {/* 登录后 */}
+          <Scene key="main" tabs>
             {/* 文章 */}
             <Scene key="posts" icon={TabIcon}>
               {/* 文章列表 */}
-              <Scene title="首页" key="post-list" component={Post.List} />
+              <Scene  title="首页" key="post-list" component={Post.List} />
               {/* 文章详情 */}
-              <Scene initial key="post-show" title="详情" component={Post.Show} />
+              <Scene key="post-show" title="详情" component={Post.Show} />
             </Scene>
 
             {/* 私信 */}
@@ -80,7 +75,7 @@ export default class Application extends Component {
 
             {/* 我的 */}
             <Scene key="account" icon={TabIcon}>
-              <Scene key="mine" title="我的" navigationBarStyle={styles.fixedNavBar} component={Account.Account}></Scene>
+              <Scene key="mine" title="我的" titleStyle={{ color: 'white' }} navigationBarStyle={styles.fixedNavBar} component={Account.Account}></Scene>
               <Scene key="following" title="关注" component={Account.Following}></Scene>
               <Scene key="followers" title="粉丝" component={Account.Followers}></Scene>
               <Scene key="myPosts" title="发表" component={Account.Followers}></Scene>

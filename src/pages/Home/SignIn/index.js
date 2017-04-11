@@ -1,99 +1,68 @@
 import React, { Component } from 'react'
-import { TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity } from 'react-native'
+
 import { Actions } from 'react-native-router-flux'
-import { Container, Content, Button, Icon, Text, Form, Item, Input } from 'native-base'
+import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import Logo from 'Forum/src/components/Logo'
-import Util from 'Forum/src/utils'
+import IconInput from 'components/IconInput'
+import Button from 'components/Button'
 
-const { width } = Util.size
+import styles from './styles'
 
-// TODO 定制full button 的borderRadius为6
 export default class SignIn extends Component {
-  handleSignIn () {
-    alert('登录')
+  constructor(props) {
+    super(props)
+    this.state = {
+      username: '',
+      password: ''
+    }
+  }
+  handleSignIn = () => {
+    const { username, password } = this.state
+    alert(username + ', ' + password)
     // Actions.welcome()
   }
-  render () {
-    return (
-      <Container style={styles.container}>
-        <Icon onPress={Actions.pop} name='close' style={styles.close} />
-        <Content style={styles.content}>
-          <Form style={{backgroundColor: '#fff'}}>
-            <Logo />
-            <Item regular style={styles.item}>
-              <Icon active name='person' style={styles.icon} />
-              <Input placeholder='用户名'/>
-            </Item>
-            <Item regular style={styles.item}>
-              <Icon active name='lock' style={styles.icon} />
-              <Input placeholder='密码'/>
-            </Item>
-            <Button full onPress={this.handleSignIn}><Text>登录</Text></Button>
-            <TouchableOpacity style={styles.bottom}>
-              <Text style={styles.tip}>还没有帐号?</Text>
-              <Text
-                style={{...styles.tip, ...styles.signup}}
-                onPress={() => Actions.signup({type: 'replace', direcion: 'horizontal'})}>
-                点击注册
-              </Text>
-            </TouchableOpacity>
-          </Form>
-        </Content>
-      </Container>
-    )
+  handleSignUp () {
+    Actions.signup({ type: 'replace', direcion: 'horizontal' })
   }
-}
-const styles = {
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#FF0'
-  },
-  content: {
-    width: width,
-    backgroundColor: 'lightblue',
-    paddingTop: 120,
-    paddingLeft: 40,
-    paddingRight: 40
-  },
-  close: {
-    position: 'absolute',
-    width: 40,
-    height: 40,
-    lineHeight: 40,
-    textAlign: 'center',
-    right: 30,
-    top: 30,
-    zIndex: 1
-  },
-  item: {
-    borderWidth: 2,
-    borderTopWidth: 2,
-    borderLeftWidth: 2,
-    borderRightWidth: 2,
-    borderBottomWidth: 2,
-    borderRadius: 6,
-    borderColor: 'green',
-    marginBottom: 12
-  },
-  icon: {
-    color: '#999'
-  },
-  bottom: {
-    height: 30,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  tip: {
-    fontSize: 14
-  },
-  signup: {
-    fontSize: 14,
-    color: '#27364E',
-    textDecorationLine: 'underline',
-    textDecorationColor: 'red'
+  handleBack () {
+    Actions.pop()
+  }
+  handleUserName = (username) => {
+    this.setState({ username })
+  }
+  handlePassword = (password) => {
+    this.setState({ password })
+  }
+  render () {
+    const { username, password } = this.state
+    return (
+      <View style={styles.container}>
+        <Icon name='close' size={20} style={styles.close} onPress={this.handleBack} />
+        <Text style={styles.logo}>登录</Text>
+        <View style={styles.content}>
+          <IconInput
+            name="person"
+            placeholder="用户名"
+            value={username}
+            onChange={this.handleUserName}>
+          </IconInput>
+          <IconInput
+            name="lock"
+            placeholder="密码"
+            value={password}
+            secureTextEntry={true}
+            onChange={this.handlePassword}>
+          </IconInput>
+          <Button style={styles.btn} onPress={this.handleSignIn}>登录</Button>
+          <View style={styles.bottom}>
+            <Text>还没有帐号?</Text>
+            <TouchableOpacity style={styles.link} onPress={this.handleSignUp}>
+              <Text style={styles.text}>点击注册</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+    )
   }
 }

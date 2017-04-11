@@ -13,7 +13,7 @@ import source from 'images/cmw.jpg'
 
 import styles from './styles'
 
-export default class Account extends Component{
+export default class Account extends Component {
   // TODO 这个学习完Animation后, 再删掉
   renderFixedForeground = () => (
     <AnimatableView
@@ -22,13 +22,12 @@ export default class Account extends Component{
     </AnimatableView>
   )
   renderHeader = () => (
-    <View style={styles.header}>
-      <Image source={rem} blurRadius={10} style={styles.bg} />
-    </View>
+    <Image source={rem} blurRadius={10} style={styles.bg} />
   )
   renderForeground = () => (
     <View style={styles.header}>
       <Image source={source} style={styles.avatar} />
+      <Text style={styles.name}>三叶</Text>
     </View>
   )
   handleFollowing = () => {

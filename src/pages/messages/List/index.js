@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { StyleSheet, ScrollView, View } from 'react-native'
 import { Container, Content, Left, Body, Right, ListItem, Thumbnail, Text } from 'native-base'
 
-const image = require('Forum/image/down.jpg')
+import source from 'images/qcx.jpg'
 const styles = {
   content: {
     backgroundColor: 'white'
@@ -18,7 +18,7 @@ export default class Message extends Component {
             return (
               <ListItem key={i} avatar>
                 <Left>
-                  <Thumbnail source={image} />
+                  <Thumbnail source={source} />
                 </Left>
                 <Body>
                   <Text>Kumar Pratik</Text>
