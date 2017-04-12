@@ -13,8 +13,11 @@ import Button from 'components/Button'
 import styles from './styles'
 
 export default class SignUp extends Component {
-  handleSignUp () {
-    Actions.signin()
+  handleBack () {
+    Actions.pop()
+  }
+  handleSignIn () {
+    Actions.signin({ type: 'replace', direcion: 'horizontal' })
   }
   render () {
     return (
@@ -37,10 +40,10 @@ export default class SignUp extends Component {
             placeholder="密码"
             onChange={t => t}>
           </IconInput>
-          <Button style={styles.btn} onPress={this.handleSignIn}>注册</Button>
+          <Button style={styles.btn} onPress={this.handleSignUp}>注册</Button>
           <View style={styles.bottom}>
             <Text>已经有帐号了?</Text>
-            <TouchableOpacity style={styles.link} onPress={this.handleSignUp}>
+            <TouchableOpacity style={styles.link} onPress={this.handleSignIn}>
               <Text style={styles.text}>立即登录</Text>
             </TouchableOpacity>
           </View>

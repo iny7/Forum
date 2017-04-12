@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+
 import { StatusBar } from 'react-native'
 import { Scene, Router } from 'react-native-router-flux'
 
@@ -10,6 +12,8 @@ import Home from './home'
 import Post from './posts'
 import Message from './messages'
 import Account from './account'
+
+const RouterWithRedux = connect()(Router)
 
 // define this based on the styles/dimensions you use
 const getSceneStyle = (/* NavigationSceneRendererProps */ props, computedProps) => {
@@ -38,7 +42,7 @@ const getSceneStyle = (/* NavigationSceneRendererProps */ props, computedProps) 
 export default class Application extends Component {
   render () {
     return (
-      <Router
+      <RouterWithRedux
         getSceneStyle={getSceneStyle}
         /* 顶栏样式 */
         titleStyle={styles.navBarTitle}
@@ -53,9 +57,9 @@ export default class Application extends Component {
           {/* 登录前 */}
           <Scene initial key="home" hideNavBar hideTabBar>
             {/* 欢迎 */}
-            <Scene key="welcome" component={Home.Welcome} />
+            <Scene initial key="welcome" component={Home.Welcome} />
             {/* 登录 */}
-            <Scene initial key="signin" direction="vertical" component={Home.SignIn} title="Register" />
+            <Scene key="signin" direction="vertical" component={Home.SignIn} title="Register" />
             {/* 注册 */}
             <Scene  key="signup" direction="vertical" component={Home.SignUp} title="Login" />
           </Scene>
@@ -83,7 +87,7 @@ export default class Application extends Component {
 
           </Scene>
         </Scene>
-      </Router>
+      </RouterWithRedux>
     )
   }
 }
