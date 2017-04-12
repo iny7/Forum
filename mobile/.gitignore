@@ -1,29 +1,5 @@
-# ---- add by rails ----
-
-# Ignore bundler config.
-/.bundle
-
-# Ignore the default SQLite database.
-/db/*.sqlite3
-/db/*.sqlite3-journal
-
-# Ignore all logfiles and tempfiles.
-/log/*
-!/log/.keep
-/tmp
-# Added by webpack-rails
-/node_modules
-/public/webpack
-/public/system
-
-# Added files under /fe
-fe/dist
-/fe/node_modules
-
-*.log
-
-# ---- add by react-native ----
 # OSX
+#
 .DS_Store
 
 # Xcode
