@@ -1,12 +1,31 @@
 module Users
   class ProfilesController < ApplicationController
-    skip_before_action :verify_authenticity_token
+    # skip_before_action :verify_authenticity_token
+
+    def show
+      profile = current_user.profile
+      sex = profile.sex
+      if sex.nil?
+        sexText = 'none'
+      elsif sex == 0
+        sexText = 'boy'
+      else
+        sexText = 'girl'
+      end
+
+      render json: {
+        nickname: profile.nickname,
+        sex: sexText,
+        grade: profile.grade,
+        avatar: profile.avatar,
+        desc: profile.desc
+      }
+    end
 
     def update
-      puts current_user
       profile = current_user.profile
-      avatar = process_image_data(:avatar)
-      profile.avatar = avatar if avatar
+      # avatar = process_image_data(:avatar)
+      # profile.avatar = avatar if avatar
 
       if profile.update_attributes(profile_params)
         render_json({ status_code: 200 })

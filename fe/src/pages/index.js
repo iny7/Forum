@@ -25,13 +25,16 @@ function getToken () {
   return userId && email && token
 }
 
-function loginRequired (nextState, replace) {
+function loginRequired (nextState, replace, next) {
+  console.log(nextState)
   if (!getToken()) {
     replace('/')
   }
+  next()
 }
 
 function loginRedirect (nextState, replace) {
+  console.log(nextState)
   if (getToken()) {
     replace('/posts')
   }

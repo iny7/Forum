@@ -26,9 +26,9 @@ export default function (state = initialState, action) {
       localStorage.setItem('userId', id)
       localStorage.setItem('email', email)
       localStorage.setItem('token', token)
-      setTimeout(() => {
-        browserHistory.replace('/posts')
-      })
+      // setTimeout(() => {
+      //   browserHistory.replace('/posts')
+      // })
       return {
         ...state,
         user

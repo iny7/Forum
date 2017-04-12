@@ -79,10 +79,11 @@ ActiveRecord::Schema.define(version: 20170402134124) do
 
   create_table "profiles", force: :cascade do |t|
     t.integer "user_id",  limit: 4,   null: false
-    t.string  "nickname", limit: 255
+    t.string  "nickname", limit: 255,   default: ""
     t.string  "grade",    limit: 255
     t.boolean "sex"
-    t.string  "avatar",   limit: 255
+    t.attachment :avatar
+    t.string  "desc",     limit: 255,   default: ""
   end
 
   create_table "relationships", force: :cascade do |t|

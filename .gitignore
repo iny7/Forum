@@ -18,6 +18,7 @@
 # Added by webpack-rails
 /node_modules
 /public/webpack
+/public/system
 
 # Added files under /fe
 fe/dist

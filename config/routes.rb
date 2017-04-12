@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   }
 
   scope module: :users do
-    resources :profiles, only: [:update]
+    resource :profiles, only: [:show, :update]
     get '/account' => 'account#show'
     # resource :account, only: [:show]
   end
