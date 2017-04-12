@@ -1,5 +1,5 @@
 import { call, put, takeLatest } from 'redux-saga/effects'
-import * as Api from 'api'
+import * as Api from '../__api__'
 
 function* createPost (action) {
   try {

@@ -1,5 +1,5 @@
 import { call, put, take } from 'redux-saga/effects'
-import * as Api from 'Api'
+import * as Api from '../__api__'
 
 // 1. 登录或注册
 // 2. 根据当前user拿数据, 比如 我的帖子 粉丝等

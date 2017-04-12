@@ -243,8 +243,6 @@ GEM
     thor (0.19.1)
     thread_safe (0.3.5)
     tilt (2.0.5)
-    turbolinks (2.5.3)
-      coffee-rails
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
     uglifier (3.0.0)
@@ -275,23 +273,19 @@ DEPENDENCIES
   auto_migrations!
   byebug
   cancan
-  coffee-rails (~> 4.1.0)
   devise
   draper
   foreman
   haml
   jbuilder (~> 2.0)
-  jquery-rails
   mysql2
   paperclip (~> 5.0.0)
   pundit
   rails (= 4.2.6)
   rails-i18n
-  sass-rails (>= 3.2)
   sdoc (~> 0.4.0)
   simple_token_authentication
   spring
-  turbolinks
   uglifier (>= 1.3.0)
   web-console (~> 2.0)
   webpack-rails
