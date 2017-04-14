@@ -1,4 +1,6 @@
 import { combineReducers } from 'redux'
+import { routerReducer } from 'react-router-redux'
+
 import user from './home/reducers'
 import post from './posts/reducers'
 
@@ -27,7 +29,10 @@ function common (state = initialState, action) {
 }
 
 const rootReducer = combineReducers({
-  common, user, post
+  routing: routerReducer,
+  common,
+  user,
+  post
 })
 
 export default rootReducer

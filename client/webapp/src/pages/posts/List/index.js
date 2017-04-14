@@ -46,10 +46,10 @@ export default class List extends React.Component {
     }
   }
   render () {
-    const { data, isLoading, router } = this.props
-    const { posts } = data
-    const { category } = router.location.query
+    const { posts, isLoading, router } = this.props
+    const { category = 'newest' } = router.location.query
     const headlines = []
+    const result = posts.filter(p => p.category === category)
     return (
       <div className="application-page">
         <Header title="首页" HeaderRight={HeaderRight} />
@@ -59,7 +59,7 @@ export default class List extends React.Component {
             <PostNav category={category} />
             { isLoading ? '正在加载' : (
               <ul>
-                { posts.map((p, k) => {
+                { result.map((p, k) => {
                   return <PostItem key={k} post={p} />
                 }) }
               </ul>

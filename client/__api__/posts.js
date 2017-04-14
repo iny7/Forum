@@ -10,6 +10,7 @@ export function fetchPostsByUserId (userId) {
   })
 }
 export function fetchPostsByCategory (category) {
+  console.log('fetchPostsByCategory')
   return new Promise((resolve) => {
     myFetch.get({
       url: '/posts',

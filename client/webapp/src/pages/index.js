@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Router, IndexRoute, Route, Redirect, browserHistory } from 'react-router'
+import { syncHistoryWithStore } from 'react-router-redux'
 
 import Home from './home'
 import Post from './posts'
@@ -13,10 +14,18 @@ import { Provider } from 'react-redux'
 import configureStore from 'store/configureStore'
 
 const store = configureStore()
+const history = syncHistoryWithStore(browserHistory, store)
 
 store.dispatch({ type: 'auth:request' })
 
+const MB = {}
+MB.posts = () => {
+  return Object.values(store.getState().post.map)
+}
+
+// 方便debug
 window.store = store
+window.MB = MB
 
 function getToken () {
   const userId = localStorage.getItem('userId')
@@ -26,7 +35,6 @@ function getToken () {
 }
 
 function loginRequired (nextState, replace, next) {
-  console.log(nextState)
   if (!getToken()) {
     replace('/')
   }
@@ -34,14 +42,13 @@ function loginRequired (nextState, replace, next) {
 }
 
 function loginRedirect (nextState, replace) {
-  console.log(nextState)
   if (getToken()) {
     replace('/posts')
   }
 }
 
 const ApplicationPage = () => (
-  <Router history={browserHistory}>
+  <Router history={history}>
     <Route name="home" path="/" onEnter={loginRedirect}>
       <IndexRoute component={Home.Welcome} />
       <Route path="users/sign_in" component={Home.SignIn} />

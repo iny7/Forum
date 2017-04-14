@@ -1,6 +1,8 @@
 import { call, put, take } from 'redux-saga/effects'
 import * as Api from '../__api__'
 
+import { replace } from 'react-router-redux'
+
 // 1. 登录或注册
 // 2. 根据当前user拿数据, 比如 我的帖子 粉丝等
 // 3. 登出
@@ -67,7 +69,9 @@ export default function* userSaga () {
     }
     if (user) {
       yield put({ type: 'auth:success', payload: { user } })
-      console.log('认证成功, 等待登出')
+      console.log('认证成功')
+      yield put(replace('/posts'))
+      console.log('重定向到帖子列表页, 等待登出')
       yield take('signout:request')
     } else {
       console.log('认证失败')
