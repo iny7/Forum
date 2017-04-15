@@ -1,4 +1,4 @@
-import myFetch from 'utils/myFetch'
+import myFetch from '../utils/myFetch'
 
 export function fetchPostsByUserId (userId) {
   return new Promise((resolve) => {

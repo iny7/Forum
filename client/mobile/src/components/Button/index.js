@@ -13,15 +13,19 @@ export default class Button extends Component {
     const args = StyleSheet.flatten(style)
 
     // 2. 将文字相关的属性从传入的style上摘下
-    const textStyle = textProps.reduce((prev, item) => {
-      args[item] && (prev[item] = args[item])
-      delete args[item]
-      return prev
-    }, {})
+    const btnStyle = {}
+    const textStyle = {}
+    Object.keys(args).map(k => {
+      if (textProps.includes(k)) {
+        textStyle[k] = args[k]
+      } else {
+        btnStyle[k] = args[k]
+      }
+    })
 
     // 3.分别重新设置Button和Text的属性
     const styles = StyleSheet.create({
-      btn: args,
+      btn: btnStyle,
       text: textStyle
     })
     return (

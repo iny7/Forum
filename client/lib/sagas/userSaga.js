@@ -1,7 +1,5 @@
 import { call, put, take } from 'redux-saga/effects'
-import * as Api from '../__api__'
-
-import { replace } from 'react-router-redux'
+import * as Api from '../api'
 
 // 1. 登录或注册
 // 2. 根据当前user拿数据, 比如 我的帖子 粉丝等
@@ -35,9 +33,16 @@ function* signup (user) {
 }
 
 function fromLocal () {
-  const userId = localStorage.getItem('userId')
-  const email = localStorage.getItem('email')
-  const token = localStorage.getItem('token')
+  let userId, email, token
+  if (typeof global === 'undefined') {
+    // web
+    userId = localStorage.getItem('userId')
+    email = localStorage.getItem('email')
+    token = localStorage.getItem('token')
+  } else {
+    // rn
+
+  }
   if (userId && email && token) {
     return { userId, email, token }
   }
@@ -70,7 +75,12 @@ export default function* userSaga () {
     if (user) {
       yield put({ type: 'auth:success', payload: { user } })
       console.log('认证成功')
-      yield put(replace('/posts'))
+      const payload = {
+        method: 'replace',
+        url: '/posts'
+      }
+      console.log('发出重定向action')
+      yield put({ type: 'route:change', payload })
       console.log('重定向到帖子列表页, 等待登出')
       yield take('signout:request')
     } else {

@@ -7,27 +7,29 @@ import { routerMiddleware, routerReducer } from 'react-router-redux'
 
 // import rootReducer from 'pages/reducers'
 
-import { post, user } from '../../../__reducers__'
+import { post, user } from 'my-lib/reducers'
+import { userSaga, postSaga } from 'my-lib/sagas'
+import routeSaga from './routeSaga'
+
 const rootReducer = combineReducers({
   post,
   user,
   routing: routerReducer
 })
 
-import userSaga from '../../../__sagas__/userSaga'
-import postSaga from '../../../__sagas__/postSaga'
 
 // const loggerMiddleware = createLogger()
-const sageMiddleware = createSagaMiddleware()
+const sagaMiddleware = createSagaMiddleware()
 const historyMiddleware = routerMiddleware(browserHistory)
 
 export default function configureStore () {
   const store = createStore(
     rootReducer,
-    applyMiddleware(sageMiddleware, historyMiddleware),
+    applyMiddleware(sagaMiddleware, historyMiddleware),
   )
-  sageMiddleware.run(userSaga)
-  sageMiddleware.run(postSaga)
+  sagaMiddleware.run(userSaga)
+  sagaMiddleware.run(postSaga)
+  sagaMiddleware.run(routeSaga)
 
   return store
 }

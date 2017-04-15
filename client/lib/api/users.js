@@ -1,4 +1,4 @@
-import myFetch from 'utils/myFetch'
+import myFetch from '../utils/myFetch'
 
 const SIGNIN_PATH = '/users/sign_in'
 const SIGNUP_PATH = '/users'

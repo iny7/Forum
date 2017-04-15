@@ -1,17 +1,31 @@
 import React, { Component } from 'react'
 import { Provider } from 'react-redux'
-import { createStore, applyMiddleware, compose } from 'redux'
+import { createStore, combineReducers, applyMiddleware } from 'redux'
+import createSagaMiddleware from 'redux-saga'
 
-import reducers from './reducers'
-// other imports...
-
-// create store...
-const middleware = [/* ...your middleware (i.e. thunk) */]
-const store = compose(
-  applyMiddleware(...middleware)
-)(createStore)(reducers)
+import { post, user } from 'my-lib/reducers'
+import { userSaga, postSaga } from 'my-lib/sagas'
+// import routeSaga from './routeSaga'
 
 import Router from 'pages'
+// other imports...
+
+const rootReducer = combineReducers({
+  post,
+  user,
+})
+
+const sagaMiddleware = createSagaMiddleware()
+
+const store = createStore(
+  rootReducer,
+  applyMiddleware(sagaMiddleware),
+)
+
+sagaMiddleware.run(userSaga)
+sagaMiddleware.run(postSaga)
+
+store.dispatch({ type: 'auth:request' })
 
 export default class App extends Component {
   render () {
