@@ -10,7 +10,7 @@
 # Ignore all logfiles and tempfiles.
 /log/*
 !/log/.keep
-/tmp
+/server/tmp
 # Added by webpack-rails
 /node_modules
 /public/webpack

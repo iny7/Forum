@@ -1,6 +1,11 @@
 // 浏览器环境下, 使用isomorphic fetch
-if (typeof global === 'undefined') {
-  var fetch = require('isomorphic-fetch')
+let fetch
+if (typeof GLOBAL === 'undefined') {
+  fetch = require('isomorphic-fetch')
+} else {
+  fetch = GLOBAL.fetch
+  // rn使用originalHXR方便在chrome network中调试
+  GLOBAL.XMLHttpRequest = GLOBAL.originalXMLHttpRequest || GLOBAL.XMLHttpRequest
 }
 
 function getQueryString (params = {}) {
@@ -18,6 +23,8 @@ function getQueryString (params = {}) {
 function request (params) {
   const method = params.method || 'GET'
   const credentials = 'include'
+  // const mode = 'no-cors'
+  const mode = 'cors' // default option, can be simply removed
   const headers = params.headers || {
     'Accept': 'application/json',
     'Content-Type': 'application/json',
@@ -31,11 +38,12 @@ function request (params) {
   } else { // POST or PUT
     var body = JSON.stringify(params.data)
   }
+  const prefix = 'http://localhost:3000'
 
-  const url = `${params.url}.json${qs}`
+  const url = `${prefix}${params.url}.json${qs}`
 
   return fetch(url, {
-    method, credentials, headers, body
+    method, credentials, mode, headers, body
   }).then(response => {
     return response.text().then((text) => {
       return text ? JSON.parse(text) : {}

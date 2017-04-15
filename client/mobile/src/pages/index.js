@@ -57,9 +57,9 @@ export default class Application extends Component {
           {/* 登录前 */}
           <Scene initial key="home" hideNavBar hideTabBar>
             {/* 欢迎 */}
-            <Scene initial key="welcome" component={Home.Welcome} />
+            <Scene  key="welcome" component={Home.Welcome} />
             {/* 登录 */}
-            <Scene key="signin" direction="vertical" component={Home.SignIn} title="Register" />
+            <Scene initial key="signin" direction="vertical" component={Home.SignIn} title="Register" />
             {/* 注册 */}
             <Scene  key="signup" direction="vertical" component={Home.SignUp} title="Login" />
           </Scene>

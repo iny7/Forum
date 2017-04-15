@@ -13,13 +13,18 @@ export default class SignIn extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      username: '',
-      password: ''
+      username: 'a@a.com',
+      password: '12345678'
     }
   }
   handleSignIn = () => {
     const { username, password } = this.state
-    alert(username + ', ' + password)
+    const user = {
+      email: username,
+      password: password
+    }
+    this.props.dispatch({ type: 'signin:request', payload: { user } })
+    // alert(username + ', ' + password)
     // Actions.welcome()
   }
   handleSignUp () {

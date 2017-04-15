@@ -12,6 +12,8 @@ gem 'pundit'
 gem 'devise'
 gem 'simple_token_authentication'
 
+gem 'rack-cors', :require => 'rack/cors'
+
 # 图片上传
 gem "paperclip", "~> 5.0.0"
 

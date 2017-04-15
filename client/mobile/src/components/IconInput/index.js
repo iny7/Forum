@@ -7,12 +7,13 @@ import styles from './styles'
 
 export default class IconInput extends Component {
   render () {
-    const { name, placeholder, secureTextEntry, onChange } = this.props
+    const { name, value, placeholder, secureTextEntry, onChange } = this.props
     return (
       <View style={styles.form}>
         <Icon name={name} style={styles.icon} />
         <TextInput
           style={styles.input}
+          value={value}
           placeholder={placeholder}
           onChangeText={onChange}
           secureTextEntry={secureTextEntry}
