@@ -12,9 +12,11 @@ function* signin (user) {
       yield put({ type: 'signin:success', payload: { email, token } })
       return { email, token }
     } else {
+      // 有错误信息
       yield put({ type: 'signin:failed', payload: { error: msg } })
     }
   } catch (e) {
+    // 网络异常
     yield put({ type: 'signin:failed', payload: { error: '???' } })
   }
 }
@@ -61,7 +63,7 @@ export default function* userSaga () {
     switch (type) {
       case 'auth:request':
         console.log('从本地读取')
-        user = yield call(fromLocal)
+        user = payload.user
         break
       case 'signin:request':
         console.log('server登录')
@@ -72,17 +74,12 @@ export default function* userSaga () {
         user = yield call(signup, payload.user)
         break
     }
-    if (user) {
-      yield put({ type: 'auth:success', payload: { user } })
-      console.log('认证成功')
-      const payload = {
-        method: 'replace',
-        url: '/posts'
-      }
-      console.log('发出重定向action')
-      yield put({ type: 'route:change', payload })
-      console.log('重定向到帖子列表页, 等待登出')
+    if (user && user.token) {
+      yield put({ type: 'auth:set:token', payload: { user } })
+      console.log('认证成功, 等待登出')
+
       yield take('signout:request')
+      yield put({ type: 'auth:remove:token' })
     } else {
       console.log('认证失败')
     }

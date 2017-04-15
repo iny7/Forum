@@ -16,7 +16,12 @@ import configureStore from 'store/configureStore'
 const store = configureStore()
 const history = syncHistoryWithStore(browserHistory, store)
 
-store.dispatch({ type: 'auth:request' })
+
+const user = {
+  email: localStorage.getItem('email'),
+  token: localStorage.getItem('token'),
+}
+store.dispatch({ type: 'auth:request', payload: { user } })
 
 const MB = {}
 MB.posts = () => {

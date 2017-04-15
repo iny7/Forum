@@ -1,31 +1,21 @@
 import React, { Component } from 'react'
+import { AsyncStorage } from 'react-native'
 import { Provider } from 'react-redux'
-import { createStore, combineReducers, applyMiddleware } from 'redux'
-import createSagaMiddleware from 'redux-saga'
 
-import { post, user } from 'my-lib/reducers'
-import { userSaga, postSaga } from 'my-lib/sagas'
-// import routeSaga from './routeSaga'
-
+import configureStore from './store/configureStore'
 import Router from 'pages'
-// other imports...
 
-const rootReducer = combineReducers({
-  post,
-  user,
-})
+const store = configureStore()
 
-const sagaMiddleware = createSagaMiddleware()
-
-const store = createStore(
-  rootReducer,
-  applyMiddleware(sagaMiddleware),
-)
-
-sagaMiddleware.run(userSaga)
-sagaMiddleware.run(postSaga)
-
-store.dispatch({ type: 'auth:request' })
+async function localAuth () {
+  const email = await AsyncStorage.getItem('email')
+  const token = await AsyncStorage.getItem('token')
+  const user = {
+    email, token
+  }
+  store.dispatch({ type: 'auth:request', payload: { user } })
+}
+localAuth()
 
 export default class App extends Component {
   render () {

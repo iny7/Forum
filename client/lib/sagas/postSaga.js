@@ -1,6 +1,6 @@
 import { call, put, takeLatest } from 'redux-saga/effects'
 import * as Api from '../api'
-console.log(Api)
+
 function* createPost (action) {
   try {
     const post = yield call(Api.createPost, action.payload.post)
@@ -14,7 +14,7 @@ function* createPost (action) {
 function* fetchPost (action) {
   try {
     const post = yield call(Api.fetchPost, action.payload.id)
-    yield put({ type: 'RECEIVE_POST', payload: { post } })
+    yield put({ type: 'receive:post', payload: { post } })
   } catch (e) {
     yield put({ type: 'fetch:post:failed' })
   }
@@ -24,9 +24,6 @@ function* fetchPostsByCategory (action) {
     const posts = yield call(Api.fetchPostsByCategory, action.payload.category)
     console.log(posts)
     yield put({ type: 'receive:posts', payload: { posts } })
-    yield put({ type: 'RECEIVE_POSTS', payload: { posts } })
-    yield put({ type: 'RECEIVE_POSTS', payload: { posts } })
-    yield put({ type: 'RECEIVE_POSTS', payload: { posts } })
   } catch (e) {
     // TODO
     yield put({ type: 'fetch:posts:failed' })

@@ -3,7 +3,7 @@ import myFetch from '../utils/myFetch'
 export function fetchPostsByUserId (userId) {
   return new Promise((resolve) => {
     myFetch.get({
-      url: `users/${userId}/posts`
+      url: `/users/${userId}/posts`
     }).then(({ posts }) => {
       resolve(posts)
     })

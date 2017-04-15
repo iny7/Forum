@@ -13,7 +13,13 @@ const tabArr = ["最新", "精选", "匿名"]
 
 // TODO 定制full button 的borderRadius为6
 export default class PostList extends Component {
+  componentWillMount () {
+    const category = 'newest'
+    this.props.dispatch({ type: 'fetch:post:by:category', payload: { category } })
+  }
   render () {
+    const { posts } = this.props
+    console.log(posts)
     return (
       <Container>
         <Swiper
