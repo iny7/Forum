@@ -1,5 +1,6 @@
 import myFetch from '../utils/myFetch'
 
+// TODO 全线 async + try catch
 export function fetchPostsByUserId (userId) {
   return new Promise((resolve) => {
     myFetch.get({
@@ -12,13 +13,14 @@ export function fetchPostsByUserId (userId) {
 export function fetchPostsByCategory (category) {
   console.log('fetchPostsByCategory')
   return new Promise((resolve) => {
+    console.log('sajdoaisd')
     myFetch.get({
       url: '/posts',
       data: { category }
     }).then(({ posts }) => {
       resolve(posts)
     }).catch((err) => {
-      console.log(err)
+      console.error(err)
     })
   })
 }

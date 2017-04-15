@@ -3,13 +3,25 @@
  * web 用 localStorage + react-router(browserHistory)
  * rn  用 AsyncStorage + RNRF
  **/
-import { take } from 'redux-saga/effects'
+import { take, call, put } from 'redux-saga/effects'
 import { browserHistory } from 'react-router'
 // import { replace } from 'react-router-redux'
 
+function* localAuth () {
+  const email = localStorage.getItem('email')
+  const token = localStorage.getItem('token')
+  if (email && token) {
+    console.log('呵呵')
+    yield put({ type: 'auth:request', payload: { user: { email, token } } })
+  } else {
+    console.log('重定向')
+    browserHistory.replace('/')
+  }
+}
+
 export default function* authSaga () {
   while (true) {
-
+    yield call(localAuth)
     // waiting for set token
     const action = yield take('auth:set:token')
     const { user: { email, token } } = action.payload
@@ -29,6 +41,6 @@ export default function* authSaga () {
     localStorage.removeItem('email')
     localStorage.removeItem('token')
 
-    browserHistory.replace('/')
+    // browserHistory.replace('/')
   }
 }

@@ -1,5 +1,6 @@
 import { call, put, take } from 'redux-saga/effects'
 import * as Api from '../api'
+import { setUser } from '../utils/myFetch'
 
 // 1. 登录或注册
 // 2. 根据当前user拿数据, 比如 我的帖子 粉丝等
@@ -34,22 +35,6 @@ function* signup (user) {
   }
 }
 
-function fromLocal () {
-  let userId, email, token
-  if (typeof global === 'undefined') {
-    // web
-    userId = localStorage.getItem('userId')
-    email = localStorage.getItem('email')
-    token = localStorage.getItem('token')
-  } else {
-    // rn
-
-  }
-  if (userId && email && token) {
-    return { userId, email, token }
-  }
-}
-
 export default function* userSaga () {
   while (true) {
     console.log('启动user saga, 等待操作')
@@ -76,10 +61,14 @@ export default function* userSaga () {
     }
     if (user && user.token) {
       yield put({ type: 'auth:set:token', payload: { user } })
+      // TODO 这里可以扩展为: 更通用的memoryStorage.setItem()
+      // memoryStorage做为一个util, 是一个单例的js对象, 在saga运行过程中不断被写入
+      yield call(setUser, user)
       console.log('认证成功, 等待登出')
 
       yield take('signout:request')
       yield put({ type: 'auth:remove:token' })
+      // TODO 登出后, 应清空currentUser (memoryStorage)
     } else {
       console.log('认证失败')
     }

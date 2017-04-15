@@ -7,16 +7,6 @@ import Router from 'pages'
 
 const store = configureStore()
 
-async function localAuth () {
-  const email = await AsyncStorage.getItem('email')
-  const token = await AsyncStorage.getItem('token')
-  const user = {
-    email, token
-  }
-  store.dispatch({ type: 'auth:request', payload: { user } })
-}
-localAuth()
-
 export default class App extends Component {
   render () {
     return (

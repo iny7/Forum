@@ -4,7 +4,7 @@
  * rn  用 AsyncStorage + RNRF
  **/
 import { AsyncStorage } from 'react-native'
-import { take, call } from 'redux-saga/effects'
+import { take, call, put } from 'redux-saga/effects'
 import { Actions } from 'react-native-router-flux'
 
 async function setToken (email, token) {
@@ -17,8 +17,19 @@ async function removeToken () {
   await AsyncStorage.removeItem('token')
 }
 
+async function localAuth () {
+  const email = await AsyncStorage.getItem('email')
+  const token = await AsyncStorage.getItem('token')
+  const user = {
+    email, token
+  }
+  put({ type: 'auth:request', payload: { user } })
+}
+
 export default function* authSaga () {
   while (true) {
+    localAuth()
+
     // waiting for set token
     const action = yield take('auth:set:token')
     const { user: { email, token } } = action.payload

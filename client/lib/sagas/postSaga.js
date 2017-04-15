@@ -8,6 +8,7 @@ function* createPost (action) {
       put({ type: 'fetching:data:success', payload: { post } })
     ]
   } catch (e) {
+    console.error(e)
     yield put({ type: 'CREATE_POST_SUCCESS' })
   }
 }
@@ -16,6 +17,7 @@ function* fetchPost (action) {
     const post = yield call(Api.fetchPost, action.payload.id)
     yield put({ type: 'receive:post', payload: { post } })
   } catch (e) {
+    console.error(e)
     yield put({ type: 'fetch:post:failed' })
   }
 }
@@ -25,6 +27,7 @@ function* fetchPostsByCategory (action) {
     console.log(posts)
     yield put({ type: 'receive:posts', payload: { posts } })
   } catch (e) {
+    console.error(e)
     // TODO
     yield put({ type: 'fetch:posts:failed' })
   }
@@ -34,6 +37,7 @@ function* fetchPostsByUserId (action) {
     const posts = yield call(Api.fetchPostsByUserId, action.payload.userId)
     yield put({ type: 'fetching:data:success', payload: { posts } })
   } catch (e) {
+    console.error(e)
     yield put({ type: '' })
   }
 }
