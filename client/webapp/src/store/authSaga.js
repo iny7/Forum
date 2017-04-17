@@ -15,7 +15,10 @@ function* localAuth () {
     yield put({ type: 'auth:request', payload: { user: { email, token } } })
   } else {
     console.log('重定向')
-    browserHistory.replace('/')
+    // TODO 不应该在这里重定向, 因为这里拿不到route的nested关系
+    // 例如: 当请求登录页 /signin 时, 本不需要redirect, 但这行代码仍旧会导致
+    // 路由的归路由, store的归store, 他们中间用subscribe通信, 而不要直接操作
+    // browserHistory.replace('/')
   }
 }
 
@@ -29,10 +32,16 @@ export default function* authSaga () {
     // storage token according to platform
     localStorage.setItem('email', email)
     localStorage.setItem('token', token)
+    yield put({ type: 'base:set:loggedIn', payload: { loggedIn: true } })
 
     // redirect
+    const { state, pathname } = browserHistory.getCurrentLocation()
+    if (state && state.nextPathname) {
+      browserHistory.replace(state.nextPathname)
+    } else if (pathname === '/users/sign_in') {
+      browserHistory.replace('/posts')
+    }
     // yield put(replace('/posts'))
-    browserHistory.replace('/posts')
 
     console.log('重定向到帖子列表页')
 
@@ -40,7 +49,9 @@ export default function* authSaga () {
     yield take('auth:remove:token')
     localStorage.removeItem('email')
     localStorage.removeItem('token')
+    put({ type: 'base:set:loggedIn', payload: { loggedIn:false } })
+    yield put({ type: 'base:set:loggedIn', payload: { loggedIn: false } })
 
-    // browserHistory.replace('/')
+    browserHistory.replace('/')
   }
 }

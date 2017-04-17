@@ -13,15 +13,16 @@ export default {
     const posts = Object.values(state.post.map)
     return {
       posts
-    // ui: state.ui,
-    // isLoading: state.common.isLoading
     }
   })(List),
-  Show: connect((state) => ({
-    data: state.post,
-    // ui: state.ui,
-    // isLoading: state.common.isLoading
-  }))(Show),
+  Show: connect((state) => {
+    const pathArr = state.routing.locationBeforeTransitions.pathname.split('/')
+    const id = pathArr[pathArr.length -1]
+    const post = state.post.map[id]
+    return {
+      post
+    }
+  })(Show),
   New: connect((state) => ({
     data: state.post,
     // ui: state.ui,

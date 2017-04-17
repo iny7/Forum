@@ -7,12 +7,13 @@ import { routerMiddleware, routerReducer } from 'react-router-redux'
 
 // import rootReducer from 'pages/reducers'
 
-import { post, user } from 'my-lib/reducers'
+import { base, post, user } from 'my-lib/reducers'
 import { userSaga, postSaga } from 'my-lib/sagas'
 // import routeSaga from './routeSaga'
 import authSaga from './authSaga'
 
 const rootReducer = combineReducers({
+  base,
   post,
   user,
   routing: routerReducer

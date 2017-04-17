@@ -30,13 +30,9 @@ function getQueryString (params = {}) {
 let currentUser = 'aaa'
 
 function request (params) {
-  console.log('request start')
   const method = params.method || 'GET'
   const credentials = 'include'
 
-  console.log('???', currentUser)
-  console.log(currentUser.email)
-  console.log(currentUser.token)
   // const mode = 'no-cors'
   const mode = 'cors' // default option, can be simply removed
   const headers = params.headers || {
@@ -45,8 +41,6 @@ function request (params) {
     'X-User-Email': currentUser.email,
     'X-User-Token': currentUser.token
   }
-
-  console.log('center')
 
   let qs = ''
   if (['GET', 'DELETE'].indexOf(method) > -1) {
@@ -58,7 +52,6 @@ function request (params) {
 
   const url = `${prefix}${params.url}.json${qs}`
 
-  console.log(fetch)
   return fetch(url, {
     method, credentials, mode, headers, body
   }).then(response => {
@@ -69,7 +62,6 @@ function request (params) {
 }
 
 export function setUser (user) {
-  console.log('设置user', user)
   currentUser = user
 }
 

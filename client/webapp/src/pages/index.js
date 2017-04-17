@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import { Router, IndexRoute, Route, Redirect, browserHistory } from 'react-router'
 import { syncHistoryWithStore } from 'react-router-redux'
@@ -32,22 +32,36 @@ function getToken () {
   return userId && email && token
 }
 
-function loginRequired (nextState, replace, next) {
-  if (!getToken()) {
-    replace('/')
-  }
-  next()
+function loggedIn () {
+  return store.getState().base.loggedIn
 }
 
-function loginRedirect (nextState, replace) {
-  if (getToken()) {
+function loginRequired (nextState, replace) {
+  if (!loggedIn()) {
+    replace({
+      pathname: '/users/sign_in',
+      state: { nextPathname: nextState.location.pathname }
+    })
+  }
+}
+
+function logoutRequired (nextState, replace) {
+  if (loggedIn()) {
     replace('/posts')
   }
 }
 
+
+// 可以在这里存一个变量, 等因为未登录被重定向时, 将请求的path赋值给该变量
+// 然后, 使用subscribe监听loggedIn的action, 当loggedIn发生时,
+// 根据该变量的值, 重定向回到之前请求的页面
+
+// TODO 使用subscribe监听
+// store.subscribe(handleStoreChange)
+
 const ApplicationPage = () => (
   <Router history={history}>
-    <Route name="home" path="/" onEnter={loginRedirect}>
+    <Route name="home" path="/" onEnter={logoutRequired}>
       <IndexRoute component={Home.Welcome} />
       <Route path="users/sign_in" component={Home.SignIn} />
       <Route path="users/sign_up" component={Home.SignUp} />
