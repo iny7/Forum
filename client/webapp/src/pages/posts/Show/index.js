@@ -34,7 +34,7 @@ export default class Show extends React.Component {
       this.setState({ loading: false })
     } else {
       const { id } = router.params
-      dispatch({ type: 'fetch:post', payload: { id } })
+      dispatch({ type: 'fetch:post:by:id', payload: { id } })
     }
   }
   componentWillReceiveProps (nProps) {
@@ -42,64 +42,70 @@ export default class Show extends React.Component {
       this.setState({ loading: false })
     }
   }
+  handleComment = () => {
+    const { post, dispatch } = this.props
+    const comment = {
+      content: this.refs.textarea.value
+    }
+    dispatch({ type: 'post:add:comment', payload: { post, comment } })
+  }
   render () {
-    const { post } = this.props
     const { loading } = this.state
 
     return (
       <div className="application-page posts-show-page">
         <Header title="文章详情" HeaderRight={HeaderRight} />
-        { loading ? LoadingUI() : renderPost(post) }
+        { loading ? this.renderLoading() : this.renderPost() }
       </div>
+    )
+  }
+
+  renderLoading = () => (
+    <main className="cx-body">
+      <div>{'loading...'}</div>
+      <div>{'loading...'}</div>
+      <div>{'loading...'}</div>
+      <div>{'loading...'}</div>
+      <div>{'loading...'}</div>
+    </main>
+  )
+
+  renderPost = () => {
+    const { post } = this.props
+    const { author, comments } = post
+    const { title, created_at, liked, likes_count } = post
+    const likeIcon = liked ? 'fa fa-heart' : 'fa fa-heart-o'
+    return (
+      <main className="cx-body">
+        <h3 className="title">{title}</h3>
+        <div className="info">
+          <img className="avatar sm" src={author.avatar} />
+          <span>{author.name}</span>
+          <time>{sdf(created_at)}</time>
+          <span>{`阅读${4521}`}</span>
+        </div>
+        <section className="content" dangerouslySetInnerHTML={{ __html: post.content }}></section>
+        <div className="operation">
+          <div className="like">
+            <i className={likeIcon}></i>
+            <span>{likes_count}</span>
+          </div>
+        </div>
+        <section className="comments">
+          <h4 className="comments-title">{`评论 ${comments.length}`} </h4>
+          { comments.map((c, i) => {
+            return <Comment key={i} comment={c}/>
+          }) }
+        </section>
+        <section className="new-comment">
+          <h3>新评论</h3>
+          <textarea ref="textarea" placeholder="test"></textarea>
+          <a className="btn btn-primary" onClick={this.handleComment}>发表</a>
+        </section>
+      </main>
     )
   }
 }
 Show.propTypes = {
   dispatch: PropTypes.func
-}
-
-const LoadingUI = () => (
-  <main className="cx-body">
-    <div>{'loading...'}</div>
-    <div>{'loading...'}</div>
-    <div>{'loading...'}</div>
-    <div>{'loading...'}</div>
-    <div>{'loading...'}</div>
-  </main>
-)
-
-const renderPost = (post) => {
-  const comments = post && post.comments || []
-  const { title, author, created_at, liked, likes_count } = post
-  const likeIcon = liked ? 'fa fa-heart' : 'fa fa-heart-o'
-  return (
-    <main className="cx-body">
-      <h3 className="title">{title}</h3>
-      <div className="info">
-        <img className="avatar sm" src="/images/avatar.png" alt=""/>
-        <span>{author}</span>
-        <time>{sdf(created_at)}</time>
-        <span>{`阅读${4521}`}</span>
-      </div>
-      <section className="content" dangerouslySetInnerHTML={{ __html: post.content }}></section>
-      <div className="operation">
-        <div className="like">
-          <i className={likeIcon}></i>
-          <span>{likes_count}</span>
-        </div>
-      </div>
-      <section className="comments">
-        <h4 className="comments-title">{`评论 ${comments.length}`} </h4>
-        { comments.map((c, i) => {
-          return <Comment key={i} comment={c}/>
-        }) }
-      </section>
-      <section className="new-comment">
-        <textarea></textarea>
-        <div className="form-control">
-          <a className="btn btn-primary">发表评论</a>
-        </div>
-      </section>
-    </main>
-  )
 }

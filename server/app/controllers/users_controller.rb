@@ -16,7 +16,7 @@ class UsersController < ApplicationController
 
   def posts
     u = User.find(params[:id])
-    render_json({ posts: u.posts })
+    render_json( u.posts )
   end
 
   def comments

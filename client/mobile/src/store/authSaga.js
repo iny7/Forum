@@ -17,22 +17,28 @@ async function removeToken () {
   await AsyncStorage.removeItem('token')
 }
 
-async function localAuth () {
+async function getToken () {
   const email = await AsyncStorage.getItem('email')
   const token = await AsyncStorage.getItem('token')
-  const user = {
-    email, token
-  }
-  put({ type: 'auth:request', payload: { user } })
+  return { email, token }
+}
+
+function* localAuth () {
+  const user = yield call(getToken)
+  yield put({ type: 'auth:request', payload: { user } })
 }
 
 export default function* authSaga () {
   while (true) {
-    localAuth()
+    yield call(localAuth)
+
+    console.log('localAuth')
 
     // waiting for set token
     const action = yield take('auth:set:token')
     const { user: { email, token } } = action.payload
+
+    console.log(email, token)
 
     // storage token according to platform
     yield call(setToken, email, token)

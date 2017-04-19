@@ -2,17 +2,15 @@ module Users
   class AccountController < ApplicationController
     def show
       u = current_user
-      Rails.logger.info '*' * 10
-      Rails.logger.info u
-      render_json({
-        user: {
-          name: u.name,
-          avatar: u.profile.try(:avatar).try(:url),
-          followers_count: u.followers.count,
-          following_count: u.followed_users.count,
-          posts_count: u.posts.count
-        }
-      })
+      profile = u.profile
+      render json: {
+        nickname: profile.try(:nickname),
+        desc: profile.try(:desc),
+        avatar: profile.try(:avatar).try(:url),
+        followers_count: u.followers.count,
+        following_count: u.followed_users.count,
+        posts_count: u.posts.count
+      }
     end
   end
 end

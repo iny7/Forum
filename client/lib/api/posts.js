@@ -1,49 +1,37 @@
 import myFetch from '../utils/myFetch'
 
 // TODO 全线 async + try catch
-export function fetchPostsByUserId (userId) {
-  return new Promise((resolve) => {
-    myFetch.get({
-      url: `/users/${userId}/posts`
-    }).then(({ posts }) => {
-      resolve(posts)
-    })
+export async function fetchPostsByUserId (userId) {
+  return await myFetch.get({
+    url: `/users/${userId}/posts`
   })
 }
-export function fetchPostsByCategory (category) {
-  console.log('fetchPostsByCategory')
-  return new Promise((resolve) => {
-    console.log('sajdoaisd')
-    myFetch.get({
-      url: '/posts',
-      data: { category }
-    }).then(({ posts }) => {
-      resolve(posts)
-    }).catch((err) => {
-      console.error(err)
-    })
+export async function fetchPostsByCategory (category) {
+  return await myFetch.get({
+    url: '/posts',
+    data: { category }
   })
 }
-export function fetchPost (id) {
-  return new Promise((resolve) => {
-    myFetch.get({
-      url: `/posts/${id}`
-    }).then(({ post }) => {
-      resolve(post)
-    })
+export async function fetchPostById (id) {
+  return await myFetch.get({
+    url: `/posts/${id}`
   })
 }
-export function createPost (post) {
-  return new Promise((resolve) => {
-    myFetch.post({
-      url: '/posts',
-      data: { post }
-    }).then(({ status_code }) => {
-      if (status_code === 200) {
-        resolve(post)
-      }
-    }).catch((error) => {
-      console.error('创建post失败了!!!!', error)
-    })
+export async function createPost (post) {
+  return await myFetch.post({
+    url: '/posts',
+    data: { post }
   })
+  // return new Promise((resolve) => {
+  //   myFetch.post({
+  //     url: '/posts',
+  //     data: { post }
+  //   }).then(({ status_code }) => {
+  //     if (status_code === 200) {
+  //       resolve(post)
+  //     }
+  //   }).catch((error) => {
+  //     console.error('创建post失败了!!!!', error)
+  //   })
+  // })
 }

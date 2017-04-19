@@ -13,8 +13,8 @@
 /server/tmp
 # Added by webpack-rails
 /node_modules
-/public/webpack
-/public/system
+/server/public/webpack
+/server/public/system
 
 # Added files under /fe
 fe/dist

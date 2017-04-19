@@ -17,11 +17,12 @@ export default {
     data: state.post,
     isLoading: state.common.isLoading
   }))(Fans),
-  Posts: connect((state) => ({
-    ui: state.ui,
-    data: state.post,
-    isLoading: state.common.isLoading
-  }))(Posts),
+  Posts: connect((state) => {
+    const pathArr = state.routing.locationBeforeTransitions.pathname.split('/')
+    const userId = pathArr[1]
+    const posts = Object.values(state.post.map).filter(p => p.userId)
+    return { posts }
+  })(Posts),
   Comments: connect((state) => ({
     ui: state.ui,
     data: state.post,

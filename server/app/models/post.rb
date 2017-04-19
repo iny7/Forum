@@ -3,7 +3,8 @@ class Post < ActiveRecord::Base
   has_many :comments, dependent: :destroy#, class_name: 'Posts::Comment'
   has_many :likes, dependent: :destroy, as: :likeable
 
-  default_scope     -> { where(headlines: false).order(created_at: 'desc') }
+  # default_scope     -> { where(headlines: false).order(created_at: 'desc') }
+  default_scope     -> { order(created_at: 'desc') }
   scope :picked,    -> { where(category: 'picked') }
   scope :anonymous, -> { where(category: 'anonymous') }
 
@@ -37,8 +38,6 @@ class Post < ActiveRecord::Base
       # votes_count:    votes_count,
     }
   end
-
-  private
 
   def is_liked(user_id)
     likes.map(&:user_id).include?(user_id)

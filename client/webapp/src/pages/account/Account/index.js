@@ -37,8 +37,8 @@ const Profile = ({ user }) => (
   <section className="section-1">
     <img className="account-bg" src="/images/bg.jpeg" />
     <img className="avatar lg" src={user.avatar} />
-    <h3 className="name">{user.name}</h3>
-    <p className="desc">一个脱离了高级趣味的人</p>
+    <h3 className="name">{user.nickname}</h3>
+    <p className="desc">{user.desc}</p>
   </section>
 )
 
@@ -48,15 +48,13 @@ export default class Account extends React.Component {
     user: {}
   }
   componentWillMount () {
-    this.setState({
-      loading: true
-    })
+    this.setState({ loading: true })
     myFetch.get({
       url: '/account'
-    }).then(res => {
+    }).then(user => {
       this.setState({
         loading: false,
-        user: res.user
+        user
       })
     })
   }
@@ -65,7 +63,6 @@ export default class Account extends React.Component {
   }
   render () {
     const { loading, user } = this.state
-    console.log(user)
     if (loading) return null
 
     return (

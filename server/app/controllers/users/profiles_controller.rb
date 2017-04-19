@@ -35,7 +35,7 @@ module Users
     end
     private
     def profile_params
-      params[:profile].permit(:nickname, :avatar, :grade, :sex)
+      params[:profile].permit(:nickname, :avatar, :grade, :sex, :desc)
     end
 
   end

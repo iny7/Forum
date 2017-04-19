@@ -49,7 +49,6 @@ export default function* authSaga () {
     yield take('auth:remove:token')
     localStorage.removeItem('email')
     localStorage.removeItem('token')
-    put({ type: 'base:set:loggedIn', payload: { loggedIn:false } })
     yield put({ type: 'base:set:loggedIn', payload: { loggedIn: false } })
 
     browserHistory.replace('/')

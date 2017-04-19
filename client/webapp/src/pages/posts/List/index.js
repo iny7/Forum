@@ -11,7 +11,7 @@ import Footer from 'components/Footer'
 const PostNav = ({ category }) => (
   <ul className="article-header">
     <li>
-      <Link to={{pathname: '/posts'}} className={!category ? 'active' : ''}>
+      <Link to={{pathname: '/posts'}} className={category === 'newest' ? 'active' : ''}>
         {'最新'}
       </Link>
     </li>

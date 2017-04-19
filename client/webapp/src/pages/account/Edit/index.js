@@ -12,7 +12,6 @@ export default class Edit extends React.Component {
   constructor () {
     super()
     this.state = {
-      user: {},
       loading: false
     }
   }
@@ -20,10 +19,12 @@ export default class Edit extends React.Component {
     this.setState({ loading: true })
     myFetch.get({
       url: '/profiles'
-    }).then((user) => {
+    }).then(user => {
+      // const { name, avatar, sex, grade, desc } = user
       this.setState({
         loading: false,
-        user: user
+        ...user
+        // name, avatar, sex, grade, desc
       })
     })
   }
@@ -35,13 +36,19 @@ export default class Edit extends React.Component {
       this.refs.thumbnail.src = data
     })
   }
+  handleSex = (e) => {
+    const sex = e.target.value
+    this.setState({ sex })
+  }
+  handleGrade = (e) => {
+    const grade = e.target.value
+    this.setState({ grade })
+  }
   handleSave = (e) => {
     e.preventDefault()
+    const { nickname, avatar, sex, grade, desc } = this.state
     const profile = {
-      sex: this.refs.sex.value,
-      grade: this.refs.grade.value,
-      // avatar: this.refs.thumbnail.src,
-      nickname: this.refs.nickname.value
+      nickname, avatar, sex, grade, desc
     }
     myFetch.put({
       url: '/profiles',
@@ -53,9 +60,8 @@ export default class Edit extends React.Component {
     })
   }
   render () {
-    const { user, loading } = this.state
-    if (loading) return <div>loading</div>
-    const { nickname, sex, avatar = '/images/avatar.png', grade = '', desc = '' } = user
+    const { nickname, avatar, sex, grade, desc, loading } = this.state
+    if (loading) return this.renderLoading()
 
     return (
       <div className="application-page account-edit-page">
@@ -77,19 +83,16 @@ export default class Edit extends React.Component {
                   <option value="1">男</option>
                   <option value="2">女</option>
                 </select>
-                <select ref="grade" className="form-control" value={grade}>
-                  <option value="">2012级</option>
-                  <option value="">2013级</option>
-                  <option value="">2014级</option>
+                <select ref="grade" className="form-control" value={grade} onChange={this.handleGrade}>
+                  <option value="2012">2012级</option>
+                  <option value="2013">2013级</option>
+                  <option value="2014">2014级</option>
                 </select>
               </div>
             </div>
           </section>
           <section className="bottom">
-            <textarea
-              className="form-control"
-              value={desc}
-              defaultValue="如果你无法简洁的表达你的想法，那只说明你还不够了解它。 -- 阿尔伯特·爱因斯坦">
+            <textarea className="form-control" defaultValue={desc}>
             </textarea>
             <div className="form-group">
               <a className="btn btn-primary" onClick={this.handleSave}>保存</a>
@@ -100,6 +103,18 @@ export default class Edit extends React.Component {
       </div>
     )
   }
+  renderLoading = () => (
+    <div className="application-page account-edit-page">
+      <Header title={'个人资料'} />
+      <main>
+        <div>loading</div>
+        <div>loading</div>
+        <div>loading</div>
+        <div>loading</div>
+      </main>
+      <Footer />
+    </div>
+  )
 }
 
 Edit.title = '个人资料'

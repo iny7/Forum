@@ -16,8 +16,8 @@ export default class PostItem extends React.Component {
       <li className="article-item">
         <Link to={`/posts/${id}`}>
           <div className="article-author">
-            <img className="avatar" src="/images/avatar.png" />
-            <span className="name">{author}</span>
+            <img className="avatar" src={author.avatar} />
+            <span className="name">{author.name}</span>
             <span className="fa fa-ellipsis-h" onClick={this.handleClick}></span>
           </div>
           <h6 className="article-title">{title}</h6>
