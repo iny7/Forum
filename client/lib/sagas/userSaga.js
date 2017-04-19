@@ -24,14 +24,23 @@ function* signin (user) {
 
 function* signup (user) {
   try {
-    const { email, token, msg } = yield call(Api.signup, user)
+    const { email, authentication_token: token, msg } = yield call(Api.signup, user)
     if (token) {
       yield put({ type: 'signup:success', payload: { email, token } })
+      return { email, token }
     } else {
       yield put({ type: 'signup:failed', payload: { error: msg } })
     }
   } catch (e) {
     yield put({ type: 'signup:failed', payload: { error: '???' } })
+  }
+}
+
+function* logout () {
+  try {
+    yield call(Api.logout)
+  } catch (e) {
+    console.error('logout error')
   }
 }
 
@@ -67,6 +76,7 @@ export default function* userSaga () {
       console.log('认证成功, 等待登出')
 
       yield take('signout:request')
+      // yield call(logout)
       yield put({ type: 'auth:remove:token' })
       // TODO 登出后, 应清空currentUser (memoryStorage)
     } else {

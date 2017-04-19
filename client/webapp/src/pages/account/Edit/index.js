@@ -40,7 +40,7 @@ export default class Edit extends React.Component {
     const profile = {
       sex: this.refs.sex.value,
       grade: this.refs.grade.value,
-      avatar: this.refs.thumbnail.src,
+      // avatar: this.refs.thumbnail.src,
       nickname: this.refs.nickname.value
     }
     myFetch.put({
@@ -48,12 +48,14 @@ export default class Edit extends React.Component {
       data: { profile }
     }).then((result) => {
       console.log(result)
-    }).catch(e => console.log('Oops, error'))
+    }).catch((e) => {
+      console.error('Oops, error', e)
+    })
   }
   render () {
     const { user, loading } = this.state
     if (loading) return <div>loading</div>
-    const { name, sex, avatar = '/images/avatar.png', grade = '', desc = '' } = user
+    const { nickname, sex, avatar = '/images/avatar.png', grade = '', desc = '' } = user
 
     return (
       <div className="application-page account-edit-page">
@@ -67,7 +69,7 @@ export default class Edit extends React.Component {
             </div>
             <div className="base-info">
               <div className="form-group">
-                <input ref="nickname" type="text" className="form-control" placeholder={name} />
+                <input ref="nickname" type="text" className="form-control" placeholder={nickname} />
               </div>
               <div className="form-group select">
                 <select ref="sex" className="form-control" value={sex}>

@@ -8,7 +8,7 @@ export default class SignIn extends React.Component {
   constructor () {
     super()
     this.state = {
-      email: 'b@b.com',
+      email: 'c@c.com',
       password: '12345678',
       password2: '12345678'
     }
@@ -20,10 +20,12 @@ export default class SignIn extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault()
     const { email, password, password2 } = this.state
-    if (password !== password2) {
-      return alert('请确认两次输入的密码相同')
+    if (password !== password2) return alert('请确认两次输入的密码相同')
+    const user = {
+      email,
+      password
     }
-    this.props.dispatch({ type: 'signup:request', payload: { email, password } })
+    this.props.dispatch({ type: 'signup:request', payload: { user } })
   }
   render () {
     const { email, password, password2 } = this.state
@@ -71,7 +73,7 @@ export default class SignIn extends React.Component {
           </form>
         </main>
         <footer>
-          <Link className="link" to="/signin">已有帐号登录</Link>
+          <Link className="link" to="/users/sign_in">已有帐号登录</Link>
         </footer>
       </div>
     )

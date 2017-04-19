@@ -35,8 +35,8 @@ const InfoBar = ({ user }) => {
 
 const Profile = ({ user }) => (
   <section className="section-1">
-    <img src="/images/bg.jpeg" alt="" className="account-bg"/>
-    <img src="/images/avatar.png" alt="" className="avatar"/>
+    <img className="account-bg" src="/images/bg.jpeg" />
+    <img className="avatar lg" src={user.avatar} />
     <h3 className="name">{user.name}</h3>
     <p className="desc">一个脱离了高级趣味的人</p>
   </section>
@@ -65,6 +65,7 @@ export default class Account extends React.Component {
   }
   render () {
     const { loading, user } = this.state
+    console.log(user)
     if (loading) return null
 
     return (

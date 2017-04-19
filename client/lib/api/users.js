@@ -11,22 +11,16 @@ export async function signin (user) {
   })
 }
 
-export function signup (user) {
-  return new Promise((resolve) => {
-    myFetch.post({
-      url: SIGNUP_PATH,
-      data: { user }
-    }).then((result) => {
-      resolve(result)
-    }).catch(e => console.log('Oops, error'))
+export async function signup (user) {
+  return await myFetch.post({
+    url: SIGNUP_PATH,
+    data: { user }
   })
 }
 
 export function logout () {
-  return new Promise((resolve) => {
-    // TODO 后端应销毁token
-    myFetch.delete({
-      url: SIGNOUT_PATH
-    })
+  // TODO 后端应销毁token
+  myFetch.delete({
+    url: SIGNOUT_PATH
   })
 }

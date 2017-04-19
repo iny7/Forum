@@ -36,12 +36,12 @@ export default function* authSaga () {
 
     // redirect
     const { state, pathname } = browserHistory.getCurrentLocation()
+    const arr = ['/', '/users/sign_in', '/users/sign_up']
     if (state && state.nextPathname) {
       browserHistory.replace(state.nextPathname)
-    } else if (pathname === '/users/sign_in') {
+    } else if (arr.indexOf(pathname) !== -1) {
       browserHistory.replace('/posts')
     }
-    // yield put(replace('/posts'))
 
     console.log('重定向到帖子列表页')
 

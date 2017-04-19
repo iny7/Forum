@@ -7,6 +7,7 @@ module Users
       render_json({
         user: {
           name: u.name,
+          avatar: u.profile.try(:avatar).try(:url),
           followers_count: u.followers.count,
           following_count: u.followed_users.count,
           posts_count: u.posts.count
