@@ -3,9 +3,9 @@ import { Link } from 'react-router'
 
 import './style.sass'
 import Carousel from './Carousel'
-import PostItem from './PostItem'
 
 import Header from 'components/Header'
+import PostItem from 'components/PostItem'
 import Footer from 'components/Footer'
 
 const PostNav = ({ category }) => (

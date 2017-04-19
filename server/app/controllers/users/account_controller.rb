@@ -4,6 +4,7 @@ module Users
       u = current_user
       profile = u.profile
       render json: {
+        id: u.id,
         nickname: profile.try(:nickname),
         desc: profile.try(:desc),
         avatar: profile.try(:avatar).try(:url),

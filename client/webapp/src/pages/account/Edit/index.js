@@ -20,11 +20,11 @@ export default class Edit extends React.Component {
     myFetch.get({
       url: '/profiles'
     }).then(user => {
-      // const { name, avatar, sex, grade, desc } = user
+      const { nickname, avatar, sex, grade, desc } = user
+      this.avatar = avatar
       this.setState({
         loading: false,
-        ...user
-        // name, avatar, sex, grade, desc
+        nickname, avatar, sex, grade, desc
       })
     })
   }
@@ -36,19 +36,16 @@ export default class Edit extends React.Component {
       this.refs.thumbnail.src = data
     })
   }
-  handleSex = (e) => {
-    const sex = e.target.value
-    this.setState({ sex })
-  }
-  handleGrade = (e) => {
-    const grade = e.target.value
-    this.setState({ grade })
+  handleChange = (e) => {
+    const { name, value } = e.target
+    this.setState({ [name]: value })
   }
   handleSave = (e) => {
     e.preventDefault()
     const { nickname, avatar, sex, grade, desc } = this.state
     const profile = {
-      nickname, avatar, sex, grade, desc
+      nickname, sex, grade, desc,
+      avatar: avatar === this.avatar ? '' : avatar
     }
     myFetch.put({
       url: '/profiles',
@@ -75,15 +72,15 @@ export default class Edit extends React.Component {
             </div>
             <div className="base-info">
               <div className="form-group">
-                <input ref="nickname" type="text" className="form-control" placeholder={nickname} />
+                <input name="nickname" type="text" className="form-control" placeholder={nickname} onChange={this.handleChange} />
               </div>
               <div className="form-group select">
-                <select ref="sex" className="form-control" value={sex}>
+                <select name="sex" className="form-control" value={sex}>
                   <option value="0">无</option>
                   <option value="1">男</option>
                   <option value="2">女</option>
                 </select>
-                <select ref="grade" className="form-control" value={grade} onChange={this.handleGrade}>
+                <select name="grade" className="form-control" value={grade} onChange={this.handleChange}>
                   <option value="2012">2012级</option>
                   <option value="2013">2013级</option>
                   <option value="2014">2014级</option>
@@ -92,7 +89,7 @@ export default class Edit extends React.Component {
             </div>
           </section>
           <section className="bottom">
-            <textarea className="form-control" defaultValue={desc}>
+            <textarea name="desc" className="form-control" value={desc} onChange={this.handleChange}>
             </textarea>
             <div className="form-group">
               <a className="btn btn-primary" onClick={this.handleSave}>保存</a>

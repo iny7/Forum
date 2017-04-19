@@ -3,26 +3,24 @@ class UsersController < ApplicationController
   skip_before_action :login_required, only: [:create]
 
   def show
-    u = User.find_by_id(params[:id])
-    render_json({
-      user: {
-        id: u.id,
-        name: u.name,
-        followers_count: u.followers.count,
-        following_count: u.followed_users.count,
-      }
-    })
+    u = User.find_by_id(params[:user_id])
+    render json: {
+      id: u.id,
+      nickname: u.profile.try(:nickname),
+      followers_count: u.followers.count,
+      following_count: u.followed_users.count,
+    }
   end
 
   def posts
-    u = User.find(params[:id])
-    render_json( u.posts )
+    u = User.find(params[:user_id])
+    render json: u.posts
   end
 
   def comments
     # TODO user comment :through
-    u = User.find(params[:id])
-    render_json({ comments: u.comments })
+    u = User.find(params[:user_id])
+    render json: u.comments
   end
 
   private

@@ -14,18 +14,18 @@ const HeaderRight = () => (
 )
 
 const InfoBar = ({ user }) => {
-  const { followers_count, following_count, posts_count } = user
+  const { id, followers_count, following_count, posts_count } = user
   return (
     <section className="section-2">
-      <Link className="item focus" to="/users/1/follows">
+      <Link className="item focus" to={`/users/${id}/follows`}>
         <div className="num">{following_count}</div>
         <div className="attr">关注</div>
       </Link>
-      <Link className="item fans" to="/users/1/fans">
+      <Link className="item fans" to={`/users/${id}/fans`}>
         <div className="num">{followers_count}</div>
         <div className="attr">粉丝</div>
       </Link>
-      <Link className="item posts" to="/users/1/posts">
+      <Link className="item posts" to={`/users/${id}/posts`}>
         <div className="num">{posts_count}</div>
         <div className="attr">帖子</div>
       </Link>

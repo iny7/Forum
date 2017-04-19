@@ -1,5 +1,6 @@
 import React from 'react'
 import sdf from 'utils/sdf'
+import './style.sass'
 
 import { Link } from 'react-router'
 

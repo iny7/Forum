@@ -21,8 +21,8 @@ Rails.application.routes.draw do
         get :followers
       end
     end
-    resources :posts, only: [:index]
-    resources :comments, only: [:index]
+    get '/posts' => 'users#posts'
+    get '/comments' => 'users#comments'
   end
 
   # resource :wechat, only: [:show, :create]
