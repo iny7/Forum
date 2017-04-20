@@ -7,10 +7,13 @@ class Comment < ActiveRecord::Base
   def as_json(options={})
     {
       id:          id,
-      author:      user.name,
+      post_id:     post.id,
+      user_id:     user.id,
+      commenter:   user.profile.try(:nickname),
+      avatar:      user.profile.try(:avatar),
       content:     content,
       likes_count: likes.count,
-      created_at:  created_at
+      created_at:  created_at,
     }
   end
 

@@ -3,9 +3,9 @@ import * as Api from '../api'
 
 function* createPost (action) {
   try {
-    const post = yield call(Api.createPost, action.payload.post)
+    const payload = yield call(Api.createPost, action.payload.post)
     yield [
-      put({ type: 'fetching:data:success', payload: { post } })
+      put({ type: 'fetching:data:success', payload })
     ]
   } catch (e) {
     console.error(e)
@@ -14,9 +14,8 @@ function* createPost (action) {
 }
 function* fetchPostById (action) {
   try {
-    const post = yield call(Api.fetchPostById, action.payload.id)
-    console.log(post)
-    yield put({ type: 'receive:post', payload: { post } })
+    const payload = yield call(Api.fetchPostById, action.payload.id)
+    yield put({ type: 'receive:post', payload })
   } catch (e) {
     console.error(e)
     yield put({ type: 'fetch:post:failed' })
@@ -24,9 +23,9 @@ function* fetchPostById (action) {
 }
 function* fetchPostsByCategory (action) {
   try {
-    const posts = yield call(Api.fetchPostsByCategory, action.payload.category)
-    console.log(posts)
-    yield put({ type: 'receive:posts', payload: { posts } })
+    const payload = yield call(Api.fetchPostsByCategory, action.payload.category)
+    console.log(payload)
+    yield put({ type: 'receive:posts', payload })
   } catch (e) {
     // TODO
     yield put({ type: 'fetch:posts:failed' })
@@ -44,7 +43,8 @@ function* fetchPostsByUserId (action) {
 function* addCommentToPost (action) {
   try {
     const { post, comment } = action.payload
-    const res = yield call(Api.addCommentToPost, post.id, comment)
+    const payload = yield call(Api.addCommentToPost, post.id, comment)
+    yield put({ type: 'receive:comment', payload })
   } catch (e) {
     console.error(e)
   }
@@ -63,7 +63,7 @@ function* watchFetchPostByUserId () {
   yield takeLatest('fetch:post:by:userId', fetchPostsByUserId)
 }
 function* watchAddCommentToPost () {
-  yield takeLatest('post:add:comment', addCommentToPost)
+  yield takeLatest('post:add:comment:request', addCommentToPost)
 }
 
 export default function* rootSaga () {

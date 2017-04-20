@@ -8,21 +8,24 @@ import './style.sass'
 
 // 使用redux-router 把router数据同步到store
 export default {
-  List: connect((state) => {
-    // console.log(state.post.map)
-    const posts = Object.values(state.post.map)
-    return {
-      posts
-    }
+  List: connect(state => {
+    const posts = Object.values(state.post)
+    console.log(posts)
+    return { posts }
   })(List),
-  Show: connect((state) => {
-    const pathArr = state.routing.locationBeforeTransitions.pathname.split('/')
-    const id = pathArr[pathArr.length -1]
-    const post = state.post.map[id]
-    return {
-      post
+
+  Show: connect((state, router) => {
+    const { params: { id } } = router
+    const { user, post, comment } = state
+    const p = post[id]
+    let author = {}, comments = []
+    if (p) {
+      author = user[p.author]
+      comments = p.comments.map(id => comment[id])
     }
+    return { id, post: p, author, comments }
   })(Show),
+
   New: connect((state) => ({
     data: state.post,
     // ui: state.ui,

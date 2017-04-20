@@ -1,37 +1,38 @@
+import { normalize } from 'normalizr'
+import * as schema from '../schema'
 import myFetch from '../utils/myFetch'
 
 // TODO 全线 async + try catch
 export async function fetchPostsByUserId (userId) {
-  return await myFetch.get({
+  const posts = await myFetch.get({
     url: `/users/${userId}/posts`
   })
+  return normalize(posts, schema.posts)
 }
 export async function fetchPostsByCategory (category) {
-  return await myFetch.get({
+  const posts = await myFetch.get({
     url: '/posts',
     data: { category }
   })
+  return normalize(posts, schema.posts)
 }
 export async function fetchPostById (id) {
-  return await myFetch.get({
+  const post = await myFetch.get({
     url: `/posts/${id}`
   })
+  return normalize(post, schema.post)
 }
 export async function createPost (post) {
   return await myFetch.post({
     url: '/posts',
     data: { post }
   })
-  // return new Promise((resolve) => {
-  //   myFetch.post({
-  //     url: '/posts',
-  //     data: { post }
-  //   }).then(({ status_code }) => {
-  //     if (status_code === 200) {
-  //       resolve(post)
-  //     }
-  //   }).catch((error) => {
-  //     console.error('创建post失败了!!!!', error)
-  //   })
-  // })
+}
+
+export async function addCommentToPost (postId, comment) {
+  const resComment = await myFetch.post({
+    url: `/posts/${postId}/comments`,
+    data: { comment }
+  })
+  return normalize(resComment, schema.comment)
 }

@@ -9,12 +9,13 @@ class CommentsController < ApplicationController
   def create
     post = Post.find( params[:post_id] )
     comment = post.comments.build(comment_params)
+    comment.user = current_user
 
     if comment.save
       comments = post.comments.order(created_at: :desc)
-      render :create_ok
+      render json: comment
     else
-      render :create_fail
+      render json: comment.errors
     end
   end
 
@@ -28,7 +29,7 @@ class CommentsController < ApplicationController
   private
 
   def comment_params
-    params.require(:comment).permit(:commenter, :body)
+    params.require(:comment).permit(:content)
   end
 
   def build_json(comment)

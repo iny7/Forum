@@ -29,13 +29,9 @@ export default class Show extends React.Component {
     // (数据请求的发起是根据上层传入的props决定的)
     // 应改为: willMount时, 根据route中的id发起fetch
     // 但这样又有个问题: 每次都需要把整个posts传进来
-    const { post, dispatch, router } = this.props
-    if (post) {
-      this.setState({ loading: false })
-    } else {
-      const { id } = router.params
-      dispatch({ type: 'fetch:post:by:id', payload: { id } })
-    }
+    this.setState({ loading: true })
+    const { id, dispatch } = this.props
+    dispatch({ type: 'fetch:post:by:id', payload: { id } })
   }
   componentWillReceiveProps (nProps) {
     if (nProps.post && this.state.loading) {
@@ -47,7 +43,7 @@ export default class Show extends React.Component {
     const comment = {
       content: this.refs.textarea.value
     }
-    dispatch({ type: 'post:add:comment', payload: { post, comment } })
+    dispatch({ type: 'post:add:comment:request', payload: { post, comment } })
   }
   render () {
     const { loading } = this.state
@@ -71,8 +67,7 @@ export default class Show extends React.Component {
   )
 
   renderPost = () => {
-    const { post } = this.props
-    const { author, comments } = post
+    const { post, author, comments } = this.props
     const { title, created_at, liked, likes_count } = post
     const likeIcon = liked ? 'fa fa-heart' : 'fa fa-heart-o'
     return (

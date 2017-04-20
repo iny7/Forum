@@ -3,7 +3,11 @@
   "version": "0.0.1",
   "dependencies": {
     "isomorphic-fetch": "^2.2.1",
+    "normalizr": "^3.2.2",
     "react-native-storage": "^0.1.5",
     "redux-saga": "^0.14.6"
+  },
+  "devDependencies": {
+    "babel-preset-stage-0": "^6.24.1"
   }
 }

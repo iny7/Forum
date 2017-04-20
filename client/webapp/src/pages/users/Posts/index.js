@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
+
 import myFetch from 'utils/myFetch'
 import Header from 'components/Header'
 import Footer from 'components/Footer'
@@ -9,7 +10,6 @@ export default class Posts extends Component {
     loading: true
   }
   componentWillMount () {
-    console.log()
     myFetch.get({
       url: this.props.location.pathname
     }).then(posts => {

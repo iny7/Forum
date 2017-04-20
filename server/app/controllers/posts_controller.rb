@@ -25,7 +25,7 @@ class PostsController < ApplicationController
       }
     end
 
-		render json: result
+		render json: result#{ posts: result }
 	end
 
 	def show

@@ -1,15 +1,17 @@
-import React from 'react'
+import React, { Component } from 'react'
 
-export default class Comment extends React.Component {
+import './style.sass'
+
+export default class Comment extends Component {
   render () {
     const { comment } = this.props
-    const { author, content, created_at: createdAt } = comment
+    const { commenter, avatar, content, created_at: createdAt } = comment
     return (
       <div className="comment">
-        <img className="avatar" src="/images/avatar.png" />
+        <img className="avatar" src={avatar} />
         <div className="comment-right">
           <div className="comment-user">
-            <span className="user">{author}</span>
+            <span className="user">{commenter}</span>
             <div className="like">
               <i className="fa fa-thumbs-o-up"></i>
               <span>18</span>
