@@ -7,7 +7,7 @@ export default class Comment extends Component {
     const { comment } = this.props
     const { commenter, avatar, content, created_at: createdAt } = comment
     return (
-      <div className="comment">
+      <div className="comment-item">
         <img className="avatar" src={avatar} />
         <div className="comment-right">
           <div className="comment-user">

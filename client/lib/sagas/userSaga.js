@@ -8,10 +8,10 @@ import { setUser } from '../utils/myFetch'
 
 function* signin (user) {
   try {
-    const { email, authentication_token: token, msg } = yield call(Api.signin, user)
+    const { id, email, authentication_token: token, msg } = yield call(Api.signin, user)
     if (token) {
-      yield put({ type: 'signin:success', payload: { email, token } })
-      return { email, token }
+      yield put({ type: 'signin:success', payload: { id, email, token } })
+      return { id, email, token }
     } else {
       // 有错误信息
       yield put({ type: 'signin:failed', payload: { error: msg } })
@@ -24,10 +24,10 @@ function* signin (user) {
 
 function* signup (user) {
   try {
-    const { email, authentication_token: token, msg } = yield call(Api.signup, user)
+    const { id, email, authentication_token: token, msg } = yield call(Api.signup, user)
     if (token) {
       yield put({ type: 'signup:success', payload: { email, token } })
-      return { email, token }
+      return { id, email, token }
     } else {
       yield put({ type: 'signup:failed', payload: { error: msg } })
     }
@@ -69,15 +69,23 @@ export default function* userSaga () {
         break
     }
     if (user && user.token) {
+      console.log(user)
+      // 存到store, 必须先更新store再调用authSaga(因为后者中的路由跳转依赖store的状态)
+      yield put({ type: 'base:set:currentUser', payload: { user } })
+      // 根据平台存到localStorage / AsyncStorage
       yield put({ type: 'auth:set:token', payload: { user } })
+
       // TODO 这里可以扩展为: 更通用的memoryStorage.setItem()
       // memoryStorage做为一个util, 是一个单例的js对象, 在saga运行过程中不断被写入
       yield call(setUser, user)
       console.log('认证成功, 等待登出')
 
       yield take('signout:request')
-      // yield call(logout)
+
+      // 必须先更新store再调用authSaga(因为后者中的路由跳转依赖store的状态)
+      yield put({ type: 'base:set:currentUser', payload: { user: undefined }})
       yield put({ type: 'auth:remove:token' })
+      // yield call(logout)
       // TODO 登出后, 应清空currentUser (memoryStorage)
     } else {
       console.log('认证失败')

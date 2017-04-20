@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { Link } from 'react-router'
 import myFetch from 'utils/myFetch'
 
@@ -42,7 +42,7 @@ const Profile = ({ user }) => (
   </section>
 )
 
-export default class Account extends React.Component {
+export default class Account extends Component {
   state = {
     loading: false,
     user: {}

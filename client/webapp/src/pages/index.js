@@ -16,20 +16,21 @@ import configureStore from 'store/configureStore'
 const store = configureStore()
 const history = syncHistoryWithStore(browserHistory, store)
 
-const MB = {}
-MB.posts = () => {
-  return Object.values(store.getState().post.map)
-}
-
 // 方便debug
+const MB = {}
 window.store = store
 window.MB = MB
 
-function getToken () {
-  const userId = localStorage.getItem('userId')
-  const email = localStorage.getItem('email')
-  const token = localStorage.getItem('token')
-  return userId && email && token
+MB.posts = () => {
+  return Object.values(store.getState().post.map)
+}
+MB.currentUser = () => {
+  const { user } = store.getState().base
+  if (user && user.token) {
+    return user
+  } else {
+    console.error('找不到当前用户')
+  }
 }
 
 function loggedIn () {
@@ -81,11 +82,11 @@ const ApplicationPage = () => (
       </Route>
       <Route path="/account" onEnter={() => { document.body.className = 'account-page' }}>
         <IndexRoute component={Account.Account} />
-        <Route path="edit" component={Account.Edit}></Route>
+        <Route path="edit" component={Account.Profile}></Route>
         <Route path="settings" component={Account.Settings}></Route>
       </Route>
-      <Route path="/users/:id" onEnter={() => { document.body.className = '' }}>
-        <IndexRoute component={null} />
+      <Route path="/users/:userId" onEnter={() => { document.body.className = '' }}>
+        <IndexRoute component={Account.Account} />
         <Route path="posts" component={User.Posts}></Route>
         <Route path="comments" component={User.Comments}></Route>
         <Route path="follows" component={User.Follows}></Route>

@@ -34,6 +34,8 @@ export default class Show extends React.Component {
     dispatch({ type: 'fetch:post:by:id', payload: { id } })
   }
   componentWillReceiveProps (nProps) {
+    // console.log(this.props.post && this.props.post.comments)
+    // console.log(nProps.post.comments)
     if (nProps.post && this.state.loading) {
       this.setState({ loading: false })
     }
@@ -68,7 +70,7 @@ export default class Show extends React.Component {
 
   renderPost = () => {
     const { post, author, comments } = this.props
-    const { title, created_at, liked, likes_count } = post
+    const { author, comments, title, created_at, liked, likes_count } = post
     const likeIcon = liked ? 'fa fa-heart' : 'fa fa-heart-o'
     return (
       <main className="cx-body">

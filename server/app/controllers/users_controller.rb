@@ -9,6 +9,7 @@ class UsersController < ApplicationController
       nickname: u.profile.try(:nickname),
       followers_count: u.followers.count,
       following_count: u.followed_users.count,
+      is_followed: current_user.following?(u)
     }
   end
 

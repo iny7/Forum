@@ -8,6 +8,56 @@ import Header from 'components/Header'
 import PostItem from 'components/PostItem'
 import Footer from 'components/Footer'
 
+// TODO 瀑布流fetch
+export default class List extends React.Component {
+  componentWillMount () {
+    const { category } = this.props
+    this.category = category
+    this.fetchData(category)
+  }
+  componentWillReceiveProps (nProps) {
+    const { category, posts } = nProps
+    // 如果文章种类发生变化, 并且store中新种类的数量为0, 那么发起请求
+    if (category !== this.category && !posts.length) {
+      this.category = category
+      this.fetchData(category)
+    }
+  }
+  fetchData (category) {
+    this.props.dispatch({ type: 'fetch:post:by:category', payload: { category } })
+  }
+  render () {
+    const { posts, category } = this.props
+    const headlines = []
+    return (
+      <div className="application-page">
+        <Header title="首页" HeaderRight={HeaderRight} />
+        <main className="cx-body">
+          <section className="article-body">
+            <Carousel posts={headlines} />
+            <PostNav category={category} />
+            { false ? '正在加载' : (
+              <ul>
+                { posts.map((p, k) => {
+                  return <PostItem key={k} post={p} />
+                }) }
+              </ul>
+            ) }
+          </section>
+        </main>
+        <Footer />
+      </div>
+    )
+  }
+}
+
+const HeaderRight = () => (
+  <div className="header-right">
+    <Link className="fa fa-bell-o" to="/notifications"></Link>
+    <Link className="fa fa-edit" to="/posts/new"></Link>
+  </div>
+)
+
 const PostNav = ({ category }) => (
   <ul className="article-header">
     <li>
@@ -28,57 +78,4 @@ const PostNav = ({ category }) => (
       </Link>
     </li>
   </ul>
-)
-
-export default class List extends React.Component {
-  componentWillMount () {
-    const { dispatch, location } = this.props
-    const { category } = location.query
-    this.category = category
-    dispatch({ type: 'fetch:post:by:category', payload: { category } })
-  }
-  componentWillReceiveProps (nProps) {
-    const { dispatch, location } = nProps
-    const { category } = location.query
-    if (category !== this.category) {
-      this.category = category
-      dispatch({ type: 'fetch:post:by:category', payload: { category } })
-    }
-  }
-  render () {
-    const { posts, isLoading, router } = this.props
-    const { category = 'newest' } = router.location.query
-    const headlines = []
-    const result = posts.filter(p => p.category === category)
-    return (
-      <div className="application-page">
-        <Header title="首页" HeaderRight={HeaderRight} />
-        <main className="cx-body">
-          <section className="article-body">
-            <Carousel posts={headlines} />
-            <PostNav category={category} />
-            { isLoading ? '正在加载' : (
-              <ul>
-                { result.map((p, k) => {
-                  return <PostItem key={k} post={p} />
-                }) }
-              </ul>
-            ) }
-          </section>
-        </main>
-        <Footer />
-      </div>
-    )
-  }
-}
-List.propTypes = {
-  dispatch: React.PropTypes.func,
-  router: React.PropTypes.object
-}
-
-const HeaderRight = () => (
-  <div className="header-right">
-    <Link className="fa fa-bell-o" to="/notifications"></Link>
-    <Link className="fa fa-edit" to="/posts/new"></Link>
-  </div>
 )

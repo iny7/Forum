@@ -17,11 +17,12 @@ export default {
     data: state.post,
     isLoading: state.common.isLoading
   }))(Fans),
-  Posts: connect((state) => {
-    const pathArr = state.routing.locationBeforeTransitions.pathname.split('/')
-    const userId = pathArr[1]
-    const posts = Object.values(state.post.map).filter(p => p.userId)
-    return { posts }
+  Posts: connect((state, router) => {
+    const { params: { userId } } = router
+    // const { user, post } = state
+    const posts = Object.values(state.post).filter(p => p.author === userId)
+    // const posts = Object.values(state.post).filter(p => p.userId)
+    return { posts, userId }
   })(Posts),
   Comments: connect((state) => ({
     ui: state.ui,

@@ -8,11 +8,12 @@ import { browserHistory } from 'react-router'
 // import { replace } from 'react-router-redux'
 
 function* localAuth () {
+  const id = localStorage.getItem('userId')
   const email = localStorage.getItem('email')
   const token = localStorage.getItem('token')
   if (email && token) {
     console.log('呵呵')
-    yield put({ type: 'auth:request', payload: { user: { email, token } } })
+    yield put({ type: 'auth:request', payload: { user: { id, email, token } } })
   } else {
     console.log('重定向')
     // TODO 不应该在这里重定向, 因为这里拿不到route的nested关系
@@ -22,24 +23,35 @@ function* localAuth () {
   }
 }
 
+function saveUser ({ id, email, token }) {
+  localStorage.setItem('userId', id)
+  localStorage.setItem('email', email)
+  localStorage.setItem('token', token)
+}
+function removeUser () {
+  localStorage.removeItem('userId')
+  localStorage.removeItem('email')
+  localStorage.removeItem('token')
+}
+
 export default function* authSaga () {
   while (true) {
     yield call(localAuth)
     // waiting for set token
     const action = yield take('auth:set:token')
-    const { user: { email, token } } = action.payload
+    const { user } = action.payload
 
     // storage token according to platform
-    localStorage.setItem('email', email)
-    localStorage.setItem('token', token)
-    yield put({ type: 'base:set:loggedIn', payload: { loggedIn: true } })
+    yield call(saveUser, user)
 
     // redirect
     const { state, pathname } = browserHistory.getCurrentLocation()
     const arr = ['/', '/users/sign_in', '/users/sign_up']
     if (state && state.nextPathname) {
-      browserHistory.replace(state.nextPathname)
-    } else if (arr.indexOf(pathname) !== -1) {
+      console.log(111, state.nextPathname)
+      yield call(browserHistory.replace, state.nextPathname)//(state.nextPathname)
+    } else if (arr.includes(pathname)) {
+      console.log(222)
       browserHistory.replace('/posts')
     }
 
@@ -47,9 +59,7 @@ export default function* authSaga () {
 
     // waiting for remove token
     yield take('auth:remove:token')
-    localStorage.removeItem('email')
-    localStorage.removeItem('token')
-    yield put({ type: 'base:set:loggedIn', payload: { loggedIn: false } })
+    yield call(removeUser)
 
     browserHistory.replace('/')
   }
