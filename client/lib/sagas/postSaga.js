@@ -31,8 +31,8 @@ function* fetchPostsByCategory (action) {
 }
 function* fetchPostsByUserId (action) {
   try {
-    const posts = yield call(Api.fetchPostsByUserId, action.payload.userId)
-    yield put({ type: 'fetching:data:success', payload: { posts } })
+    const payload = yield call(Api.fetchPostsByUserId, action.payload.userId)
+    yield put({ type: 'receive:posts', payload })
   } catch (e) {
     console.error(e)
     yield put({ type: '' })

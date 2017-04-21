@@ -5,18 +5,16 @@ import New from './New'
 import Show from './Show'
 import List from './List'
 
-const getPostList = (state, category) => {
-  const posts = Object.values(state.post)
-  return posts.filter(p => p.category === category)
-}
+const getPostList = (state, category) => Object.values(state.post)
 const getPost = (state, id) => state.post[id]
 const getUser = state => state.user
 const getComment = state => state.comment
 
 // 根据category选出文章列表
-const selectPostByCategory = createSelector(
+const selectPosts = createSelector(
   [getPostList, getUser],
   (postList, userMap) => {
+    console.log('calc...')
     const posts = postList.map(p => {
       return {
         ...p,
@@ -35,7 +33,7 @@ const selectPostById = createSelector(
   [getPost, getUser, getComment],
   (post, userMap, commentMap) => {
     if (!post) return
-    console.log('---', 'error')
+    console.log('---', post)
     const author = userMap[post.author]
     // TODO 这里出错了
     const comments = post.comments.map(id => commentMap[id])
@@ -51,9 +49,9 @@ const selectPostById = createSelector(
 
 export default {
   List: connect(state => {
-    const category = 'newest'
-    const posts = selectPostByCategory(state, category)
-    return { category, posts }
+    const posts = selectPosts(state)
+    console.log('List', posts)
+    return { posts }
   })(List),
   Show: connect((state, router) => {
     const id = router.data

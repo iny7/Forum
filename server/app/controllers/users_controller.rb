@@ -15,7 +15,26 @@ class UsersController < ApplicationController
 
   def posts
     u = User.find(params[:user_id])
-    render json: u.posts
+    user_id = u.id
+    result = u.posts.each_with_object([]) do |p, mem|
+      mem << {
+        id:             p.id,
+        title:          p.title,
+        category:       p.category,
+        content:        p.content,
+        comments:       p.comments,
+        created_at:     p.created_at,
+        liked:          p.is_liked(user_id),
+        likes_count:    p.likes.count,
+        author: {
+          id:      p.user_id,
+          name:    p.user.profile.nickname,
+          avatar:  p.user.profile.try(:avatar)
+        }
+      }
+    end
+
+    render json: result
   end
 
   def comments

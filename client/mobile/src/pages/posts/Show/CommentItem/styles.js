@@ -1,19 +1,12 @@
 import { StyleSheet } from 'react-native'
 
-const avatarWidth = 48
-
 const styles = StyleSheet.create({
   comment: {
     flexDirection: 'row',
     marginVertical: 20
   },
   commentLeft: {
-    width: 60
-  },
-  avatar: {
-    width: avatarWidth,
-    height: avatarWidth,
-    borderRadius: avatarWidth / 2
+    width: 54
   },
   commentRight: {
     flex: 1

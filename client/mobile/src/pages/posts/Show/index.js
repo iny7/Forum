@@ -10,14 +10,6 @@ import CommentItem from './CommentItem'
 import styles from './styles'
 import source from 'images/zzq.jpg'
 
-const html = `
-  <p>如果你无法简洁的表达你的想法，那只说明你还不够了解它。如果你无法简洁的表达你的想法，那只说明你还不够了解它解它...</p>
-  <p>如果你无法简洁的表达你的想法，那只说明你还不够了解它。如果你无法简洁的表达你的想法，那只说明你还不够了解它解它...</p>
-  <p>如果你无法简洁的表达你的想法，那只说明你还不够了解它。如果你无法简洁的表达你的想法，那只说明你还不够了解它解它...</p>
-  <p>如果你无法简洁的表达你的想法，那只说明你还不够了解它。如果你无法简洁的表达你的想法，那只说明你还不够了解它解它...</p>
-  <p>如果你无法简洁的表达你的想法，那只说明你还不够了解它。如果你无法简洁的表达你的想法，那只说明你还不够了解它解它...</p>
-`
-
 export default class PostShow extends Component {
   constructor () {
     super()

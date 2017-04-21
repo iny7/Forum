@@ -1,51 +1,52 @@
 import React, { Component } from 'react'
 
-import myFetch from 'utils/myFetch'
 import Header from 'components/Header'
 import Footer from 'components/Footer'
 import PostItem from 'components/PostItem'
 
 export default class Posts extends Component {
-  state = {
-    loading: true
+  constructor () {
+    super()
+    this.state = {
+      loading: true
+    }
   }
   componentWillMount () {
-    myFetch.get({
-      url: this.props.location.pathname
-    }).then(posts => {
-      this.setState({
-        loading: false,
-        posts
-      })
-    })
+    const { dispatch, userId } = this.props
+    this.setState({ loading: true })
+    dispatch({ type: 'fetch:post:by:userId', payload: { userId } })
+  }
+  componentWillReceiveProps (nProps) {
+    if (nProps.posts.length) {
+      this.setState({ loading: false })
+    }
   }
   render () {
     const { loading } = this.state
-    // console.log(this.renderPosts())
+    const { posts } = this.props
+    const title = posts.length ? `${posts[0].author.name}的帖子` : '加载中'
     return (
       <div className="application-page">
-        <Header title={'x的帖子'} />
-        <main className="cx-body">
-          { loading ? this.renderLoading() : this.renderPosts() }
-        </main>
+        <Header title={title} />
+        { loading ? this.renderLoading() : this.renderPosts() }
         <Footer />
       </div>
     )
   }
   renderLoading = () => (
-    <div>
+    <main className="cx-body">
       <div>loading....</div>
       <div>loading....</div>
       <div>loading....</div>
-    </div>
+    </main>
   )
 
   renderPosts () {
-    const { posts } = this.state
+    const { posts } = this.props
     return (
-      posts.map((p, i) => {
-        return <PostItem key={i} post={p} />
-      })
+      <main className="cx-body">
+        { posts.map((p, i) => <PostItem key={i} post={p} />) }
+      </main>
     )
   }
 }

@@ -30,7 +30,6 @@ function getQueryString (params = {}) {
 let currentUser = 'aaa'
 
 function request (params) {
-  console.log(currentUser)
   const method = params.method || 'GET'
   const credentials = 'include'
 

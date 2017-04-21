@@ -28,6 +28,7 @@ export default class Button extends Component {
       btn: btnStyle,
       text: textStyle
     })
+
     return (
       <TouchableOpacity
         activeOpacity={0.8}

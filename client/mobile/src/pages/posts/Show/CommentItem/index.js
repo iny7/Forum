@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
-import { Image, View, Text } from 'react-native'
+import { View, Text } from 'react-native'
+
 import sdf from 'my-lib/utils/sdf'
 
+import MyImage from 'components/MyImage'
 import IconButton from 'components/IconButton'
 import styles from './styles'
 
@@ -9,11 +11,11 @@ export default class CommentItem extends Component {
   render () {
     const { comment } = this.props
     const { commenter, avatar, content, created_at } = comment
-    console.log(commenter, avatar, content, created_at)
+
     return (
       <View style={styles.comment}>
         <View style={styles.commentLeft}>
-          <Image source={{ uri: avatar }} style={styles.avatar}></Image>
+          <MyImage size={40} src={avatar} />
         </View>
         <View style={styles.commentRight}>
           <View style={styles.info}>
