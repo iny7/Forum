@@ -55,9 +55,9 @@ export default class Application extends Component {
 
         <Scene key="root">
           {/* 登录前 */}
-          <Scene  key="home" hideNavBar hideTabBar>
+          <Scene initial key="home" hideNavBar hideTabBar>
             {/* 欢迎 */}
-            <Scene  key="welcome" component={Home.Welcome} />
+            <Scene initial key="welcome" component={Home.Welcome} />
             {/* 登录 */}
             <Scene  key="signin" direction="vertical" component={Home.SignIn} title="Register" />
             {/* 注册 */}
@@ -65,11 +65,11 @@ export default class Application extends Component {
           </Scene>
 
           {/* 登录后 */}
-          <Scene initial key="main" tabs>
+          <Scene key="main" tabs>
             {/* 文章 */}
             <Scene key="posts" icon={TabIcon}>
               {/* 文章列表 */}
-              <Scene initial title="首页" key="post-list" component={Post.List} />
+              <Scene title="首页" key="post-list" component={Post.List} />
               {/* 文章详情 */}
               <Scene key="post-show" title="详情" component={Post.Show} />
             </Scene>

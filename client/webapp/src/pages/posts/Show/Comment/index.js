@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
+import sdf from 'my-lib/utils/sdf'
 
 import './style.sass'
 
 export default class Comment extends Component {
   render () {
     const { comment } = this.props
-    const { commenter, avatar, content, created_at: createdAt } = comment
+    const { commenter, avatar, content, created_at } = comment
     return (
       <div className="comment-item">
         <img className="avatar" src={avatar} />
@@ -17,7 +18,7 @@ export default class Comment extends Component {
               <span>18</span>
             </div>
           </div>
-          <time className="comment-time">{createdAt}</time>
+          <time className="comment-time">{sdf(created_at)}</time>
           <div className="comment-body">
             {content}
           </div>

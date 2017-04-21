@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
+import sdf from 'my-lib/utils/sdf'
 import { ScrollView, Image, View, Text, TouchableOpacity, TextInput } from 'react-native'
-import AutoHeightWebView from 'react-native-autoheight-webview'
+
+// import AutoHeightWebView from 'react-native-autoheight-webview'
 
 import IconButton from 'components/IconButton'
 
@@ -17,33 +19,72 @@ const html = `
 `
 
 export default class PostShow extends Component {
+  constructor () {
+    super()
+    this.state = {
+      loading: true
+    }
+  }
+  componentWillMount () {
+    this.setState({ loading: true })
+    const { id, dispatch } = this.props
+    dispatch({ type: 'fetch:post:by:id', payload: { id } })
+  }
+  componentWillReceiveProps (nProps) {
+    if (nProps.post && this.state.loading) {
+      this.setState({ loading: false })
+    }
+  }
   render () {
+    // TODO loading => store
+    const { loading } = this.state
+    return loading ? this.renderLoading() : this.renderPost()
+  }
+  renderLoading = () => (
+    <View>
+      <Text>{'loading...'}</Text>
+      <Text>{'loading...'}</Text>
+      <Text>{'loading...'}</Text>
+      <Text>{'loading...'}</Text>
+      <Text>{'loading...'}</Text>
+      <Text>{'loading...'}</Text>
+    </View>
+  )
+  renderPost = () => {
+    const { post } = this.props
+    const { author, comments, title, content, created_at, liked, likes_count } = post
+    console.log(comments)
+    const likeIcon = liked ? 'heart' : 'heart-o'
     return (
       <ScrollView style={styles.page}>
 
         {/* 文章标题 */}
-        <Text style={styles.postTitle}>请教下，PostCSS和rework有什么区别区区别...</Text>
+        <Text style={styles.postTitle}>{title}</Text>
 
         {/* 文章信息 */}
         <View style={styles.postInfo}>
           <TouchableOpacity style={styles.author}>
             <Image source={source} style={styles.avatar}></Image>
-            <Text style={styles.name}>作者名字</Text>
+            <Text style={styles.name}>{author.nickname}</Text>
           </TouchableOpacity>
-          <Text style={styles.time}>12月13日21:43</Text>
+          <Text style={styles.time}>{sdf(created_at)}</Text>
           <Text style={styles.opens}>阅读 4521</Text>
         </View>
 
         {/* 文章内容 */}
-        <AutoHeightWebView style={styles.postContent} source={{ html }} />
+        {/*<AutoHeightWebView style={styles.postContent} source={{ html }} />*/}
+        <View style={styles.postContent}>
+          <Text>{content}</Text>
+        </View>
 
         {/* 文章赞数 */}
-        <IconButton name="heart" color={'red'} label={12} style={styles.like} />
+        <IconButton name={likeIcon} color={'red'} label={12} style={styles.like} />
+        <Text>{likes_count}</Text>
 
         {/* 评论列表 */}
         <View style={styles.comments}>
           <Text style={styles.commentCount}>评论 4</Text>
-          { [1, 2, 3].map((c, i) => {
+          { comments.map((c, i) => {
             return <CommentItem key={i} comment={c} />
           }) }
         </View>

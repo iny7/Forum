@@ -22,7 +22,7 @@ window.store = store
 window.MB = MB
 
 MB.posts = () => {
-  return Object.values(store.getState().post.map)
+  return Object.values(store.getState().post)
 }
 MB.currentUser = () => {
   const { user } = store.getState().base

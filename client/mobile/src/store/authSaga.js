@@ -7,41 +7,46 @@ import { AsyncStorage } from 'react-native'
 import { take, call, put } from 'redux-saga/effects'
 import { Actions } from 'react-native-router-flux'
 
-async function setToken (email, token) {
+
+async function getUser () {
+  const id = await AsyncStorage.getItem('userId')
+  const email = await AsyncStorage.getItem('email')
+  const token = await AsyncStorage.getItem('token')
+  return { id: id >> 0, email, token }
+}
+
+async function saveUser ({ id, email, token }) {
+  await AsyncStorage.setItem('userId', String(id))
   await AsyncStorage.setItem('email', email)
   await AsyncStorage.setItem('token', token)
 }
 
-async function removeToken () {
+async function removeUser () {
+  await AsyncStorage.removeItem('userId')
   await AsyncStorage.removeItem('email')
   await AsyncStorage.removeItem('token')
 }
 
-async function getToken () {
-  const email = await AsyncStorage.getItem('email')
-  const token = await AsyncStorage.getItem('token')
-  return { email, token }
-}
-
 function* localAuth () {
-  const user = yield call(getToken)
-  yield put({ type: 'auth:request', payload: { user } })
+  const user = yield call(getUser)
+  if (user.email && user.token) {
+    yield put({ type: 'auth:request', payload: { user } })
+  } else {
+    Actions.home({ type: 'replace' })
+    console.log('重定向')
+  }
 }
 
 export default function* authSaga () {
   while (true) {
     yield call(localAuth)
 
-    console.log('localAuth')
-
     // waiting for set token
     const action = yield take('auth:set:token')
-    const { user: { email, token } } = action.payload
-
-    console.log(email, token)
+    const { user } = action.payload
 
     // storage token according to platform
-    yield call(setToken, email, token)
+    yield call(saveUser, user)
 
     // redirect
     Actions.main({ type: 'replace' })
@@ -50,7 +55,7 @@ export default function* authSaga () {
 
     // waiting for remove token
     yield take('auth:remove:token')
-    yield call(removeToken)
+    yield call(removeUser)
 
     Actions.home({ type: 'replace' })
   }

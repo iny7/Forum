@@ -70,14 +70,14 @@ export default function* userSaga () {
     }
     if (user && user.token) {
       console.log(user)
+      // TODO 这里可以扩展为: 更通用的memoryStorage.setItem()
+      // memoryStorage做为一个util, 是一个单例的js对象, 在saga运行过程中不断被写入
+      yield call(setUser, user)
       // 存到store, 必须先更新store再调用authSaga(因为后者中的路由跳转依赖store的状态)
       yield put({ type: 'base:set:currentUser', payload: { user } })
       // 根据平台存到localStorage / AsyncStorage
       yield put({ type: 'auth:set:token', payload: { user } })
 
-      // TODO 这里可以扩展为: 更通用的memoryStorage.setItem()
-      // memoryStorage做为一个util, 是一个单例的js对象, 在saga运行过程中不断被写入
-      yield call(setUser, user)
       console.log('认证成功, 等待登出')
 
       yield take('signout:request')

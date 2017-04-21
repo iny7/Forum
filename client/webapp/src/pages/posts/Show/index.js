@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import sdf from 'utils/sdf'
+import sdf from 'my-lib/utils/sdf'
 
 import Header from 'components/Header'
 import Comment from './Comment'
@@ -48,6 +48,7 @@ export default class Show extends React.Component {
     dispatch({ type: 'post:add:comment:request', payload: { post, comment } })
   }
   render () {
+    // TODO loading应由store控制
     const { loading } = this.state
 
     return (
@@ -70,7 +71,7 @@ export default class Show extends React.Component {
 
   renderPost = () => {
     const { post } = this.props
-    const { author, comments, title, created_at, liked, likes_count } = post
+    const { author, comments, title, content, created_at, liked, likes_count } = post
     const likeIcon = liked ? 'fa fa-heart' : 'fa fa-heart-o'
     return (
       <main className="cx-body">
@@ -81,7 +82,7 @@ export default class Show extends React.Component {
           <time>{sdf(created_at)}</time>
           <span>{`阅读${4521}`}</span>
         </div>
-        <section className="content" dangerouslySetInnerHTML={{ __html: post.content }}></section>
+        <section className="content" dangerouslySetInnerHTML={{ __html: content }}></section>
         <div className="operation">
           <div className="like">
             <i className={likeIcon}></i>

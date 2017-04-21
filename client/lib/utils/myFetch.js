@@ -30,6 +30,7 @@ function getQueryString (params = {}) {
 let currentUser = 'aaa'
 
 function request (params) {
+  console.log(currentUser)
   const method = params.method || 'GET'
   const credentials = 'include'
 
@@ -62,6 +63,7 @@ function request (params) {
 }
 
 export function setUser (user) {
+  console.log('setUser', user)
   currentUser = user
 }
 

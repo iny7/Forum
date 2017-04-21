@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
 import { StyleSheet, View } from 'react-native'
-import { Actions } from 'react-native-router-flux'
 
 import Swiper from 'react-native-swiper'
 import { Container, Content, Tabs, Tab, Text } from 'native-base'
 
-import PostItem from './PostItem'
+import PostItem from 'components/PostItem'
 
 // import Util from 'Forum/src/utils'
 // const { width } = Util.size
@@ -14,12 +13,17 @@ const tabArr = ["最新", "精选", "匿名"]
 // TODO 定制full button 的borderRadius为6
 export default class PostList extends Component {
   componentWillMount () {
+    const { category } = this.props
+    this.category = category
+    this.fetchData(category)
     // const category = 'newest'
     // this.props.dispatch({ type: 'fetch:post:by:category', payload: { category } })
   }
+  fetchData (category) {
+    this.props.dispatch({ type: 'fetch:post:by:category', payload: { category } })
+  }
   render () {
-    const { posts } = this.props
-    console.log(posts)
+    const { posts, category } = this.props
     return (
       <Container>
         <Swiper
@@ -38,7 +42,6 @@ export default class PostList extends Component {
         </Swiper>
         <Tabs>
           { tabArr.map((tabName, i) => {
-            const posts = new Array(1 + Math.random() * 3 >> 0).fill('')
             return (
               <Tab key={i} heading={tabName}>
                 <Content>
