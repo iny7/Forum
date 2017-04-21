@@ -69,7 +69,7 @@ export default class Show extends React.Component {
   )
 
   renderPost = () => {
-    const { post, author, comments } = this.props
+    const { post } = this.props
     const { author, comments, title, created_at, liked, likes_count } = post
     const likeIcon = liked ? 'fa fa-heart' : 'fa fa-heart-o'
     return (
@@ -77,7 +77,7 @@ export default class Show extends React.Component {
         <h3 className="title">{title}</h3>
         <div className="info">
           <img className="avatar sm" src={author.avatar} />
-          <span>{author.name}</span>
+          <span>{author.nickname}</span>
           <time>{sdf(created_at)}</time>
           <span>{`阅读${4521}`}</span>
         </div>

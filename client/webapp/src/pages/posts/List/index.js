@@ -18,7 +18,8 @@ export default class List extends React.Component {
   componentWillReceiveProps (nProps) {
     const { category, posts } = nProps
     // 如果文章种类发生变化, 并且store中新种类的数量为0, 那么发起请求
-    if (category !== this.category && !posts.length) {
+    // 小于2的原因: 当用户直接访问新建页面, 新建帖子并返回时, store里只有1篇, 此时也应发起请求`
+    if (category !== this.category && posts.length < 2) {
       this.category = category
       this.fetchData(category)
     }

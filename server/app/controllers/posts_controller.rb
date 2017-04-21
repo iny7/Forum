@@ -19,8 +19,8 @@ class PostsController < ApplicationController
       	likes_count:    p.likes.count,
       	author: {
       		id:      p.user_id,
-      		name:    p.user.try(:name),
-      		avatar:  p.user.try(:avatar)
+      		name:    p.user.profile.nickname,
+      		avatar:  p.user.profile.try(:avatar)
       	}
       }
     end
@@ -42,8 +42,8 @@ class PostsController < ApplicationController
 			likes_count:    p.likes.count,
 			author: {
 				id:      p.user_id,
-				name:    p.user.try(:name),
-				avatar:  p.user.try(:avatar)
+				name:    p.user.profile.nickname,
+				avatar:  p.user.profile.try(:avatar)
 			}
 		}
 
@@ -69,14 +69,9 @@ class PostsController < ApplicationController
 		@post = Post.new(post_params)
 		@post.user_id = current_user.id
 		if @post.save
-			render json: {
-				status_code: 200,
-				post_id: @post.id
-			}
+			render json: @post
 		else
-			render json: {
-				errors: @post.errors
-			}
+			render json: @post.errors
 		end
 	end
 

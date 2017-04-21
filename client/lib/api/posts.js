@@ -23,10 +23,11 @@ export async function fetchPostById (id) {
   return normalize(post, schema.post)
 }
 export async function createPost (post) {
-  return await myFetch.post({
+  const resPost = await myFetch.post({
     url: '/posts',
     data: { post }
   })
+  return normalize(resPost, schema.post)
 }
 
 export async function addCommentToPost (postId, comment) {

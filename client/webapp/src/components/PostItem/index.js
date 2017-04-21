@@ -11,7 +11,6 @@ export default class PostItem extends React.Component {
   }
   render () {
     const { post } = this.props
-    console.log(post)
     const { id, title, author, content, comments, created_at, liked, likes_count } = post
     const likeIcon = liked ? 'fa fa-heart' : 'fa fa-heart-o'
     return (

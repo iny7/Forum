@@ -4,9 +4,7 @@ import * as Api from '../api'
 function* createPost (action) {
   try {
     const payload = yield call(Api.createPost, action.payload.post)
-    yield [
-      put({ type: 'fetching:data:success', payload })
-    ]
+    yield put({ type: 'post:create:success', payload })
   } catch (e) {
     console.error(e)
     yield put({ type: 'CREATE_POST_SUCCESS' })

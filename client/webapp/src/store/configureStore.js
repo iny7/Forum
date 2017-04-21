@@ -9,7 +9,7 @@ import { routerMiddleware, routerReducer } from 'react-router-redux'
 
 import { base, post, user, comment } from 'my-lib/reducers'
 import { userSaga, postSaga } from 'my-lib/sagas'
-// import routeSaga from './routeSaga'
+import routeSaga from './routeSaga'
 import authSaga from './authSaga'
 
 const rootReducer = combineReducers({
@@ -30,7 +30,7 @@ export default function configureStore () {
   sagaMiddleware.run(userSaga)
   sagaMiddleware.run(postSaga)
   sagaMiddleware.run(authSaga)
-  // sagaMiddleware.run(routeSaga)
+  sagaMiddleware.run(routeSaga)
 
   return store
 }
