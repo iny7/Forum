@@ -8,7 +8,7 @@ import { routerMiddleware, routerReducer } from 'react-router-redux'
 // import rootReducer from 'pages/reducers'
 
 import { base, post, user, comment } from 'my-lib/reducers'
-import { userSaga, postSaga } from 'my-lib/sagas'
+import { signSaga, userSaga, postSaga } from 'my-lib/sagas'
 import routeSaga from './routeSaga'
 import authSaga from './authSaga'
 
@@ -27,6 +27,7 @@ export default function configureStore () {
     rootReducer,
     applyMiddleware(sagaMiddleware, historyMiddleware),
   )
+  sagaMiddleware.run(signSaga)
   sagaMiddleware.run(userSaga)
   sagaMiddleware.run(postSaga)
   sagaMiddleware.run(authSaga)

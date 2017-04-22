@@ -3,12 +3,17 @@ class UsersController < ApplicationController
   skip_before_action :login_required, only: [:create]
 
   def show
-    u = User.find_by_id(params[:user_id])
+    u = User.find_by_id(params[:id])
+    log params[:id]
+    log u.inspect
     render json: {
       id: u.id,
       nickname: u.profile.try(:nickname),
+      desc: u.profile.try(:desc),
+      avatar: u.profile.try(:avatar).try(:url),
       followers_count: u.followers.count,
       following_count: u.followed_users.count,
+      posts_count: u.posts.count,
       is_followed: current_user.following?(u)
     }
   end
@@ -35,6 +40,26 @@ class UsersController < ApplicationController
     end
 
     render json: result
+  end
+
+  # 正在关注
+  def following
+    u = User.find(params[:user_id])
+    render json: {
+      id: u.id,
+      name: u.profile.nickname,
+      following: u.followed_users.map(&:lite_json)
+    }
+  end
+
+  # 粉丝
+  def followers
+    u = User.find(params[:user_id])
+    render json: {
+      id: u.id,
+      name: u.profile.nickname,
+      fans: u.followers.map(&:lite_json)
+    }
   end
 
   def comments

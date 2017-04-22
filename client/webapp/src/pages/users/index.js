@@ -10,12 +10,12 @@ const getPostList = (state, userId) => {
   const posts = Object.values(state.post)
   return posts.filter(p => p.author == userId) // string <=> int
 }
-const getUser = state => state.user
+const getUserMap = state => state.user
+const getUserById = (state, userId) => state.user[userId]
 
 const getPostByUserId = createSelector(
-  [getPostList, getUser],
+  [getPostList, getUserMap],
   (postList, userMap) => {
-    console.log('calc..', postList)
     const posts = postList.map(p => {
       return {
         ...p,
@@ -26,23 +26,51 @@ const getPostByUserId = createSelector(
   }
 )
 
+const getFollows = createSelector(
+  [getUserMap, getUserById],
+  (userMap, user) => {
+    if (user && user.following) {
+      return user.following.map(id => ({ ...userMap[id] }))
+    } else {
+      return []
+    }
+  }
+)
+
+const getFans = createSelector(
+  [getUserMap, getUserById],
+  (userMap, user) => {
+    if (user && user.fans) {
+      return user.fans.map(id => ({ ...userMap[id] }))
+    } else {
+      return []
+    }
+  }
+)
+
 // 使用redux-router 把router数据同步到store
 export default {
-  Follows: connect((state) => ({
-    ui: state.ui,
-    data: state.post,
-    isLoading: state.common.isLoading
-  }))(Follows),
-  Fans: connect((state) => ({
-    ui: state.ui,
-    data: state.post,
-    isLoading: state.common.isLoading
-  }))(Fans),
+  Follows: connect((state, router) => {
+    const { params: { userId } } = router
+    const userName = state.user[userId] && state.user[userId].name
+    const follows = getFollows(state, userId)
+    return { follows, userName, userId }
+  })(Follows),
+
+  Fans: connect((state, router) => {
+    const { params: { userId } } = router
+    const userName = state.user[userId] && state.user[userId].name
+    const fans = getFans(state, userId)
+    return { fans, userName, userId }
+  })(Fans),
+
   Posts: connect((state, router) => {
     const { params: { userId } } = router
+    const userName = state.user[userId] && state.user[userId].name
     const posts = getPostByUserId(state, userId)
-    return { posts, userId }
+    return { posts, userName, userId }
   })(Posts),
+
   Comments: connect((state) => ({
     ui: state.ui,
     data: state.post,

@@ -15,13 +15,24 @@ Rails.application.routes.draw do
 
   # get 'users/signin' => 'application#index'
   resources :users, only: [:show] do
-    scope module: :users do
-      resource :relationship, only: [:create, :destroy] do
-        get :following
-        get :followers
-      end
+    # scope module: :users do
+    #   resource :relationship, only: [:create, :destroy] do
+    #     get :following
+    #     get :followers
+    #   end
+    # end
+
+    # 关注 / 取关
+    member do
+      post   '/follow' => 'users/relationship#create'
+      delete '/follow' => 'users/relationship#delete'
     end
-    get '/posts' => 'users#posts'
+
+    # 关注 / 粉丝
+    get '/following' => 'users#following'
+    get '/followers' => 'users#followers'
+
+    get '/posts'    => 'users#posts'
     get '/comments' => 'users#comments'
   end
 

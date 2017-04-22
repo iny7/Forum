@@ -14,7 +14,9 @@ class ApplicationController < ActionController::Base
   end
 
   def log(args)
+    Rails.logger.info '*' * 20
     Rails.logger.info args
+    Rails.logger.info '*' * 20
   end
 
   private

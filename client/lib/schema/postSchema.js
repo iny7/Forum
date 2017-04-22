@@ -3,6 +3,10 @@ import { normalize, schema } from 'normalizr'
 // Define a users schema
 export const user = new schema.Entity('users')
 
+const following = new schema.Array(user) // 关注
+const fans = new schema.Array(user) // 粉丝
+user.define({ following, fans })
+
 // Define your comments schema
 export const comment = new schema.Entity('comments', {
   commenter: user

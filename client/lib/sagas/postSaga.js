@@ -22,7 +22,6 @@ function* fetchPostById (action) {
 function* fetchPostsByCategory (action) {
   try {
     const payload = yield call(Api.fetchPostsByCategory, action.payload.category)
-    console.log(payload)
     yield put({ type: 'receive:posts', payload })
   } catch (e) {
     // TODO
@@ -65,7 +64,6 @@ function* watchAddCommentToPost () {
 }
 
 export default function* rootSaga () {
-  console.log('start all sagas')
   yield [
     watchCreatePost(),
     watchFetchPost(),
@@ -73,5 +71,4 @@ export default function* rootSaga () {
     watchFetchPostByUserId(),
     watchAddCommentToPost()
   ]
-  console.log('fuck sagas')
 }

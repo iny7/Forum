@@ -45,52 +45,64 @@ const Profile = ({ user }) => (
 export default class Account extends Component {
   state = {
     loading: false,
-    user: {}
   }
   componentWillMount () {
     this.setState({ loading: true })
-    myFetch.get({
-      url: '/account'
-    }).then(user => {
-      this.setState({
-        loading: false,
-        user
-      })
-    })
+    const { userId, dispatch } = this.props
+    dispatch({ type: 'user:get:profile', payload: { userId } })
+  }
+  componentWillReceiveProps(nextProps) {
+    const { user } = nextProps
+    user && this.setState({ loading: false })
   }
   handleSignOut = () => {
     this.props.dispatch({ type: 'signout:request' })
   }
   render () {
-    const { loading, user } = this.state
-    if (loading) return null
-
+    const { loading } = this.state
+    const { user } = this.props
+    const title = user.id == MB.currentUser().id ? '我的' : user.nickname
     return (
       <div className="application-page account-index">
-        <Header title="我的" HeaderRight={HeaderRight} />
-        <main className="cx-body">
-          <Profile user={user} />
-          <InfoBar user={user} />
-          <section className="section-3">
-            <div className="item">
-              <span className="fa fa-minus-square"></span>
-              <h4>黑名单</h4>
-              <span className="fa fa-angle-right"></span>
-            </div>
-            <div className="item">
-              <span className="fa fa-history"></span>
-              <h4>浏览历史</h4>
-              <span className="fa fa-angle-right"></span>
-            </div>
-            <div className="item" onClick={this.handleSignOut}>
-              <span className="fa fa-sign-out"></span>
-              <h4>退出登录</h4>
-              <span className="fa fa-angle-right"></span>
-            </div>
-          </section>
-        </main>
+        <Header title={title} HeaderRight={HeaderRight} />
+        { loading ? this.renderLoading() : this.renderContent() }
         <Footer />
       </div>
     )
+  }
+  renderLoading = () => (
+    <main className="cx-body">
+      <div>loading....</div>
+      <div>loading....</div>
+      <div>loading....</div>
+      <div>loading....</div>
+    </main>
+  )
+
+  renderContent = () => {
+    const { user } = this.props
+    return (
+       <main className="cx-body">
+         <Profile user={user} />
+         <InfoBar user={user} />
+         <section className="section-3">
+           <div className="item">
+             <span className="fa fa-minus-square"></span>
+             <h4>黑名单</h4>
+             <span className="fa fa-angle-right"></span>
+           </div>
+           <div className="item">
+             <span className="fa fa-history"></span>
+             <h4>浏览历史</h4>
+             <span className="fa fa-angle-right"></span>
+           </div>
+           <div className="item" onClick={this.handleSignOut}>
+             <span className="fa fa-sign-out"></span>
+             <h4>退出登录</h4>
+             <span className="fa fa-angle-right"></span>
+           </div>
+         </section>
+       </main>
+     )
   }
 }

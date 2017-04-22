@@ -23,30 +23,28 @@ export default class Posts extends Component {
   }
   render () {
     const { loading } = this.state
-    const { posts } = this.props
-    const title = posts.length ? `${posts[0].author.name}的帖子` : '加载中'
+    const { userName } = this.props
+    const title = userName ? `${userName}的帖子` : '加载中'
     return (
       <div className="application-page">
         <Header title={title} />
-        { loading ? this.renderLoading() : this.renderPosts() }
+        <main className="cx-body">
+          { loading ? this.renderLoading() : this.renderPosts() }
+        </main>
         <Footer />
       </div>
     )
   }
   renderLoading = () => (
-    <main className="cx-body">
+    <div>
       <div>loading....</div>
       <div>loading....</div>
       <div>loading....</div>
-    </main>
+    </div>
   )
 
   renderPosts () {
     const { posts } = this.props
-    return (
-      <main className="cx-body">
-        { posts.map((p, i) => <PostItem key={i} post={p} />) }
-      </main>
-    )
+    return posts.map((p, i) => <PostItem key={i} post={p} />)
   }
 }

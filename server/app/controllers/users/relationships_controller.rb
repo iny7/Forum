@@ -13,21 +13,5 @@ module Users
       current_user.unfollow!(u)
     end
 
-    # 正在关注
-    def following
-      u = params[:user_id]
-      render_json({
-        following: u.followed_users
-      })
-    end
-
-    # 粉丝
-    def followers
-      u = params[:user_id]
-      render_json({
-        following: u.followers
-      })
-    end
-
   end
 end

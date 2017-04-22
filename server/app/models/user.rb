@@ -26,15 +26,33 @@ class User < ActiveRecord::Base
 
   # validates :name, presence: true
 
+  def as_json(ops={})
+    {
+      id: id,
+      email: email,
+      token: authentication_token,
+    }
+  end
+
+  def lite_json
+    {
+      id: id,
+      name: profile.nickname,
+      desc: profile.desc,
+      avatar: profile.avatar,
+    }
+  end
+
   def generate_profile(nickname)
   end
 
   def following?(other_user)
-    relationships.find_by_followed_id(other_user.id)
+    !!relationships.find_by_followed_id(other_user.id)
   end
 
-  def follow!(other_ser)
-    relationships.create!(followed_id: other_user.id)
+  def follow(other_user)
+    rel = relationships.create(followed_id: other_user.id)
+    rel.save
   end
 
   def unfollow!(other_user)
