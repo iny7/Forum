@@ -2,6 +2,7 @@ class UsersController < ApplicationController
   skip_before_action :verify_authenticity_token
   skip_before_action :login_required, only: [:create]
 
+  # /users/:id
   def show
     u = User.find_by_id(params[:id])
     log params[:id]
@@ -18,6 +19,7 @@ class UsersController < ApplicationController
     }
   end
 
+  # /users/:id/posts
   def posts
     u = User.find(params[:user_id])
     user_id = u.id
@@ -42,6 +44,7 @@ class UsersController < ApplicationController
     render json: result
   end
 
+  # /users/:id/following
   # 正在关注
   def following
     u = User.find(params[:user_id])
@@ -52,6 +55,7 @@ class UsersController < ApplicationController
     }
   end
 
+  # /users/:id/fans
   # 粉丝
   def followers
     u = User.find(params[:user_id])

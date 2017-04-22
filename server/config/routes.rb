@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
 
   ActiveAdmin.routes(self)
-  devise_for :admin_users, ActiveAdmin::Devise.config
   devise_for :users, controllers: {
     sessions: 'users/sessions',
     registrations: 'users/registrations'
@@ -9,7 +8,7 @@ Rails.application.routes.draw do
 
   scope module: :users do
     resource :profiles, only: [:show, :update]
-    get '/account' => 'account#show'
+    # get '/account' => 'account#show'
     # resource :account, only: [:show]
   end
 
@@ -87,7 +86,7 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
-  get 'users/sign_in' => 'application#index'
-  get 'users/sign_up' => 'application#index'
+  # get 'users/sign_in' => 'application#index'
+  # get 'users/sign_up' => 'application#index'
   get '/(*all)' => 'application#index'
 end

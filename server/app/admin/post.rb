@@ -17,6 +17,9 @@ ActiveAdmin.register Post do
     column :headlines
     column :category
     column :title
+    column :comments do |p|
+      p.comments.count
+    end
     actions
   end
 

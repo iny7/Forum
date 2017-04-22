@@ -1,8 +1,6 @@
 class PostsController < ApplicationController
 	layout 'application'
 
-	# http_basic_authenticate_with name: "dhh", password: "secret", except: [:index, :show]
-
 	def index
 		category = params[:category].present? ? params[:category] : 'newest'
 		posts = Post.where(category: category)

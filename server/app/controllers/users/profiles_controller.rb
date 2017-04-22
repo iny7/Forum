@@ -24,13 +24,11 @@ module Users
 
     def update
       profile = current_user.profile
-      # avatar = process_image_data(:avatar)
-      # profile.avatar = avatar if avatar
 
       if profile.update_attributes(profile_params)
-        render_json({ status_code: 200 })
+        render json: 'success'
       else
-        render_json({ status_code: 400 })
+        render json: 'failed'
       end
     end
     private
