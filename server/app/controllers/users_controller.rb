@@ -10,7 +10,7 @@ class UsersController < ApplicationController
     render json: {
       id: u.id,
       nickname: u.profile.try(:nickname),
-      desc: u.profile.try(:desc),
+      desc: u.profile.try(:desc) || '这个人很懒, 什么都没说',
       avatar: u.profile.try(:avatar).try(:url),
       followers_count: u.followers.count,
       following_count: u.followed_users.count,

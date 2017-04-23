@@ -28,11 +28,10 @@ class ApplicationController < ActionController::Base
   end
 
   def layout_only
-    is_admin = request.path =~ /admin/
-    log request.path
+    is_admin = request.path =~ /^\/admin/
 
     if is_admin
-      log 'admin'
+      log '接收到Admin'
     elsif request.format.html?
       render text: nil, layout: true
     else
@@ -40,7 +39,7 @@ class ApplicationController < ActionController::Base
       # log request.session_options.inspect
       # request.session_options[:skip] = true
       # env['rack.session.options'][:skip] = true
-      log 'fuck'
+      log '接收到API请求' + request.path
     end
   end
 

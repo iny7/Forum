@@ -55,7 +55,7 @@ class User < ActiveRecord::Base
     rel.save
   end
 
-  def unfollow!(other_user)
+  def unfollow(other_user)
     relationships.find_by_followed_id(other_user.id).destroy
   end
 

@@ -3,18 +3,15 @@ import sdf from 'my-lib/utils/sdf'
 
 import Header from 'components/Header'
 import Comment from './Comment'
+import Spiner from 'components/Spiner'
 
 import './style.sass'
 
-class HeaderRight extends Component {
-  render () {
-    return (
-      <div className="header-right">
-        <span className="fa fa-ellipsis-h"></span>
-      </div>
-    )
-  }
-}
+const HeaderRight = () => (
+  <div className="header-right">
+    <span className="fa fa-ellipsis-h"></span>
+  </div>
+)
 
 export default class Show extends React.Component {
   constructor () {
@@ -61,11 +58,7 @@ export default class Show extends React.Component {
 
   renderLoading = () => (
     <main className="cx-body">
-      <div>{'loading...'}</div>
-      <div>{'loading...'}</div>
-      <div>{'loading...'}</div>
-      <div>{'loading...'}</div>
-      <div>{'loading...'}</div>
+      <Spiner />
     </main>
   )
 

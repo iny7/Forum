@@ -75,7 +75,7 @@ export default class Edit extends React.Component {
                 <input name="nickname" type="text" className="form-control" placeholder={nickname} onChange={this.handleChange} />
               </div>
               <div className="form-group select">
-                <select name="sex" className="form-control" value={sex}>
+                <select name="sex" className="form-control" value={sex} onChange={this.handleChange}>
                   <option value="0">无</option>
                   <option value="1">男</option>
                   <option value="2">女</option>

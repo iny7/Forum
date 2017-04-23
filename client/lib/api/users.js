@@ -22,3 +22,25 @@ export async function getFans (userId) {
   })
   return normalize(fans, schema.user)
 }
+
+export async function followUserById (userId) {
+  const result = await myFetch.post({
+    url: `/users/${userId}/follow`
+  })
+  if (result === 'failed') {
+    console.error('关注用户异常')
+  } else {
+    return { userId: result.user_id }
+  }
+}
+
+export async function unfollowUserById (userId) {
+  const result = await myFetch.delete({
+    url: `/users/${userId}/follow`
+  })
+  if (result === 'failed') {
+    console.error('取消关注用户异常')
+  } else {
+    return { userId: result.user_id }
+  }
+}

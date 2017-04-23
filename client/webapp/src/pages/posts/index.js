@@ -26,7 +26,7 @@ const selectPostByCategory = createSelector(
       }
     }).sort((a, b) => {
       // 新发表在前
-      return new Date(a.created_at) < new Date(b.created_at)
+      return new Date(b.created_at) - new Date(a.created_at)
     })
     return posts
   }

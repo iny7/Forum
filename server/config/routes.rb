@@ -23,8 +23,8 @@ Rails.application.routes.draw do
 
     # 关注 / 取关
     member do
-      post   '/follow' => 'users/relationship#create'
-      delete '/follow' => 'users/relationship#delete'
+      post   '/follow' => 'users/relationships#create'
+      delete '/follow' => 'users/relationships#destroy'
     end
 
     # 关注 / 粉丝

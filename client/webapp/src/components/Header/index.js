@@ -12,7 +12,7 @@ export default class Header extends React.Component {
     const isRootPath = location.pathname.split('/').filter(s => s).length <= 1
     const { title, needBack = !isRootPath, HeaderRight } = this.props
     // 判断是stateless component还是普通component
-    const rightSplat = HeaderRight.prototype.render ? <HeaderRight /> : HeaderRight()
+    // const rightSplat = HeaderRight.prototype.render ? <HeaderRight /> : HeaderRight()
     return (
       <header className="cx-header">
         {needBack ? (
@@ -21,16 +21,18 @@ export default class Header extends React.Component {
           </div>
         ) : <div className="header-left"></div>}
         <h2 className="header-title">{title}</h2>
-        {rightSplat}
+        <div className="header-right">
+          { HeaderRight && HeaderRight() }
+        </div>
       </header>
     )
   }
 }
-Header.defaultProps = {
-  HeaderRight: () => <div className="header-right"></div>
-}
-Header.propTypes = {
-  title: React.PropTypes.string,
-  needBack: React.PropTypes.bool,
-  HeaderRight: React.PropTypes.func
-}
+// Header.defaultProps = {
+//   HeaderRight: () => <div className="header-right"></div>
+// }
+// Header.propTypes = {
+//   title: React.PropTypes.string,
+//   needBack: React.PropTypes.bool,
+//   HeaderRight: React.PropTypes.func
+// }
