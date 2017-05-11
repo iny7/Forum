@@ -5,9 +5,9 @@ module Users
     skip_before_action :require_no_authentication
     skip_before_action :verify_authenticity_token
 
-    # def users_url
-    #   '/'
-    # end
+    def users_url
+      '/'
+    end
 
     # def create
     #   reset_session

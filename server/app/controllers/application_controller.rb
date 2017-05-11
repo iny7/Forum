@@ -37,8 +37,8 @@ class ApplicationController < ActionController::Base
     else
       # reset_session
       # log request.session_options.inspect
-      # request.session_options[:skip] = true
-      # env['rack.session.options'][:skip] = true
+      request.session_options[:skip] = true
+      env['rack.session.options'][:skip] = true
       log '接收到API请求' + request.path
     end
   end

@@ -99,16 +99,18 @@ export default class Account extends Component {
 
          { isMe && (
            <section className="section-3">
-             <div className="item">
-               <span className="fa fa-minus-square"></span>
-               <h4>黑名单</h4>
-               <span className="fa fa-angle-right"></span>
-             </div>
-             <div className="item">
-               <span className="fa fa-history"></span>
-               <h4>浏览历史</h4>
-               <span className="fa fa-angle-right"></span>
-             </div>
+              {/*
+               <div className="item">
+                 <span className="fa fa-minus-square"></span>
+                 <h4>黑名单</h4>
+                 <span className="fa fa-angle-right"></span>
+               </div>
+               <div className="item">
+                 <span className="fa fa-history"></span>
+                 <h4>浏览历史</h4>
+                 <span className="fa fa-angle-right"></span>
+               </div>
+              */}
              <div className="item" onClick={this.handleSignOut}>
                <span className="fa fa-sign-out"></span>
                <h4>退出登录</h4>

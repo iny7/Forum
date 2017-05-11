@@ -37,6 +37,11 @@ export default class Show extends Component {
       this.setState({ loading: false })
     }
   }
+  handleLike = () => {
+    const { post, dispatch } = this.props
+    const type = post.liked ? 'unlike:post' : 'like:post'
+    dispatch({ type, payload: { post } })
+  }
   handleComment = () => {
     const { post, dispatch } = this.props
     const comment = {
@@ -72,11 +77,11 @@ export default class Show extends Component {
           <img className="avatar sm" src={author.avatar} />
           <span>{author.nickname}</span>
           <time>{sdf(created_at)}</time>
-          <span>{`阅读${4521}`}</span>
+          {/* <span>{`阅读${4521}`}</span> */}
         </div>
         <section className="content" dangerouslySetInnerHTML={{ __html: content }}></section>
         <div className="operation">
-          <div className="like">
+          <div className="like" onClick={this.handleLike}>
             <i className={likeIcon}></i>
             <span>{likes_count}</span>
           </div>

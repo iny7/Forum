@@ -1,5 +1,5 @@
 // import thunkMiddleware from 'redux-thunk'
-// import createLogger from 'redux-logger'
+import createLogger from 'redux-logger'
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import createSagaMiddleware from 'redux-saga'
 import { browserHistory } from 'react-router'
@@ -18,14 +18,14 @@ const rootReducer = combineReducers({
 })
 
 
-// const loggerMiddleware = createLogger()
+const loggerMiddleware = createLogger()
 const sagaMiddleware = createSagaMiddleware()
 const historyMiddleware = routerMiddleware(browserHistory)
 
 export default function configureStore () {
   const store = createStore(
     rootReducer,
-    applyMiddleware(sagaMiddleware, historyMiddleware),
+    applyMiddleware(sagaMiddleware, loggerMiddleware, historyMiddleware),
   )
 
   // common sagas

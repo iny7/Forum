@@ -8,8 +8,9 @@ import HeaderImageScrollView, { TriggeringView } from 'react-native-image-header
 import { View as AnimatableView } from 'react-native-animatable'
 import { List, ListItem } from 'react-native-elements'
 
+import MyImage from 'components/MyImage'
+
 import rem from 'images/rem.png'
-import source from 'images/cmw.jpg'
 
 import styles from './styles'
 
@@ -26,8 +27,8 @@ export default class Account extends Component {
   )
   renderForeground = () => (
     <View style={styles.header}>
-      <Image source={source} style={styles.avatar} />
-      <Text style={styles.name}>三叶</Text>
+      <MyImage src={'/images/avatar2.png'} size={80} />
+      <Text style={styles.name}>秦长熙</Text>
     </View>
   )
   handleFollowing = () => {
@@ -38,6 +39,9 @@ export default class Account extends Component {
   }
   handlePosts = () => {
     Actions.myPosts()
+  }
+  handleSignout = () => {
+    this.props.dispatch({ type: 'signout:request' })
   }
   render() {
     return(
@@ -56,15 +60,15 @@ export default class Account extends Component {
           {/* 关注 / 粉丝 / 帖子 */}
           <View style={styles.infoBar}>
             <TouchableOpacity style={styles.info} onPress={this.handleFollowing}>
-              <Text style={styles.num}>22</Text>
+              <Text style={styles.num}>2</Text>
               <Text style={styles.label}>关注</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.info} onPress={this.handleFollowers}>
-              <Text>5</Text>
+              <Text>1</Text>
               <Text>粉丝</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.info} onPress={this.handlePosts}>
-              <Text>399</Text>
+              <Text>22</Text>
               <Text>帖子</Text>
             </TouchableOpacity>
           </View>
@@ -89,7 +93,7 @@ export default class Account extends Component {
               <ListItem
                 title={'退出登录'}
                 leftIcon={{ name: 'exit-to-app' }}
-                onPress={() => { alert(1)}}
+                onPress={this.handleSignout}
               />
             </List>
           </View>

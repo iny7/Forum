@@ -9,7 +9,7 @@ export default class Carousel extends React.Component {
   }
   render () {
     return (
-      <div className="article-carousel">轮播</div>
+      <div className="article-carousel">川大头条</div>
     )
   }
 }

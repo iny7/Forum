@@ -21,6 +21,30 @@ export default function byId (state = {}, action) {
         [post.id]: post
       }
     }
+    case 'list:post:success': {
+      const{ post_id, likes_count } = payload
+      const post = {
+        ...state[post_id],
+        liked: true,
+        likes_count
+      }
+      return {
+        ...state,
+        [post.id]: post
+      }
+    }
+    case 'unlike:post:success': {
+      const { post_id, likes_count } = payload
+      const post = {
+        ...state[post_id],
+        liked: false,
+        likes_count
+      }
+      return {
+        ...state,
+        [post.id]: post
+      }
+    }
   }
   return state
 }

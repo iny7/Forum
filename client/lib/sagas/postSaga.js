@@ -46,6 +46,24 @@ function* addCommentToPost (action) {
     console.error(e)
   }
 }
+function* likePost (action) {
+  try {
+    const { post } = action.payload
+    const payload = yield call(Api.likePost, post.id)
+    yield put({ type: 'list:post:success', payload })
+  } catch (e) {
+    console.error(e)
+  }
+}
+function* unlikePost (action) {
+  try {
+    const { post } = action.payload
+    const payload = yield call(Api.unlikePost, post.id)
+    yield put({ type: 'unlike:post:success', payload })
+  } catch (e) {
+    console.error(e)
+  }
+}
 
 export default function* rootSaga () {
   yield [
@@ -54,5 +72,7 @@ export default function* rootSaga () {
     takeLatest('fetch:post:by:category', fetchPostsByCategory),
     takeLatest('fetch:post:by:userId', fetchPostsByUserId),
     takeLatest('post:add:comment:request', addCommentToPost),
+    takeLatest('like:post', likePost),
+    takeLatest('unlike:post', unlikePost),
   ]
 }

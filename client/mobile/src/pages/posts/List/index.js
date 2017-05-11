@@ -48,13 +48,13 @@ export default class PostList extends Component {
       <ScrollView>
         <Swiper autoplay height={200} showsButtons={false}>
           <View style={styles.headline}>
-            <Text style={styles.text}>Hello Swiper</Text>
+            <Text style={styles.text}>川大头条</Text>
           </View>
           <View style={styles.headline}>
-            <Text style={styles.text}>Beautiful</Text>
+            <Text style={styles.text}>川大头条</Text>
           </View>
           <View style={styles.headline}>
-            <Text style={styles.text}>And simple</Text>
+            <Text style={styles.text}>川大头条</Text>
           </View>
         </Swiper>
         <View style={styles.tabs}>
