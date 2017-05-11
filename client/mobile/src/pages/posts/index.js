@@ -14,7 +14,6 @@ const getComment = state => state.comment
 const selectPosts = createSelector(
   [getPostList, getUser],
   (postList, userMap) => {
-    console.log('calc...')
     const posts = postList.map(p => {
       return {
         ...p,

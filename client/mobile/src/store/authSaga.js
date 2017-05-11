@@ -8,25 +8,6 @@ import { take, call, put } from 'redux-saga/effects'
 import { Actions } from 'react-native-router-flux'
 
 
-async function getUser () {
-  const id = await AsyncStorage.getItem('userId')
-  const email = await AsyncStorage.getItem('email')
-  const token = await AsyncStorage.getItem('token')
-  return { id: id >> 0, email, token }
-}
-
-async function saveUser ({ id, email, token }) {
-  await AsyncStorage.setItem('userId', String(id))
-  await AsyncStorage.setItem('email', email)
-  await AsyncStorage.setItem('token', token)
-}
-
-async function removeUser () {
-  await AsyncStorage.removeItem('userId')
-  await AsyncStorage.removeItem('email')
-  await AsyncStorage.removeItem('token')
-}
-
 function* localAuth () {
   const user = yield call(getUser)
   if (user.email && user.token) {
@@ -37,6 +18,30 @@ function* localAuth () {
   }
 }
 
+async function getUser () {
+  const id = await AsyncStorage.getItem('userId')
+  const email = await AsyncStorage.getItem('email')
+  const token = await AsyncStorage.getItem('token')
+  return { id: id >> 0, email, token }
+}
+
+
+async function removeUser () {
+  await AsyncStorage.removeItem('userId')
+  await AsyncStorage.removeItem('email')
+  await AsyncStorage.removeItem('token')
+}
+
+async function saveUser ({ id, email, token }) {
+  await AsyncStorage.setItem('userId', String(id))
+  await AsyncStorage.setItem('email', email)
+  await AsyncStorage.setItem('token', token)
+}
+
+/**
+ * mobile token处理
+ * @iny 2017.4.16
+ **/
 export default function* authSaga () {
   while (true) {
     yield call(localAuth)

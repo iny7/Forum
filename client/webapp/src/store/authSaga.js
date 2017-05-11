@@ -1,3 +1,4 @@
+/* eslint-disable no-constant-condition */
 /**
  * 因为两个平台存储方式和登录成功后的行为区别较大, 所以实现authSaga
  * web 用 localStorage + react-router(browserHistory)
@@ -23,17 +24,22 @@ function* localAuth () {
   }
 }
 
-function saveUser ({ id, email, token }) {
-  localStorage.setItem('userId', id)
-  localStorage.setItem('email', email)
-  localStorage.setItem('token', token)
-}
 function removeUser () {
   localStorage.removeItem('userId')
   localStorage.removeItem('email')
   localStorage.removeItem('token')
 }
 
+function saveUser ({ id, email, token }) {
+  localStorage.setItem('userId', id)
+  localStorage.setItem('email', email)
+  localStorage.setItem('token', token)
+}
+
+/**
+ * web端token处理
+ * @iny 2017.4.16
+ **/
 export default function* authSaga () {
   while (true) {
     yield call(localAuth)
@@ -48,15 +54,10 @@ export default function* authSaga () {
     const { state, pathname } = browserHistory.getCurrentLocation()
     const arr = ['/', '/users/sign_in', '/users/sign_up']
     if (state && state.nextPathname) {
-      console.log(111, state.nextPathname)
       yield call(browserHistory.replace, state.nextPathname)//(state.nextPathname)
     } else if (arr.includes(pathname)) {
-      console.log(222)
       browserHistory.replace('/posts')
     }
-
-    console.log('重定向到帖子列表页')
-
     // waiting for remove token
     yield take('auth:remove:token')
     yield call(removeUser)

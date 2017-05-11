@@ -1,7 +1,5 @@
 import { StyleSheet } from 'react-native'
 
-const postAvatarWidth = 24
-
 const styles = StyleSheet.create({
   page: {
     padding: 24
@@ -21,11 +19,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  avatar: {
-    width: postAvatarWidth,
-    height: postAvatarWidth,
-    borderRadius: postAvatarWidth / 2,
-    marginRight: 6,
+  name: {
+    marginLeft: 6,
   },
   time: {
     fontSize: 13,

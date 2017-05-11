@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
 import sdf from 'my-lib/utils/sdf'
-import { ScrollView, Image, View, Text, TouchableOpacity, TextInput } from 'react-native'
+import { ScrollView, View, Text, TouchableOpacity, TextInput } from 'react-native'
 
 // import AutoHeightWebView from 'react-native-autoheight-webview'
 
+import MyImage from 'components/MyImage'
 import IconButton from 'components/IconButton'
 
 import CommentItem from './CommentItem'
 import styles from './styles'
-import source from 'images/zzq.jpg'
 
 export default class PostShow extends Component {
   constructor () {
@@ -56,11 +56,11 @@ export default class PostShow extends Component {
         {/* 文章信息 */}
         <View style={styles.postInfo}>
           <TouchableOpacity style={styles.author}>
-            <Image source={source} style={styles.avatar}></Image>
+            <MyImage size={24} src={author.avatar} />
             <Text style={styles.name}>{author.nickname}</Text>
           </TouchableOpacity>
           <Text style={styles.time}>{sdf(created_at)}</Text>
-          <Text style={styles.opens}>阅读 4521</Text>
+          {/* <Text style={styles.opens}>阅读 4521</Text> */}
         </View>
 
         {/* 文章内容 */}

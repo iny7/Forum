@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 import sdf from 'my-lib/utils/sdf'
 
 import Header from 'components/Header'
@@ -13,7 +13,7 @@ const HeaderRight = () => (
   </div>
 )
 
-export default class Show extends React.Component {
+export default class Show extends Component {
   constructor () {
     super()
     this.state = {
@@ -44,24 +44,23 @@ export default class Show extends React.Component {
     }
     dispatch({ type: 'post:add:comment:request', payload: { post, comment } })
   }
+
   render () {
     // TODO loading应由store控制
     const { loading } = this.state
 
     return (
       <div className="application-page posts-show-page">
-        <Header title="文章详情" HeaderRight={HeaderRight} />
+        <Header title="文章详情" HeaderRight={false && HeaderRight} />
         { loading ? this.renderLoading() : this.renderPost() }
       </div>
     )
   }
-
   renderLoading = () => (
     <main className="cx-body">
       <Spiner />
     </main>
   )
-
   renderPost = () => {
     const { post } = this.props
     const { author, comments, title, content, created_at, liked, likes_count } = post
@@ -96,7 +95,4 @@ export default class Show extends React.Component {
       </main>
     )
   }
-}
-Show.propTypes = {
-  dispatch: PropTypes.func
 }

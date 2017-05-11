@@ -27,9 +27,13 @@ export default function configureStore () {
     rootReducer,
     applyMiddleware(sagaMiddleware, historyMiddleware),
   )
+
+  // common sagas
   sagaMiddleware.run(signSaga)
   sagaMiddleware.run(userSaga)
   sagaMiddleware.run(postSaga)
+
+  // private sagas
   sagaMiddleware.run(authSaga)
   sagaMiddleware.run(routeSaga)
 

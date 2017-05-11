@@ -19,7 +19,7 @@ export default class PostItem extends React.Component {
           <div className="article-author">
             <img className="avatar" src={author.avatar} />
             <span className="name">{author.name}</span>
-            <span className="fa fa-ellipsis-h" onClick={this.handleClick}></span>
+            {/* <span className="fa fa-ellipsis-h" onClick={this.handleClick}></span> */}
           </div>
           <h6 className="article-title">{title}</h6>
           <p className="article-content">{content}</p>

@@ -73,6 +73,23 @@ class PostsController < ApplicationController
 		end
 	end
 
+  def like
+    post = Post.find(params[:id])
+    like = p.likes.create({ user: current_user })
+    if like.save
+      render json: p.likes.count
+    else
+      render json: 'failed'
+    end
+  end
+
+  def unlike
+    post = Post.find(params[:id])
+    user_id = current_user.id
+    p.likes.find_by_user_id(user_id).destroy
+    render json: p.likes.count
+  end
+
 	private
   def post_params
     params.require(:post).permit(:title, :category, :content)

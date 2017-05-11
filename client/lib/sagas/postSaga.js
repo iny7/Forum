@@ -47,28 +47,12 @@ function* addCommentToPost (action) {
   }
 }
 
-function* watchCreatePost () {
-  yield takeLatest('create:post', createPost)
-}
-function* watchFetchPost () {
-  yield takeLatest('fetch:post:by:id', fetchPostById)
-}
-function* watchFetchPostByCategory () {
-  yield takeLatest('fetch:post:by:category', fetchPostsByCategory)
-}
-function* watchFetchPostByUserId () {
-  yield takeLatest('fetch:post:by:userId', fetchPostsByUserId)
-}
-function* watchAddCommentToPost () {
-  yield takeLatest('post:add:comment:request', addCommentToPost)
-}
-
 export default function* rootSaga () {
   yield [
-    watchCreatePost(),
-    watchFetchPost(),
-    watchFetchPostByCategory(),
-    watchFetchPostByUserId(),
-    watchAddCommentToPost()
+    takeLatest('create:post', createPost),
+    takeLatest('fetch:post:by:id', fetchPostById),
+    takeLatest('fetch:post:by:category', fetchPostsByCategory),
+    takeLatest('fetch:post:by:userId', fetchPostsByUserId),
+    takeLatest('post:add:comment:request', addCommentToPost),
   ]
 }

@@ -6,17 +6,17 @@ import styles from './styles'
 
 const I18N = {
   posts: '首页',
-  messages: '私信',
+  // messages: '私信',
   account: '我的'
 }
 const iconMap = {
   posts: 'home',
-  messages: 'message',
+  // messages: 'message',
   account: 'person'
 }
 
 
-export default class Followers extends Component {
+export default class TabIcon extends Component {
   render () {
     const { selected, sceneKey } = this.props
     const color = selected ? '#F55D54' : '#666'

@@ -23,6 +23,7 @@ export default class SignIn extends Component {
       email: username,
       password: password
     }
+    console.log(this.props.dispatch)
     this.props.dispatch({ type: 'signin:request', payload: { user } })
     // alert(username + ', ' + password)
     // Actions.welcome()

@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { StatusBar } from 'react-native'
 import { Scene, Router } from 'react-native-router-flux'
 
 import TabIcon from 'components/TabIcon'
@@ -75,7 +74,9 @@ export default class Application extends Component {
             </Scene>
 
             {/* 私信 */}
-            <Scene key="messages" title="私信" component={Message.List} icon={TabIcon} />
+            {/*
+              <Scene key="messages" title="私信" component={Message.List} icon={TabIcon} />
+            */}
 
             {/* 我的 */}
             <Scene key="account" icon={TabIcon}>

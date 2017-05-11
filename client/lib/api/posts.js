@@ -37,3 +37,26 @@ export async function addCommentToPost (postId, comment) {
   })
   return normalize(resComment, schema.comment)
 }
+
+export async function likePost (postId) {
+  const res = await myFetch.post({
+    url: `/posts/${postId}/like`
+  })
+  if (res === 'failed') {
+    console.error('点赞错误')
+  } else {
+    return res // likeCount
+  }
+}
+
+export async function unlikePost (postId) {
+  const res = await myFetch.delete({
+    url: `/posts/${postId}/unlike`
+  })
+  if (res === 'failed') {
+    console.error('点赞错误')
+  } else {
+    return res // likeCount
+  }
+}
+

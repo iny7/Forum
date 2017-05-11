@@ -1,3 +1,6 @@
+/**
+ * 
+ **/
 export default function byId (state = {}, action) {
   const { type, payload } = action
   switch (type) {
