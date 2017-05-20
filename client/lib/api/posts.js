@@ -2,7 +2,6 @@ import { normalize } from 'normalizr'
 import * as schema from '../schema'
 import myFetch from '../utils/myFetch'
 
-// TODO 全线 async + try catch
 export async function fetchPostsByUserId (userId) {
   const posts = await myFetch.get({
     url: `/users/${userId}/posts`

@@ -1,5 +1,5 @@
-ActiveAdmin.register Post do
-  menu priority: 3, label: "文章管理"
+ActiveAdmin.register Comment, :as => "BlogComment" do
+  menu priority: 3, label: "评论管理"
   permit_params :list, :of, :attributes, :on, :model
 #
 # or
@@ -12,16 +12,12 @@ ActiveAdmin.register Post do
 
   index do
     column :id
-    column :user do |p|
-      p.user.try(:name)
+    column :author do |c|
+      c.user.profile.try(:nickname)
     end
-    column :headlines
-    column :category
-    column :title
-    column :comments do |p|
-      p.comments.count
-    end
+    column :content
+    column :created_at
+
     actions
   end
-
 end

@@ -68,14 +68,18 @@ export default class Show extends Component {
   )
   renderPost = () => {
     const { post } = this.props
-    const { author, comments, title, content, created_at, liked, likes_count } = post
+    const { author, category, comments, title, content, created_at, liked, likes_count } = post
     const likeIcon = liked ? 'fa fa-heart' : 'fa fa-heart-o'
+    const anonymous = category === 'anonymous'
+    const avatar = anonymous ? '/images/avatar.png' : author.avatar
+    const name = anonymous ? '匿名用户' : author.name
+
     return (
       <main className="cx-body">
         <h3 className="title">{title}</h3>
         <div className="info">
-          <img className="avatar sm" src={author.avatar} />
-          <span>{author.nickname}</span>
+          <img className="avatar sm" src={avatar} />
+          <span>{name}</span>
           <time>{sdf(created_at)}</time>
           {/* <span>{`阅读${4521}`}</span> */}
         </div>

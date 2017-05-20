@@ -32,8 +32,8 @@ export default class Edit extends React.Component {
   handleUpload = (e) => {
     const pic = e.target.files[0]
     imgUploader(pic, (data) => {
-      console.log(data)
-      this.refs.thumbnail.src = data
+      // this.refs.thumbnail.src = data
+      this.setState({ avatar: data })
     })
   }
   handleChange = (e) => {

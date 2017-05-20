@@ -45,8 +45,8 @@ export default class PostShow extends Component {
   renderPost = () => {
     const { post } = this.props
     const { author, comments, title, content, created_at, liked, likes_count } = post
-    console.log(comments)
     const likeIcon = liked ? 'heart' : 'heart-o'
+
     return (
       <ScrollView style={styles.page}>
 

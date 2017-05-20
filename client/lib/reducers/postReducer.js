@@ -1,5 +1,3 @@
-// 数据在被取出的时候再根据特定的需求排序
-// ids好像暂时作用不大, 先不用?
 export default function byId (state = {}, action) {
   const { type, payload } = action
   switch (type) {

@@ -8,15 +8,7 @@ import { take, call, put } from 'redux-saga/effects'
 import { Actions } from 'react-native-router-flux'
 
 
-function* localAuth () {
-  const user = yield call(getUser)
-  if (user.email && user.token) {
-    yield put({ type: 'auth:request', payload: { user } })
-  } else {
-    Actions.home({ type: 'replace' })
-    console.log('重定向')
-  }
-}
+
 
 async function getUser () {
   const id = await AsyncStorage.getItem('userId')
@@ -42,6 +34,16 @@ async function saveUser ({ id, email, token }) {
  * mobile token处理
  * @iny 2017.4.16
  **/
+
+function* localAuth () {
+  const user = yield call(getUser)
+  if (user.email && user.token) {
+    yield put({ type: 'auth:request', payload: { user } })
+  } else {
+    Actions.home({ type: 'replace' })
+    console.log('重定向')
+  }
+}
 export default function* authSaga () {
   while (true) {
     yield call(localAuth)

@@ -11,14 +11,18 @@ export default class PostItem extends React.Component {
   }
   render () {
     const { post } = this.props
-    const { id, title, author, content, comments, created_at, liked, likes_count } = post
+    const { id, title, author, category, content, comments, created_at, liked, likes_count } = post
     const likeIcon = liked ? 'fa fa-heart' : 'fa fa-heart-o'
+    const anonymous = category === 'anonymous'
+    const avatar = anonymous ? '/images/avatar.png' : author.avatar
+    const name = anonymous ? '匿名用户' : author.name
+
     return (
       <li className="article-item">
         <Link to={`/posts/${id}`}>
           <div className="article-author">
-            <img className="avatar" src={author.avatar} />
-            <span className="name">{author.name}</span>
+            <img className="avatar" src={avatar} />
+            <span className="name">{name}</span>
             {/* <span className="fa fa-ellipsis-h" onClick={this.handleClick}></span> */}
           </div>
           <h6 className="article-title">{title}</h6>

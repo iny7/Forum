@@ -7,12 +7,12 @@ const following = new schema.Array(user) // 关注
 const fans = new schema.Array(user) // 粉丝
 user.define({ following, fans })
 
-// Define your comments schema
+// Define comments schema
 export const comment = new schema.Entity('comments', {
   commenter: user
 })
 
-// Define your article
+// Define article
 export const post = new schema.Entity('posts', {
   author: user,
   comments: [ comment ]

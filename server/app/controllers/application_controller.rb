@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
 
   # 422 unprocessable entity
   skip_before_action :verify_authenticity_token
+  # skip_before_filter :authenticate_user!, :if => lambda { |controller| controller.request.path =~ /^\/admin/ }
 
   # before_filter :authenticate_user!, unless: lambda { |controller| controller.request.format == :json }
   before_filter :layout_only#, :if => lambda { |controller| controller.request.format == :html }
@@ -29,6 +30,8 @@ class ApplicationController < ActionController::Base
 
   def layout_only
     is_admin = request.path =~ /^\/admin/
+    # render text: nil, layout: true
+    # return
 
     if is_admin
       log '接收到Admin'

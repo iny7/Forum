@@ -29,7 +29,7 @@ module Blog
     end
 
     # config.middleware.delete ActionDispatch::Cookies
-    config.middleware.delete ActionDispatch::Session::CookieStore
+    # config.middleware.delete ActionDispatch::Session::CookieStore
     # config.middleware.delete ActionDispatch::Flash
 
     # Do not swallow errors in after_commit/after_rollback callbacks.

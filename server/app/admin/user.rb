@@ -1,4 +1,5 @@
-ActiveAdmin.register AdminUser do
+ActiveAdmin.register User do
+  menu priority: 2, label: "用户管理"
   permit_params :email, :password, :password_confirmation
 
   index do
