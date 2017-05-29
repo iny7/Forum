@@ -21,7 +21,7 @@ module.exports = {
   }),
   output: {
     path: outputPath,
-    publicPath: '/webpack/',
+    publicPath: '/public/',
     filename: '[name].js'
   },
   resolve: {

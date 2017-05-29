@@ -3,7 +3,7 @@ var config = require('./webpack.config.common')
 
 var devServerHost = '0.0.0.0'
 // must match config.webpack.dev_server.port
-var devServerPort = 3808
+var devServerPort = 8080
 
 for (var entry in config.entry) {
   config.entry[entry].push(

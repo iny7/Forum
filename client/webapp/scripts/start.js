@@ -8,7 +8,7 @@ var config = require('../configs/webpack.config.dev.js')
 
 var devServerHost = '0.0.0.0'
 // must match config.webpack.dev_server.port
-var devServerPort = 3808
+var devServerPort = 8080
 
 var compiler
 
@@ -76,7 +76,7 @@ function runDevServer (host, port, protocol) {
   var devServer = new WebpackDevServer(compiler, {
     // Silence WebpackDevServer's own logs since they're generally not useful.
     // It will still show compile warnings and errors with this setting.
-    clientLogLevel: 'none',
+    // clientLogLevel: 'none',
     // Enable hot reloading server. It will provide /sockjs-node/ endpoint
     // for the WebpackDevServer client so it can learn when the files were
     // updated. The WebpackDevServer client is included as an entry point
@@ -86,6 +86,20 @@ function runDevServer (host, port, protocol) {
     // It is important to tell WebpackDevServer to use the same "root" path
     // as we specified in the config. In development, we always serve from /.
     publicPath: config.output.publicPath,
+    historyApiFallback: {
+      index: '/public/index.html'
+    },
+    // proxy: {
+    //   "/api": {
+    //     target: "http://localhost:3000",
+    //     bypass: function(req, res, proxyOptions) {
+    //       if (req.headers.accept.indexOf("html") !== -1) {
+    //         console.log("Skipping proxy for browser request.");
+    //         return "/index.html";
+    //       }
+    //     }
+    //   }
+    // },
     // WebpackDevServer is noisy by default so we emit custom message instead
     // by listening to the compiler events with `compiler.plugin` calls above.
     quiet: true,

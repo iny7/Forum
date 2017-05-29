@@ -6,13 +6,8 @@ class ApplicationController < ActionController::Base
   # skip_before_filter :authenticate_user!, :if => lambda { |controller| controller.request.path =~ /^\/admin/ }
 
   # before_filter :authenticate_user!, unless: lambda { |controller| controller.request.format == :json }
-  before_filter :layout_only#, :if => lambda { |controller| controller.request.format == :html }
 
   acts_as_token_authentication_handler_for User#, unless: lambda { |controller| controller.request.format.html? }
-
-  def index
-    layout_only
-  end
 
   def log(args)
     Rails.logger.info '*' * 20
@@ -27,24 +22,5 @@ class ApplicationController < ActionController::Base
     render text: nil, layout: 'application'
     return
   end
-
-  def layout_only
-    is_admin = request.path =~ /^\/admin/
-    # render text: nil, layout: true
-    # return
-
-    if is_admin
-      log '接收到Admin'
-    elsif request.format.html?
-      render text: nil, layout: true
-    else
-      # reset_session
-      # log request.session_options.inspect
-      request.session_options[:skip] = true
-      env['rack.session.options'][:skip] = true
-      log '接收到API请求' + request.path
-    end
-  end
-
 
 end
