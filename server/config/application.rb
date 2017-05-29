@@ -8,6 +8,8 @@ Bundler.require(*Rails.groups)
 
 module Blog
   class Application < Rails::Application
+    config.api_only = true
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
@@ -20,19 +22,19 @@ module Blog
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     config.i18n.default_locale = 'zh-CN'
 
-    config.middleware.insert_before Warden::Manager, Rack::Cors
-    config.middleware.insert_before 0, "Rack::Cors" do
-      allow do
-        origins '*'
-        resource '*', :headers => :any, :methods => [:get, :post, :delete, :options]
-      end
-    end
+    # config.middleware.insert_before Warden::Manager, Rack::Cors
+    # config.middleware.insert_before 0, "Rack::Cors" do
+    #   allow do
+    #     origins '*'
+    #     resource '*', :headers => :any, :methods => [:get, :post, :delete, :options]
+    #   end
+    # end
 
     # config.middleware.delete ActionDispatch::Cookies
     # config.middleware.delete ActionDispatch::Session::CookieStore
     # config.middleware.delete ActionDispatch::Flash
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
-    config.active_record.raise_in_transactional_callbacks = true
+    # config.active_record.raise_in_transactional_callbacks = true
   end
 end

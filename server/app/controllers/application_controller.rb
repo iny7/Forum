@@ -1,11 +1,5 @@
-class ApplicationController < ActionController::Base
-  protect_from_forgery with: :null_session
-
-  # 422 unprocessable entity
-  skip_before_action :verify_authenticity_token
-  # skip_before_filter :authenticate_user!, :if => lambda { |controller| controller.request.path =~ /^\/admin/ }
-
-  # before_filter :authenticate_user!, unless: lambda { |controller| controller.request.format == :json }
+class ApplicationController < ActionController::API
+  include ActionView::Layouts
 
   acts_as_token_authentication_handler_for User#, unless: lambda { |controller| controller.request.format.html? }
 

@@ -1,10 +1,10 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.6'
+gem 'rails', '5.1.1'
 gem 'mysql2'
 
-gem 'activeadmin', git: 'https://github.com/activeadmin/activeadmin'
+gem 'activeadmin'#, git: 'https://github.com/activeadmin/activeadmin'
 gem 'cancan' # or cancancan
 gem 'draper'
 gem 'pundit'
@@ -31,7 +31,7 @@ gem 'jbuilder', '~> 2.0'
 
 gem 'foreman'
 gem 'webpack-rails'
-gem 'auto_migrations', git: 'https://github.com/yzhang/auto_migrations'
+# gem 'auto_migrations', git: 'https://github.com/yzhang/auto_migrations'
 
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
